@@ -11,6 +11,27 @@ class Gallery
         $config = include(__DIR__ . '/../../config/config.php');
         $this->db = new Database($config['database']);
         $this->immichClient = new ImmichClient($config['immich']['api_url'], $config['immich']['api_key']);
+
+        // Créer les tables si nécessaire
+        $this->createTablesIfNotExist();
+    }
+
+    /**
+     * Créer les tables nécessaires si elles n'existent pas
+     */
+    public function createTablesIfNotExist(): void
+    {
+        // Table gallery_permissions
+        $this->db->getPDO()->exec("
+            CREATE TABLE IF NOT EXISTS gallery_permissions (
+                id INT AUTO_INCREMENT PRIMARY KEY,
+                gallery_id INT,
+                role VARCHAR(50),
+                created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+                FOREIGN KEY (gallery_id) REFERENCES galleries(id) ON DELETE CASCADE,
+                UNIQUE KEY unique_gallery_role (gallery_id, role)
+            )
+        ");
     }
 
     /**
@@ -163,19 +184,89 @@ class Gallery
     }
 
     /**
-     * Récupérer les galeries publiques
+     * Récupérer les galeries accessibles pour un rôle spécifique
+     */
+    public function getGalleriesForRole($role): array
+    {
+        $stmt = $this->db->getPDO()->prepare("
+            SELECT DISTINCT g.*, 
+                   GROUP_CONCAT(gia.immich_album_id) as album_ids,
+                   GROUP_CONCAT(gia.immich_album_name) as album_names
+            FROM galleries g
+            LEFT JOIN gallery_immich_albums gia ON g.id = gia.gallery_id
+            LEFT JOIN gallery_permissions gp ON g.id = gp.gallery_id
+            WHERE g.is_public = 1 
+               OR gp.role = ?
+               OR ? = 'admin'
+            GROUP BY g.id
+            ORDER BY g.created_at DESC
+        ");
+
+        $stmt->execute([$role, $role]);
+        $galleries = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Enrichir avec les infos des albums
+        foreach ($galleries as &$gallery) {
+            $gallery['albums'] = [];
+            if ($gallery['album_ids']) {
+                $albumIds = explode(',', $gallery['album_ids']);
+                $albumNames = explode(',', $gallery['album_names']);
+
+                foreach ($albumIds as $i => $albumId) {
+                    $gallery['albums'][] = [
+                        'id' => $albumId,
+                        'albumName' => $albumNames[$i] ?? '',
+                        'assetCount' => $this->getAlbumAssetCount($albumId)
+                    ];
+                }
+            }
+
+            // Récupérer une image de couverture
+            $gallery['cover_image_url'] = $this->getGalleryCoverImage($gallery['id']);
+
+            // Récupérer les permissions
+            $stmt = $this->db->getPDO()->prepare("
+                SELECT role FROM gallery_permissions WHERE gallery_id = ?
+            ");
+            $stmt->execute([$gallery['id']]);
+            $gallery['permissions'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+        }
+
+        return $galleries;
+    }
+
+    /**
+     * Obtenir toutes les galeries publiques (pour les non-connectés)
      */
     public function getPublicGalleries(): array
     {
         $stmt = $this->db->getPDO()->query("
-            SELECT * FROM galleries 
-            WHERE is_public = 1 
-            ORDER BY created_at DESC
+            SELECT g.*, 
+                   GROUP_CONCAT(gia.immich_album_id) as album_ids,
+                   GROUP_CONCAT(gia.immich_album_name) as album_names
+            FROM galleries g
+            LEFT JOIN gallery_immich_albums gia ON g.id = gia.gallery_id
+            WHERE g.is_public = 1 AND g.requires_auth = 0
+            GROUP BY g.id
+            ORDER BY g.created_at DESC
         ");
 
         $galleries = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         foreach ($galleries as &$gallery) {
+            $gallery['albums'] = [];
+            if ($gallery['album_ids']) {
+                $albumIds = explode(',', $gallery['album_ids']);
+                $albumNames = explode(',', $gallery['album_names']);
+
+                foreach ($albumIds as $i => $albumId) {
+                    $gallery['albums'][] = [
+                        'id' => $albumId,
+                        'albumName' => $albumNames[$i] ?? ''
+                    ];
+                }
+            }
+
             $gallery['cover_image_url'] = $this->getGalleryCoverImage($gallery['id']);
         }
 
@@ -183,9 +274,9 @@ class Gallery
     }
 
     /**
-     * Récupérer une galerie par son slug
+     * Récupérer une galerie par son slug avec vérification des permissions
      */
-    public function getGalleryBySlug($slug): ?array
+    public function getGalleryBySlug($slug, $userRole = null): ?array
     {
         $stmt = $this->db->getPDO()->prepare("
             SELECT * FROM galleries WHERE slug = ?
@@ -194,6 +285,11 @@ class Gallery
         $gallery = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if (!$gallery) {
+            return null;
+        }
+
+        // Vérifier les permissions si un rôle est fourni
+        if ($userRole !== null && !$this->userCanAccessGallery($gallery['id'], $userRole)) {
             return null;
         }
 
@@ -206,10 +302,38 @@ class Gallery
         $stmt->execute([$gallery['id']]);
         $gallery['images'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
+        // Récupérer les permissions
+        $stmt = $this->db->getPDO()->prepare("
+            SELECT role FROM gallery_permissions WHERE gallery_id = ?
+        ");
+        $stmt->execute([$gallery['id']]);
+        $gallery['permissions'] = $stmt->fetchAll(PDO::FETCH_COLUMN);
+
         // Incrémenter le compteur de vues
         $this->incrementViewCount($gallery['id']);
 
         return $gallery;
+    }
+
+    /**
+     * Vérifier si un utilisateur a accès à une galerie
+     */
+    public function userCanAccessGallery($galleryId, $userRole): bool
+    {
+        // Admin peut tout voir
+        if ($userRole === 'admin') {
+            return true;
+        }
+
+        $stmt = $this->db->getPDO()->prepare("
+            SELECT COUNT(*) FROM galleries g
+            LEFT JOIN gallery_permissions gp ON g.id = gp.gallery_id
+            WHERE g.id = ? 
+            AND (g.is_public = 1 OR gp.role = ?)
+        ");
+
+        $stmt->execute([$galleryId, $userRole]);
+        return $stmt->fetchColumn() > 0;
     }
 
     /**
@@ -291,5 +415,107 @@ class Gallery
     {
         $stmt = $this->db->getPDO()->prepare("DELETE FROM galleries WHERE id = ?");
         $stmt->execute([$galleryId]);
+    }
+
+    /**
+     * Obtenir les statistiques globales
+     */
+    public function getStatistics(): array
+    {
+        $stats = [];
+
+        // Nombre total de galeries
+        $stmt = $this->db->getPDO()->query("SELECT COUNT(*) FROM galleries");
+        $stats['total_galleries'] = $stmt->fetchColumn();
+
+        // Nombre total de photos
+        $stmt = $this->db->getPDO()->query("SELECT SUM(image_count) FROM galleries");
+        $stats['total_photos'] = $stmt->fetchColumn() ?: 0;
+
+        // Nombre de vues totales
+        $stmt = $this->db->getPDO()->query("SELECT SUM(view_count) FROM galleries");
+        $stats['total_views'] = $stmt->fetchColumn() ?: 0;
+
+        // Galeries par permission
+        $stmt = $this->db->getPDO()->query("
+            SELECT role, COUNT(DISTINCT gallery_id) as count 
+            FROM gallery_permissions 
+            GROUP BY role
+        ");
+        $stats['galleries_by_role'] = $stmt->fetchAll(PDO::FETCH_KEY_PAIR);
+
+        return $stats;
+    }
+    /**
+     * Ajouter une demande de suppression
+     */
+    public function addDeletionRequest($data): int
+    {
+        $stmt = $this->db->getPDO()->prepare("
+        INSERT INTO deletion_requests 
+        (gallery_id, image_id, user_id, reason, status, created_at) 
+        VALUES (?, ?, ?, ?, 'pending', NOW())
+    ");
+
+        $stmt->execute([
+            $data['gallery_id'],
+            $data['image_id'] ?? null,
+            $data['user_id'],
+            $data['reason']
+        ]);
+
+        return $this->db->getPDO()->lastInsertId();
+    }
+
+    /**
+     * Récupérer les demandes de suppression en attente
+     */
+    public function getPendingDeletionRequests(): array
+    {
+        $stmt = $this->db->getPDO()->query("
+        SELECT dr.*, u.name as user_name, u.email as user_email,
+               g.name as gallery_name, gi.immich_asset_id
+        FROM deletion_requests dr
+        JOIN users u ON dr.user_id = u.id
+        JOIN galleries g ON dr.gallery_id = g.id
+        LEFT JOIN gallery_images gi ON dr.image_id = gi.id
+        WHERE dr.status = 'pending'
+        ORDER BY dr.created_at DESC
+    ");
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    /**
+     * Traiter une demande de suppression
+     */
+    public function processDeletionRequest($requestId, $status, $adminId, $response = null): void
+    {
+        $stmt = $this->db->getPDO()->prepare("
+        UPDATE deletion_requests 
+        SET status = ?, 
+            admin_response = ?, 
+            processed_by_admin_id = ?,
+            processed_at = NOW()
+        WHERE id = ?
+    ");
+
+        $stmt->execute([$status, $response, $adminId, $requestId]);
+
+        // Si approuvé, supprimer l'image
+        if ($status === 'approved') {
+            $stmt = $this->db->getPDO()->prepare("
+            SELECT image_id FROM deletion_requests WHERE id = ?
+        ");
+            $stmt->execute([$requestId]);
+            $imageId = $stmt->fetchColumn();
+
+            if ($imageId) {
+                $stmt = $this->db->getPDO()->prepare("
+                DELETE FROM gallery_images WHERE id = ?
+            ");
+                $stmt->execute([$imageId]);
+            }
+        }
     }
 }

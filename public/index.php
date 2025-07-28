@@ -1,4 +1,15 @@
 <?php
+session_start();
+require_once '../src/Auth/Auth.php';
+
+$auth = new Auth();
+
+// Si pas connecté, rediriger vers login
+if (!$auth->isAuthenticated()) {
+    header('Location: login.php');
+    exit;
+}
+
 // Augmenter la limite de mémoire temporairement
 ini_set('memory_limit', '512M');
 

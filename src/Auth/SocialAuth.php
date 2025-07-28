@@ -418,7 +418,7 @@ class SocialAuth
     /**
      * Effectue une requête HTTP
      */
-    private function makeHttpRequest(string $url, array $params = null, string $method = 'GET'): ?string
+    private function makeHttpRequest(string $url, ?array $params = null, string $method = 'GET'): ?string
     {
         $ch = curl_init();
 
