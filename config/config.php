@@ -1,14 +1,14 @@
 <?php
 return [
     'immich' => [
-        'api_url' => 'http://localhost:2283',
-        'api_key' => '', // À configurer
+        'api_url' => 'http://192.168.1.110:3001',
+        'api_key' => '3FIKnjqJp4cMWH6NVDFxjdm2wnKHp8DiKuOppMlj6w', // À configurer
     ],
     'database' => [
         'host' => 'localhost',
         'name' => 'immich_gallery',
         'user' => 'root',
-        'password' => '',
+        'password' => 'mysqlroot',
     ],
     'geolocation' => [
         'enable_unesco' => true,

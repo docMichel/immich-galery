@@ -1,44 +1,64 @@
 <?php
 // src/Auth/SocialAuth.php - Système d'authentification sociale complet
 
-class SocialAuth 
+require_once __DIR__ . '/../Services/Database.php';
+
+class SocialAuth
 {
     private $config;
     private $db;
 
-    public function __construct() 
+    public function __construct()
     {
+        // Configuration des providers OAuth
         $this->config = [
             'facebook' => [
-                'app_id' => $_ENV['FACEBOOK_APP_ID'],
-                'app_secret' => $_ENV['FACEBOOK_APP_SECRET'],
-                'redirect_uri' => $_ENV['BASE_URL'] . '/auth/facebook/callback'
+                'app_id' => $_ENV['FACEBOOK_APP_ID'] ?? '',
+                'app_secret' => $_ENV['FACEBOOK_APP_SECRET'] ?? '',
+                'redirect_uri' => $this->getBaseUrl() . '/auth/facebook/callback'
             ],
             'google' => [
-                'client_id' => $_ENV['GOOGLE_CLIENT_ID'],
-                'client_secret' => $_ENV['GOOGLE_CLIENT_SECRET'],
-                'redirect_uri' => $_ENV['BASE_URL'] . '/auth/google/callback'
+                'client_id' => $_ENV['GOOGLE_CLIENT_ID'] ?? '',
+                'client_secret' => $_ENV['GOOGLE_CLIENT_SECRET'] ?? '',
+                'redirect_uri' => $this->getBaseUrl() . '/auth/google/callback'
             ],
             'apple' => [
-                'client_id' => $_ENV['APPLE_CLIENT_ID'],
-                'team_id' => $_ENV['APPLE_TEAM_ID'],
-                'key_id' => $_ENV['APPLE_KEY_ID'],
-                'private_key' => $_ENV['APPLE_PRIVATE_KEY'],
-                'redirect_uri' => $_ENV['BASE_URL'] . '/auth/apple/callback'
+                'client_id' => $_ENV['APPLE_CLIENT_ID'] ?? '',
+                'team_id' => $_ENV['APPLE_TEAM_ID'] ?? '',
+                'key_id' => $_ENV['APPLE_KEY_ID'] ?? '',
+                'private_key' => $_ENV['APPLE_PRIVATE_KEY'] ?? '',
+                'redirect_uri' => $this->getBaseUrl() . '/auth/apple/callback'
             ]
         ];
-        
-        $this->db = Database::getInstance();
+
+        // Initialiser la session si pas déjà fait
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Connexion à la base de données
+        $dbConfig = include(__DIR__ . '/../../config/config.php');
+        $this->db = Database::getInstance($dbConfig['database'])->getPDO();
+    }
+
+    /**
+     * Obtenir l'URL de base
+     */
+    private function getBaseUrl(): string
+    {
+        $protocol = isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? 'https' : 'http';
+        $host = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        return $protocol . '://' . $host;
     }
 
     /**
      * Génère l'URL de connexion Facebook
      */
-    public function getFacebookLoginUrl(): string 
+    public function getFacebookLoginUrl(): string
     {
         $state = $this->generateState();
         $_SESSION['oauth_state'] = $state;
-        
+
         $params = [
             'client_id' => $this->config['facebook']['app_id'],
             'redirect_uri' => $this->config['facebook']['redirect_uri'],
@@ -46,18 +66,18 @@ class SocialAuth
             'response_type' => 'code',
             'state' => $state
         ];
-        
+
         return 'https://www.facebook.com/v18.0/dialog/oauth?' . http_build_query($params);
     }
 
     /**
      * Génère l'URL de connexion Google
      */
-    public function getGoogleLoginUrl(): string 
+    public function getGoogleLoginUrl(): string
     {
         $state = $this->generateState();
         $_SESSION['oauth_state'] = $state;
-        
+
         $params = [
             'client_id' => $this->config['google']['client_id'],
             'redirect_uri' => $this->config['google']['redirect_uri'],
@@ -66,18 +86,18 @@ class SocialAuth
             'access_type' => 'offline',
             'state' => $state
         ];
-        
+
         return 'https://accounts.google.com/o/oauth2/v2/auth?' . http_build_query($params);
     }
 
     /**
      * Génère l'URL de connexion Apple
      */
-    public function getAppleLoginUrl(): string 
+    public function getAppleLoginUrl(): string
     {
         $state = $this->generateState();
         $_SESSION['oauth_state'] = $state;
-        
+
         $params = [
             'client_id' => $this->config['apple']['client_id'],
             'redirect_uri' => $this->config['apple']['redirect_uri'],
@@ -86,14 +106,14 @@ class SocialAuth
             'response_mode' => 'form_post',
             'state' => $state
         ];
-        
+
         return 'https://appleid.apple.com/auth/authorize?' . http_build_query($params);
     }
 
     /**
      * Traite le callback Facebook
      */
-    public function handleFacebookCallback(string $code, string $state): ?array 
+    public function handleFacebookCallback(string $code, string $state): ?array
     {
         if (!$this->validateState($state)) {
             throw new Exception('État OAuth invalide');
@@ -118,7 +138,7 @@ class SocialAuth
     /**
      * Traite le callback Google
      */
-    public function handleGoogleCallback(string $code, string $state): ?array 
+    public function handleGoogleCallback(string $code, string $state): ?array
     {
         if (!$this->validateState($state)) {
             throw new Exception('État OAuth invalide');
@@ -143,7 +163,7 @@ class SocialAuth
     /**
      * Traite le callback Apple
      */
-    public function handleAppleCallback(string $code, string $state, ?string $user = null): ?array 
+    public function handleAppleCallback(string $code, string $state, ?string $user = null): ?array
     {
         if (!$this->validateState($state)) {
             throw new Exception('État OAuth invalide');
@@ -176,7 +196,7 @@ class SocialAuth
     /**
      * Échange le code Facebook contre un token
      */
-    private function exchangeFacebookCode(string $code): ?array 
+    private function exchangeFacebookCode(string $code): ?array
     {
         $params = [
             'client_id' => $this->config['facebook']['app_id'],
@@ -196,16 +216,16 @@ class SocialAuth
     /**
      * Récupère les informations utilisateur Facebook
      */
-    private function getFacebookUserInfo(string $accessToken): ?array 
+    private function getFacebookUserInfo(string $accessToken): ?array
     {
         $fields = 'id,name,email,picture.width(200).height(200)';
         $url = "https://graph.facebook.com/v18.0/me?fields={$fields}&access_token={$accessToken}";
-        
+
         $response = $this->makeHttpRequest($url);
         if (!$response) return null;
 
         $data = json_decode($response, true);
-        
+
         return [
             'id' => $data['id'],
             'name' => $data['name'],
@@ -217,7 +237,7 @@ class SocialAuth
     /**
      * Échange le code Google contre un token
      */
-    private function exchangeGoogleCode(string $code): ?array 
+    private function exchangeGoogleCode(string $code): ?array
     {
         $params = [
             'client_id' => $this->config['google']['client_id'],
@@ -229,7 +249,8 @@ class SocialAuth
 
         $response = $this->makeHttpRequest(
             'https://oauth2.googleapis.com/token',
-            $params
+            $params,
+            'POST'
         );
 
         return $response ? json_decode($response, true) : null;
@@ -238,7 +259,7 @@ class SocialAuth
     /**
      * Décode le JWT Google
      */
-    private function decodeGoogleJWT(string $idToken): ?array 
+    private function decodeGoogleJWT(string $idToken): ?array
     {
         // Décoder le JWT (sans vérification de signature pour la démo)
         // En production, il faut vérifier la signature avec les clés publiques Google
@@ -246,7 +267,7 @@ class SocialAuth
         if (count($parts) !== 3) return null;
 
         $payload = json_decode(base64_decode(str_pad(strtr($parts[1], '-_', '+/'), strlen($parts[1]) % 4, '=', STR_PAD_RIGHT)), true);
-        
+
         if (!$payload) return null;
 
         return [
@@ -260,10 +281,10 @@ class SocialAuth
     /**
      * Échange le code Apple contre un token
      */
-    private function exchangeAppleCode(string $code): ?array 
+    private function exchangeAppleCode(string $code): ?array
     {
         $clientSecret = $this->generateAppleClientSecret();
-        
+
         $params = [
             'client_id' => $this->config['apple']['client_id'],
             'client_secret' => $clientSecret,
@@ -274,7 +295,8 @@ class SocialAuth
 
         $response = $this->makeHttpRequest(
             'https://appleid.apple.com/auth/token',
-            $params
+            $params,
+            'POST'
         );
 
         return $response ? json_decode($response, true) : null;
@@ -283,8 +305,10 @@ class SocialAuth
     /**
      * Génère le client secret Apple (JWT)
      */
-    private function generateAppleClientSecret(): string 
+    private function generateAppleClientSecret(): string
     {
+        // En production, utilisez une bibliothèque JWT appropriée
+        // comme firebase/php-jwt pour générer un JWT ES256
         $header = [
             'alg' => 'ES256',
             'kid' => $this->config['apple']['key_id']
@@ -298,22 +322,22 @@ class SocialAuth
             'sub' => $this->config['apple']['client_id']
         ];
 
-        // Utiliser une bibliothèque JWT pour la signature ES256
         // Pour la démo, retourner un placeholder
-        return 'APPLE_CLIENT_SECRET_JWT';
+        // En production, vous devez signer avec la clé privée Apple
+        return 'APPLE_CLIENT_SECRET_JWT_PLACEHOLDER';
     }
 
     /**
      * Décode le JWT Apple
      */
-    private function decodeAppleJWT(string $idToken): ?array 
+    private function decodeAppleJWT(string $idToken): ?array
     {
         // Même logique que Google JWT
         $parts = explode('.', $idToken);
         if (count($parts) !== 3) return null;
 
         $payload = json_decode(base64_decode(str_pad(strtr($parts[1], '-_', '+/'), strlen($parts[1]) % 4, '=', STR_PAD_RIGHT)), true);
-        
+
         if (!$payload) return null;
 
         return [
@@ -327,7 +351,7 @@ class SocialAuth
     /**
      * Crée ou met à jour un utilisateur
      */
-    private function createOrUpdateUser(string $provider, array $userInfo, array $tokenData): array 
+    private function createOrUpdateUser(string $provider, array $userInfo, array $tokenData): array
     {
         // Chercher l'utilisateur existant
         $stmt = $this->db->prepare("
@@ -350,7 +374,7 @@ class SocialAuth
                 $userInfo['avatar_url'],
                 $user['id']
             ]);
-            
+
             $userId = $user['id'];
         } else {
             // Créer un nouvel utilisateur
@@ -365,7 +389,7 @@ class SocialAuth
                 $userInfo['name'],
                 $userInfo['avatar_url']
             ]);
-            
+
             $userId = $this->db->lastInsertId();
         }
 
@@ -394,34 +418,50 @@ class SocialAuth
     /**
      * Effectue une requête HTTP
      */
-    private function makeHttpRequest(string $url, array $params = null): ?string 
+    private function makeHttpRequest(string $url, array $params = null, string $method = 'GET'): ?string
     {
         $ch = curl_init();
-        
-        curl_setopt_array($ch, [
-            CURLOPT_URL => $url,
+
+        $curlOptions = [
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT => 10,
             CURLOPT_SSL_VERIFYPEER => true,
             CURLOPT_FOLLOWLOCATION => true
-        ]);
+        ];
 
-        if ($params) {
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($params));
+        if ($method === 'POST' && $params) {
+            $curlOptions[CURLOPT_URL] = $url;
+            $curlOptions[CURLOPT_POST] = true;
+            $curlOptions[CURLOPT_POSTFIELDS] = http_build_query($params);
+        } else {
+            $queryString = $params ? '?' . http_build_query($params) : '';
+            $curlOptions[CURLOPT_URL] = $url . $queryString;
         }
+
+        curl_setopt_array($ch, $curlOptions);
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        $error = curl_error($ch);
         curl_close($ch);
 
-        return ($httpCode === 200) ? $response : null;
+        if ($error) {
+            error_log("Erreur cURL: " . $error);
+            return null;
+        }
+
+        if ($httpCode !== 200) {
+            error_log("Erreur HTTP {$httpCode}: " . $response);
+            return null;
+        }
+
+        return $response;
     }
 
     /**
      * Génère un état OAuth sécurisé
      */
-    private function generateState(): string 
+    private function generateState(): string
     {
         return bin2hex(random_bytes(16));
     }
@@ -429,12 +469,61 @@ class SocialAuth
     /**
      * Valide l'état OAuth
      */
-    private function validateState(string $state): bool 
+    private function validateState(string $state): bool
     {
-        return isset($_SESSION['oauth_state']) && 
-               $_SESSION['oauth_state'] === $state;
+        return isset($_SESSION['oauth_state']) &&
+            $_SESSION['oauth_state'] === $state;
     }
 
     /**
-     * Génère un token de session
+     * Génère un token de session sécurisé
      */
+    private function generateSessionToken(): string
+    {
+        return bin2hex(random_bytes(32));
+    }
+
+    /**
+     * Vérifie si l'utilisateur est connecté
+     */
+    public function isAuthenticated(): bool
+    {
+        return isset($_SESSION['user_id']) && isset($_SESSION['session_token']);
+    }
+
+    /**
+     * Obtient l'utilisateur connecté
+     */
+    public function getCurrentUser(): ?array
+    {
+        if (!$this->isAuthenticated()) {
+            return null;
+        }
+
+        $stmt = $this->db->prepare("
+            SELECT u.* FROM users u
+            INNER JOIN user_sessions s ON u.id = s.user_id
+            WHERE s.session_token = ? AND s.expires_at > NOW()
+        ");
+        $stmt->execute([$_SESSION['session_token']]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC) ?: null;
+    }
+
+    /**
+     * Déconnecte l'utilisateur
+     */
+    public function logout(): void
+    {
+        if (isset($_SESSION['session_token'])) {
+            // Supprimer la session de la base de données
+            $stmt = $this->db->prepare("
+                DELETE FROM user_sessions WHERE session_token = ?
+            ");
+            $stmt->execute([$_SESSION['session_token']]);
+        }
+
+        // Détruire la session PHP
+        session_destroy();
+    }
+}
