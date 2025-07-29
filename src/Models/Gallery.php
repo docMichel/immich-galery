@@ -292,6 +292,14 @@ class Gallery
         if ($userRole !== null && !$this->userCanAccessGallery($gallery['id'], $userRole)) {
             return null;
         }
+        // Récupérer les albums
+        $stmt = $this->db->getPDO()->prepare("
+            SELECT immich_album_id as id, immich_album_name as albumName 
+            FROM gallery_immich_albums 
+            WHERE gallery_id = ?
+        ");
+        $stmt->execute([$gallery['id']]);
+        $gallery['albums'] = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
         // Récupérer les images
         $stmt = $this->db->getPDO()->prepare("
