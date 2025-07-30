@@ -19,7 +19,7 @@ if (!$assetId || !$galleryId) {
 }
 
 // Configuration du serveur Flask
-$FLASK_API_URL = "http://localhost:5000";
+$FLASK_API_URL = $config['immich']['FLASK_API_URL'];
 
 // Récupérer les infos de l'image
 $stmt = $db->getPDO()->prepare("

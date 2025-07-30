@@ -3,6 +3,8 @@ return [
     'immich' => [
         'api_url' => 'http://192.168.1.110:3001',
         'api_key' => '3FIKnjqJp4cMWH6NVDFxjdm2wnKHp8DiKuOppMlj6w', // À configurer
+
+        'FLASK_API_URL' => "http://192.168.1.110:5001"
     ],
     'database' => [
         'host' => 'localhost',
