@@ -1,0 +1,292 @@
+/* public/assets/css/gps-manager.css */
+
+/* Filtres dans le header */
+.filter-pills {
+    display: flex;
+    gap: 8px;
+}
+
+.filter-pill {
+    background: #f0f0f0;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.filter-pill:hover {
+    background: #e0e0e0;
+}
+
+.filter-pill.active {
+    background: #007bff;
+    color: white;
+}
+
+.pill-count {
+    background: rgba(0,0,0,0.1);
+    padding: 2px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.filter-pill.active .pill-count {
+    background: rgba(255,255,255,0.2);
+}
+
+.pill-count.success {
+    background: #28a745;
+    color: white;
+}
+
+.pill-count.warning {
+    background: #ffc107;
+    color: #333;
+}
+
+/* Barre d'actions */
+.action-bar {
+    background: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.selection-info {
+    font-weight: 500;
+    color: #666;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.clipboard-info {
+    background: #e8f4f8;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    color: #0c5460;
+}
+
+/* Boutons */
+.btn {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn-primary {
+    background: #007bff;
+    color: white;
+}
+
+.btn-primary:hover:not(:disabled) {
+    background: #0056b3;
+}
+
+.btn-secondary {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-secondary:hover:not(:disabled) {
+    background: #545b62;
+}
+
+.btn-danger {
+    background: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover:not(:disabled) {
+    background: #c82333;
+}
+
+/* Photos avec GPS */
+.photo-item.gps-item {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.photo-item.has-gps {
+    border-color: #28a745;
+}
+
+.photo-item.no-gps {
+    border-color: #ffc107;
+}
+
+.photo-item.selected {
+    border-color: #007bff !important;
+    transform: scale(0.95);
+}
+
+/* Checkbox de sélection */
+.selection-checkbox {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+}
+
+.selection-checkbox input[type="checkbox"] {
+    display: none;
+}
+
+.selection-checkbox label {
+    display: block;
+    width: 24px;
+    height: 24px;
+    background: rgba(255,255,255,0.9);
+    border: 2px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+}
+
+.selection-checkbox input[type="checkbox"]:checked + label {
+    background: #007bff;
+    border-color: #007bff;
+}
+
+.selection-checkbox input[type="checkbox"]:checked + label::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+/* Badge GPS */
+.gps-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+    z-index: 2;
+}
+
+.gps-badge.success {
+    background: rgba(40, 167, 69, 0.9);
+    color: white;
+}
+
+.gps-badge.warning {
+    background: rgba(255, 193, 7, 0.9);
+    color: #333;
+}
+
+/* Survol et interaction */
+.photo-item.gps-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.photo-item.gps-item:hover .selection-checkbox label {
+    border-color: #007bff;
+}
+
+/* Filtrage */
+.photo-item.gps-item {
+    display: block;
+}
+
+.photo-item.gps-item.hidden {
+    display: none;
+}
+
+/* Toast notifications */
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #333;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.toast.show {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.toast.success {
+    background: #28a745;
+}
+
+.toast.error {
+    background: #dc3545;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .header-content {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .filter-pills {
+        flex-wrap: wrap;
+    }
+    
+    .action-bar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .action-buttons {
+        flex-wrap: wrap;
+    }
+}
+
+.clipboard-info {
+	display: flex;
+	font-size: 12px;
+	align-items: center;
+	gap: 8px;
+	position: absolute;
+	right: 0px;
+	flex-flow: column;
+	top: 5px;
+	background: aqua;
+}
