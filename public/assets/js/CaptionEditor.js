@@ -47,7 +47,7 @@ class CaptionEditorAI {
             this.ui.showMessage('success', 'Génération terminée avec succès!');
             this.ui.setButtonState('btnGenerate', true);
             this.ui.setButtonState('btnRegenerate', true);
-            this.ui.displayComplete(data);
+            this.ui.displayComplete(data.data);
         });
 
         // Erreur

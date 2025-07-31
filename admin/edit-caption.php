@@ -19,7 +19,7 @@ if (!$assetId || !$galleryId) {
 }
 
 // Configuration du serveur Flask
-$FLASK_API_URL = $config['immich']['FLASK_API_URL'];
+$FLASK_API_URL = $config['immich']['FLASK_API_URL'] ?? 'http://192.168.1.110:5001';
 
 // Récupérer les infos de l'image
 $stmt = $db->getPDO()->prepare("
@@ -77,11 +77,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
     <div class="container">
         <div class="header">
             <h1>Éditer la légende avec IA</h1>
+
+            <!-- Options de génération dans le header -->
+            <div class="generation-options">
+                <select id="language">
+                    <option value="français">Français</option>
+                    <option value="english">English</option>
+                    <option value="bilingual">Bilingue FR/EN</option>
+                </select>
+
+                <select id="style">
+                    <option value="creative">Créatif</option>
+                    <option value="descriptive">Descriptif</option>
+                    <option value="minimal">Minimaliste</option>
+                </select>
+            </div>
+
             <button onclick="window.close()" class="btn-close">✕ Fermer</button>
         </div>
 
         <div class="main-grid">
-            <!-- Colonne gauche : Image -->
+            <!-- Colonne gauche : Image + Légende finale -->
             <div class="panel image-panel">
                 <div class="image-container">
                     <img src="../public/image-proxy.php?id=<?= $assetId ?>&type=original"
@@ -99,16 +115,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                         <?php else: ?>
                             <p><strong>GPS:</strong> <em>Aucune donnée de localisation</em></p>
                         <?php endif; ?>
-
-                        <?php if (defined('DEBUG') || isset($_GET['debug'])): ?>
-                            <details>
-                                <summary>Debug EXIF</summary>
-                                <pre style="font-size: 11px; overflow: auto; max-height: 200px;">
-<?= htmlspecialchars(json_encode($assetInfo['exifInfo'] ?? [], JSON_PRETTY_PRINT)) ?>
-                                </pre>
-                            </details>
-                        <?php endif; ?>
                     <?php endif; ?>
+                </div>
+
+                <!-- Légende finale sous l'image -->
+                <div class="form-group" style="margin-top: 15px;">
+                    <label>Légende finale</label>
+                    <textarea id="finalCaption" rows="3" placeholder="Légende finale générée..."><?= htmlspecialchars($existingCaption) ?></textarea>
                 </div>
             </div>
 
@@ -122,32 +135,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="progress-text" id="progressText">Initialisation...</div>
                 </div>
 
-                <!-- Options de génération -->
-                <div class="generation-options">
-                    <div class="option-group">
-                        <label>Langue</label>
-                        <select id="language">
-                            <option value="français">Français</option>
-                            <option value="english">English</option>
-                            <option value="bilingual">Bilingue FR/EN</option>
-                        </select>
-                    </div>
-
-                    <div class="option-group">
-                        <label>Style</label>
-                        <select id="style">
-                            <option value="creative">Créatif - Poétique et évocateur</option>
-                            <option value="descriptive">Descriptif - Informatif et engageant</option>
-                            <option value="minimal">Minimaliste - Court et percutant</option>
-                        </select>
-                    </div>
-                </div>
-
                 <!-- Étapes de génération -->
                 <div class="generation-steps">
                     <div class="form-group">
                         <label>Description de l'image</label>
-                        <textarea id="imageDescription" rows="3" placeholder="Description générée par l'IA..."><?= htmlspecialchars($imageData['image_description'] ?? '') ?></textarea>
+                        <textarea id="imageDescription" rows="2" placeholder="Description générée par l'IA..."><?= htmlspecialchars($imageData['image_description'] ?? '') ?></textarea>
                     </div>
 
                     <div class="form-group">
@@ -157,12 +149,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
                     <div class="form-group">
                         <label>Enrichissement culturel</label>
-                        <textarea id="culturalEnrichment" rows="3" placeholder="Informations culturelles et historiques..."><?= htmlspecialchars($imageData['cultural_enrichment'] ?? '') ?></textarea>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Légende finale</label>
-                        <textarea id="finalCaption" rows="4" placeholder="Légende finale générée..."><?= htmlspecialchars($existingCaption) ?></textarea>
+                        <textarea id="culturalEnrichment" rows="2" placeholder="Informations culturelles et historiques..."><?= htmlspecialchars($imageData['cultural_enrichment'] ?? '') ?></textarea>
                     </div>
                 </div>
 
@@ -173,7 +160,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     </button>
 
                     <button id="btnRegenerate" class="btn btn-secondary" disabled>
-                        🔄 Régénérer la légende finale
+                        🔄 Régénérer
                     </button>
 
                     <form method="POST" style="display: inline;">
@@ -200,14 +187,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             latitude: <?= $latitude !== null ? $latitude : 'null' ?>,
             longitude: <?= $longitude !== null ? $longitude : 'null' ?>
         };
-
-        // Debug
-        console.log('Caption Editor Config:', window.captionEditorConfig);
-        console.log('Asset Info:', <?= json_encode($assetInfo ?? null) ?>);
     </script>
 
     <!-- Import du module principal -->
-    <script type="module" src="../public/assets/js/CaptionEditorAI.js"></script>
+    <script type="module" src="../public/assets/js/CaptionEditor.js"></script>
 </body>
 
 </html>
