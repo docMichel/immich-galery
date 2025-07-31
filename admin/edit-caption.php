@@ -122,6 +122,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="progress-text" id="progressText">Initialisation...</div>
                 </div>
 
+                <!-- Options de génération -->
+                <div class="generation-options">
+                    <div class="option-group">
+                        <label>Langue</label>
+                        <select id="language">
+                            <option value="français">Français</option>
+                            <option value="english">English</option>
+                            <option value="bilingual">Bilingue FR/EN</option>
+                        </select>
+                    </div>
+
+                    <div class="option-group">
+                        <label>Style</label>
+                        <select id="style">
+                            <option value="creative">Créatif - Poétique et évocateur</option>
+                            <option value="descriptive">Descriptif - Informatif et engageant</option>
+                            <option value="minimal">Minimaliste - Court et percutant</option>
+                        </select>
+                    </div>
+                </div>
+
                 <!-- Étapes de génération -->
                 <div class="generation-steps">
                     <div class="form-group">
@@ -142,27 +163,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                     <div class="form-group">
                         <label>Légende finale</label>
                         <textarea id="finalCaption" rows="4" placeholder="Légende finale générée..."><?= htmlspecialchars($existingCaption) ?></textarea>
-                    </div>
-                </div>
-
-                <!-- Options de génération -->
-                <div class="generation-options">
-                    <div class="option-group">
-                        <label>Langue</label>
-                        <select id="language">
-                            <option value="français">Français</option>
-                            <option value="english">English</option>
-                        </select>
-                    </div>
-
-                    <div class="option-group">
-                        <label>Style</label>
-                        <select id="style">
-                            <option value="descriptive">Descriptif</option>
-                            <option value="creative">Créatif</option>
-                            <option value="minimal">Minimaliste</option>
-                            <option value="technical">Technique</option>
-                        </select>
                     </div>
                 </div>
 
@@ -205,7 +205,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         console.log('Caption Editor Config:', window.captionEditorConfig);
         console.log('Asset Info:', <?= json_encode($assetInfo ?? null) ?>);
     </script>
-    <script src="../public/assets/js/caption-editor-ai.js"></script>
+
+    <!-- Import du module principal -->
+    <script type="module" src="../public/assets/js/CaptionEditorAI.js"></script>
 </body>
 
 </html>
