@@ -315,10 +315,32 @@ $imagesWithoutGPS = $totalImages - $imagesWithGPS;
 
     <!-- Toast notifications -->
     <div id="toast" class="toast"></div>
-
+    <!-- Modal de carte -->
+    <div id="mapModal" class="map-modal">
+        <div class="map-container">
+            <div class="map-header">
+                <h3>Sélectionner une position GPS</h3>
+                <button class="btn-close" onclick="closeMapModal()">✕</button>
+            </div>
+            <div id="map"></div>
+            <div class="map-footer">
+                <div class="map-coords">
+                    Cliquez sur la carte pour sélectionner une position
+                </div>
+                <div>
+                    <button class="btn btn-secondary" onclick="closeMapModal()">Annuler</button>
+                    <button id="btnConfirmLocation" class="btn btn-primary" disabled onclick="confirmMapLocation()">
+                        Valider cette position
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
     <!-- Hidden data -->
     <input type="hidden" id="galleryId" value="<?= $galleryId ?>">
 
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="../public//assets/js/modules/MapManager.js"></script>
     <script src="../public/assets/js/gps-manager.js"></script>
 </body>
 
