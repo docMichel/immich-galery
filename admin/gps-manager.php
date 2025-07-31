@@ -54,6 +54,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                 }
             }
 
+            echo json_encode([
+                'success' => true,
+                'updated' => $updated,
+                'message' => "GPS appliqué à $updated photos"
+            ]);
+            exit;
+
         case 'remove_gps':
             $assetIds = json_decode($_POST['asset_ids'], true);
 

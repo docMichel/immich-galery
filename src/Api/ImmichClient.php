@@ -121,6 +121,11 @@ class ImmichClient
     private function makeRequest($endpoint, $method = 'GET', $data = null)
     {
         $url = $this->apiUrl . $endpoint;
+        // DEBUG
+        error_log("Immich API Call: $method $url");
+        if ($data) {
+            error_log("Request data: " . json_encode($data));
+        }
 
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -144,6 +149,11 @@ class ImmichClient
 
         $response = curl_exec($ch);
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+        // DEBUG
+        error_log("Response code: $httpCode");
+        error_log("Response body: " . substr($response, 0, 500));
+
         $error = curl_error($ch);
         curl_close($ch);
 
@@ -197,8 +207,13 @@ class ImmichClient
             $data['latitude'] = 0;
             $data['longitude'] = 0;
         }
+        error_log("Immich updateAssetLocation: " . json_encode($data));
+        $result = $this->makeRequest('/api/assets', 'PUT', $data);
 
-        return $this->makeRequest('/api/assets', 'PUT', $data);
+        // DEBUG: Logger la réponse
+        error_log("Immich response: " . json_encode($result));
+
+        return $result;
     }
     /**
      * Rechercher des assets

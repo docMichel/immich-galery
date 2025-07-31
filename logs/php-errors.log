@@ -1,0 +1,1437 @@
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","deviceAssetId":"A7C035EF-4FBF-4904-B577-138ECB0F5121_4_5005_c.jpg-101432","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/cc/52/cc52a6e2-739
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/729995fe-2c4c-4fbb-a6b5-b0f112d68000
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"729995fe-2c4c-4fbb-a6b5-b0f112d68000","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_4_5005_c.jpg-102162","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/b5/3a/b53a8945-6ed
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/4bc6ec3e-39b5-4914-9083-914ca60357aa
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"4bc6ec3e-39b5-4914-9083-914ca60357aa","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_1_201_a.jpg-4399042","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/42/fd/42fd1eac-220
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/9a7475c0-a286-42bf-b02c-94246c5cf937
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"9a7475c0-a286-42bf-b02c-94246c5cf937","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_4_5005_c.jpg-101574","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0d/d0/0dd0743d-b7b
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/0f5c707b-2b5b-45c0-b881-e62f6eddc06d
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"0f5c707b-2b5b-45c0-b881-e62f6eddc06d","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_1_201_a.jpg-4559658","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/9c/bc/9cbc0ca1-d87
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bc616c8c-1a41-41fc-8be6-32f8f68d9b94
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"bc616c8c-1a41-41fc-8be6-32f8f68d9b94","deviceAssetId":"F33BE2EE-713E-4A8E-81E4-228BE6E1D268_4_5005_c.jpg-107891","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/de/39/de39127d-a31
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b","deviceAssetId":"81BD7EBF-315B-433A-8A14-9C9A859E1739_4_5005_c.jpg-104732","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/a5/86/a586c114-c11
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/7282bc67-4644-4d6a-8a65-3d453fe7a484
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"7282bc67-4644-4d6a-8a65-3d453fe7a484","deviceAssetId":"799FD0E8-68FF-4000-8AF9-C2574783B982_4_5005_c.jpg-105055","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0b/92/0b92103d-df3
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/02f7a0e5-bec5-4c1d-927a-5c1a44f9103a
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"02f7a0e5-bec5-4c1d-927a-5c1a44f9103a","deviceAssetId":"66F827FE-B611-41A9-8DAC-44BCE99CDB09_4_5005_c.jpg-105150","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/7e/b3/7eb3666a-8e6
+[31-Jul-2025 05:23:51 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2c55563e-6e18-4f8d-9c43-bc9ac816cc69
+[31-Jul-2025 05:23:51 UTC] Response code: 200
+[31-Jul-2025 05:23:51 UTC] Response body: {"id":"2c55563e-6e18-4f8d-9c43-bc9ac816cc69","deviceAssetId":"84788B6D-8F46-4241-83A7-844ECD3BA8A1_4_5005_c.jpg-105035","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/62/83/628312f0-7a3
+[31-Jul-2025 05:24:14 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","deviceAssetId":"A7C035EF-4FBF-4904-B577-138ECB0F5121_4_5005_c.jpg-101432","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/cc/52/cc52a6e2-739
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/729995fe-2c4c-4fbb-a6b5-b0f112d68000
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"729995fe-2c4c-4fbb-a6b5-b0f112d68000","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_4_5005_c.jpg-102162","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/b5/3a/b53a8945-6ed
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/4bc6ec3e-39b5-4914-9083-914ca60357aa
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"4bc6ec3e-39b5-4914-9083-914ca60357aa","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_1_201_a.jpg-4399042","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/42/fd/42fd1eac-220
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/9a7475c0-a286-42bf-b02c-94246c5cf937
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"9a7475c0-a286-42bf-b02c-94246c5cf937","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_4_5005_c.jpg-101574","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0d/d0/0dd0743d-b7b
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/0f5c707b-2b5b-45c0-b881-e62f6eddc06d
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"0f5c707b-2b5b-45c0-b881-e62f6eddc06d","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_1_201_a.jpg-4559658","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/9c/bc/9cbc0ca1-d87
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bc616c8c-1a41-41fc-8be6-32f8f68d9b94
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"bc616c8c-1a41-41fc-8be6-32f8f68d9b94","deviceAssetId":"F33BE2EE-713E-4A8E-81E4-228BE6E1D268_4_5005_c.jpg-107891","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/de/39/de39127d-a31
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b","deviceAssetId":"81BD7EBF-315B-433A-8A14-9C9A859E1739_4_5005_c.jpg-104732","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/a5/86/a586c114-c11
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/7282bc67-4644-4d6a-8a65-3d453fe7a484
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"7282bc67-4644-4d6a-8a65-3d453fe7a484","deviceAssetId":"799FD0E8-68FF-4000-8AF9-C2574783B982_4_5005_c.jpg-105055","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0b/92/0b92103d-df3
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/02f7a0e5-bec5-4c1d-927a-5c1a44f9103a
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"02f7a0e5-bec5-4c1d-927a-5c1a44f9103a","deviceAssetId":"66F827FE-B611-41A9-8DAC-44BCE99CDB09_4_5005_c.jpg-105150","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/7e/b3/7eb3666a-8e6
+[31-Jul-2025 05:24:15 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2c55563e-6e18-4f8d-9c43-bc9ac816cc69
+[31-Jul-2025 05:24:15 UTC] Response code: 200
+[31-Jul-2025 05:24:15 UTC] Response body: {"id":"2c55563e-6e18-4f8d-9c43-bc9ac816cc69","deviceAssetId":"84788B6D-8F46-4241-83A7-844ECD3BA8A1_4_5005_c.jpg-105035","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/62/83/628312f0-7a3
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["d1937909-e4fe-4c99-bb2c-dfcf3a308f77"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["d1937909-e4fe-4c99-bb2c-dfcf3a308f77"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["a230a6dd-4af0-42aa-b7e5-4da3531236e4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["a230a6dd-4af0-42aa-b7e5-4da3531236e4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["7b0b7dc9-11e1-4651-a5db-93dd2a1c6c82"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["7b0b7dc9-11e1-4651-a5db-93dd2a1c6c82"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["2024d578-aa9f-4535-a150-a136c8b51ed8"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["2024d578-aa9f-4535-a150-a136c8b51ed8"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["3735b5ad-d802-4f20-ab6a-8da204b55bbc"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["3735b5ad-d802-4f20-ab6a-8da204b55bbc"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["599fd5c3-046d-4752-9824-5239c6f3faed"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["599fd5c3-046d-4752-9824-5239c6f3faed"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:24:57 UTC] Immich updateAssetLocation: {"ids":["2a723f74-bfe8-40de-812a-549ab36ec0c4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:24:57 UTC] Request data: {"ids":["2a723f74-bfe8-40de-812a-549ab36ec0c4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:24:57 UTC] Response code: 204
+[31-Jul-2025 05:24:57 UTC] Response body: 
+[31-Jul-2025 05:24:57 UTC] Immich response: true
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","deviceAssetId":"A7C035EF-4FBF-4904-B577-138ECB0F5121_4_5005_c.jpg-101432","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/cc/52/cc52a6e2-739
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/729995fe-2c4c-4fbb-a6b5-b0f112d68000
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"729995fe-2c4c-4fbb-a6b5-b0f112d68000","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_4_5005_c.jpg-102162","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/b5/3a/b53a8945-6ed
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/4bc6ec3e-39b5-4914-9083-914ca60357aa
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"4bc6ec3e-39b5-4914-9083-914ca60357aa","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_1_201_a.jpg-4399042","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/42/fd/42fd1eac-220
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/9a7475c0-a286-42bf-b02c-94246c5cf937
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"9a7475c0-a286-42bf-b02c-94246c5cf937","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_4_5005_c.jpg-101574","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0d/d0/0dd0743d-b7b
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/0f5c707b-2b5b-45c0-b881-e62f6eddc06d
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"0f5c707b-2b5b-45c0-b881-e62f6eddc06d","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_1_201_a.jpg-4559658","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/9c/bc/9cbc0ca1-d87
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bc616c8c-1a41-41fc-8be6-32f8f68d9b94
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"bc616c8c-1a41-41fc-8be6-32f8f68d9b94","deviceAssetId":"F33BE2EE-713E-4A8E-81E4-228BE6E1D268_4_5005_c.jpg-107891","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/de/39/de39127d-a31
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b","deviceAssetId":"81BD7EBF-315B-433A-8A14-9C9A859E1739_4_5005_c.jpg-104732","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/a5/86/a586c114-c11
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/7282bc67-4644-4d6a-8a65-3d453fe7a484
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"7282bc67-4644-4d6a-8a65-3d453fe7a484","deviceAssetId":"799FD0E8-68FF-4000-8AF9-C2574783B982_4_5005_c.jpg-105055","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0b/92/0b92103d-df3
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/02f7a0e5-bec5-4c1d-927a-5c1a44f9103a
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"02f7a0e5-bec5-4c1d-927a-5c1a44f9103a","deviceAssetId":"66F827FE-B611-41A9-8DAC-44BCE99CDB09_4_5005_c.jpg-105150","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/7e/b3/7eb3666a-8e6
+[31-Jul-2025 05:25:32 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2c55563e-6e18-4f8d-9c43-bc9ac816cc69
+[31-Jul-2025 05:25:32 UTC] Response code: 200
+[31-Jul-2025 05:25:32 UTC] Response body: {"id":"2c55563e-6e18-4f8d-9c43-bc9ac816cc69","deviceAssetId":"84788B6D-8F46-4241-83A7-844ECD3BA8A1_4_5005_c.jpg-105035","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/62/83/628312f0-7a3
+[31-Jul-2025 05:27:06 UTC] Immich API Call: GET http://192.168.1.110:3001/api/albums/b09a2fde-ea3c-44dd-b2bf-46af958d189c
+[31-Jul-2025 05:27:07 UTC] Response code: 200
+[31-Jul-2025 05:27:07 UTC] Response body: {"albumName":"kecak","description":"","albumThumbnailAssetId":"ca9a39c5-76c1-473f-acd5-5bed9078d891","createdAt":"2025-07-24T19:55:48.905Z","updatedAt":"2025-07-26T03:20:16.091Z","id":"b09a2fde-ea3c-44dd-b2bf-46af958d189c","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"albumUsers":[],"shared":false,
+[31-Jul-2025 05:27:07 UTC] Immich API Call: GET http://192.168.1.110:3001/api/albums/07329960-7dd0-4ace-b58b-93bbc510328d
+[31-Jul-2025 05:27:08 UTC] Response code: 200
+[31-Jul-2025 05:27:08 UTC] Response body: {"albumName":"Thiebagi","description":"","albumThumbnailAssetId":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","createdAt":"2025-07-27T06:08:18.302Z","updatedAt":"2025-07-29T07:09:01.270Z","id":"07329960-7dd0-4ace-b58b-93bbc510328d","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"albumUsers":[],"shared":tru
+[31-Jul-2025 05:27:11 UTC] Immich API Call: GET http://192.168.1.110:3001/api/albums/07329960-7dd0-4ace-b58b-93bbc510328d
+[31-Jul-2025 05:27:13 UTC] Response code: 200
+[31-Jul-2025 05:27:13 UTC] Response body: {"albumName":"Thiebagi","description":"","albumThumbnailAssetId":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","createdAt":"2025-07-27T06:08:18.302Z","updatedAt":"2025-07-29T07:09:01.270Z","id":"07329960-7dd0-4ace-b58b-93bbc510328d","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"albumUsers":[],"shared":tru
+[31-Jul-2025 05:27:26 UTC] Immich API Call: GET http://192.168.1.110:3001/api/albums/b09a2fde-ea3c-44dd-b2bf-46af958d189c
+[31-Jul-2025 05:27:26 UTC] Response code: 200
+[31-Jul-2025 05:27:26 UTC] Response body: {"albumName":"kecak","description":"","albumThumbnailAssetId":"ca9a39c5-76c1-473f-acd5-5bed9078d891","createdAt":"2025-07-24T19:55:48.905Z","updatedAt":"2025-07-26T03:20:16.091Z","id":"b09a2fde-ea3c-44dd-b2bf-46af958d189c","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"albumUsers":[],"shared":false,
+[31-Jul-2025 05:27:26 UTC] Immich API Call: GET http://192.168.1.110:3001/api/albums/07329960-7dd0-4ace-b58b-93bbc510328d
+[31-Jul-2025 05:27:27 UTC] Response code: 200
+[31-Jul-2025 05:27:27 UTC] Response body: {"albumName":"Thiebagi","description":"","albumThumbnailAssetId":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","createdAt":"2025-07-27T06:08:18.302Z","updatedAt":"2025-07-29T07:09:01.270Z","id":"07329960-7dd0-4ace-b58b-93bbc510328d","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"albumUsers":[],"shared":tru
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"2f5f3d3f-936e-474c-b31b-4e9cb3f34f4c","deviceAssetId":"A7C035EF-4FBF-4904-B577-138ECB0F5121_4_5005_c.jpg-101432","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/cc/52/cc52a6e2-739
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/729995fe-2c4c-4fbb-a6b5-b0f112d68000
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"729995fe-2c4c-4fbb-a6b5-b0f112d68000","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_4_5005_c.jpg-102162","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/b5/3a/b53a8945-6ed
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/4bc6ec3e-39b5-4914-9083-914ca60357aa
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"4bc6ec3e-39b5-4914-9083-914ca60357aa","deviceAssetId":"CDE8F0C4-EE1E-4AEE-8231-7E05074DA739_1_201_a.jpg-4399042","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/42/fd/42fd1eac-220
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/9a7475c0-a286-42bf-b02c-94246c5cf937
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"9a7475c0-a286-42bf-b02c-94246c5cf937","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_4_5005_c.jpg-101574","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0d/d0/0dd0743d-b7b
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/0f5c707b-2b5b-45c0-b881-e62f6eddc06d
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"0f5c707b-2b5b-45c0-b881-e62f6eddc06d","deviceAssetId":"BEC365A9-8FDD-47F7-BDA2-561EDD32CBC4_1_201_a.jpg-4559658","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/9c/bc/9cbc0ca1-d87
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bc616c8c-1a41-41fc-8be6-32f8f68d9b94
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"bc616c8c-1a41-41fc-8be6-32f8f68d9b94","deviceAssetId":"F33BE2EE-713E-4A8E-81E4-228BE6E1D268_4_5005_c.jpg-107891","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/de/39/de39127d-a31
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"bedc2fb6-729d-4a03-8db4-3a56fcb2ae5b","deviceAssetId":"81BD7EBF-315B-433A-8A14-9C9A859E1739_4_5005_c.jpg-104732","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/a5/86/a586c114-c11
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/7282bc67-4644-4d6a-8a65-3d453fe7a484
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"7282bc67-4644-4d6a-8a65-3d453fe7a484","deviceAssetId":"799FD0E8-68FF-4000-8AF9-C2574783B982_4_5005_c.jpg-105055","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/0b/92/0b92103d-df3
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/02f7a0e5-bec5-4c1d-927a-5c1a44f9103a
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"02f7a0e5-bec5-4c1d-927a-5c1a44f9103a","deviceAssetId":"66F827FE-B611-41A9-8DAC-44BCE99CDB09_4_5005_c.jpg-105150","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/7e/b3/7eb3666a-8e6
+[31-Jul-2025 05:27:29 UTC] Immich API Call: GET http://192.168.1.110:3001/api/assets/2c55563e-6e18-4f8d-9c43-bc9ac816cc69
+[31-Jul-2025 05:27:29 UTC] Response code: 200
+[31-Jul-2025 05:27:29 UTC] Response body: {"id":"2c55563e-6e18-4f8d-9c43-bc9ac816cc69","deviceAssetId":"84788B6D-8F46-4241-83A7-844ECD3BA8A1_4_5005_c.jpg-105035","ownerId":"446689f7-3799-4b33-a67a-4971f19961df","owner":{"id":"446689f7-3799-4b33-a67a-4971f19961df","email":"docgemini@gmail.com","name":"Michel","profileImagePath":"","avatarColor":"blue","profileChangedAt":"2025-07-23T07:48:23.029991+00:00"},"deviceId":"CLI","libraryId":null,"type":"IMAGE","originalPath":"upload/upload/446689f7-3799-4b33-a67a-4971f19961df/62/83/628312f0-7a3
+[31-Jul-2025 05:35:10 UTC] Immich updateAssetLocation: {"ids":["1b30839e-910f-4857-9846-5ed2490e8f02"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:10 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:10 UTC] Request data: {"ids":["1b30839e-910f-4857-9846-5ed2490e8f02"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:10 UTC] Response code: 204
+[31-Jul-2025 05:35:10 UTC] Response body: 
+[31-Jul-2025 05:35:10 UTC] Immich response: true
+[31-Jul-2025 05:35:11 UTC] Immich updateAssetLocation: {"ids":["f7aef515-e6b7-4d1a-bc89-e9e828e3b55e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:11 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:11 UTC] Request data: {"ids":["f7aef515-e6b7-4d1a-bc89-e9e828e3b55e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:11 UTC] Response code: 204
+[31-Jul-2025 05:35:11 UTC] Response body: 
+[31-Jul-2025 05:35:11 UTC] Immich response: true
+[31-Jul-2025 05:35:11 UTC] Immich updateAssetLocation: {"ids":["c6e43836-b2b0-46a4-bd71-0e843466e16d"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:11 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:11 UTC] Request data: {"ids":["c6e43836-b2b0-46a4-bd71-0e843466e16d"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:11 UTC] Response code: 204
+[31-Jul-2025 05:35:11 UTC] Response body: 
+[31-Jul-2025 05:35:11 UTC] Immich response: true
+[31-Jul-2025 05:35:11 UTC] Immich updateAssetLocation: {"ids":["ae0a1d3b-7080-4a87-b956-aaf0cbd4f475"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:11 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:11 UTC] Request data: {"ids":["ae0a1d3b-7080-4a87-b956-aaf0cbd4f475"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:11 UTC] Response code: 204
+[31-Jul-2025 05:35:11 UTC] Response body: 
+[31-Jul-2025 05:35:11 UTC] Immich response: true
+[31-Jul-2025 05:35:11 UTC] Immich updateAssetLocation: {"ids":["dbc08ba7-56ba-4d2b-9ea7-fa476cbadb58"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:11 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:11 UTC] Request data: {"ids":["dbc08ba7-56ba-4d2b-9ea7-fa476cbadb58"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:11 UTC] Response code: 204
+[31-Jul-2025 05:35:11 UTC] Response body: 
+[31-Jul-2025 05:35:11 UTC] Immich response: true
+[31-Jul-2025 05:35:11 UTC] Immich updateAssetLocation: {"ids":["78679769-ec66-4b8f-8506-1239209c5e6e"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:11 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:11 UTC] Request data: {"ids":["78679769-ec66-4b8f-8506-1239209c5e6e"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:11 UTC] Response code: 204
+[31-Jul-2025 05:35:11 UTC] Response body: 
+[31-Jul-2025 05:35:11 UTC] Immich response: true
+[31-Jul-2025 05:35:12 UTC] Immich updateAssetLocation: {"ids":["d7972a50-2031-4cbc-aeef-d54d0d5fdd93"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:12 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:12 UTC] Request data: {"ids":["d7972a50-2031-4cbc-aeef-d54d0d5fdd93"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:12 UTC] Response code: 204
+[31-Jul-2025 05:35:12 UTC] Response body: 
+[31-Jul-2025 05:35:12 UTC] Immich response: true
+[31-Jul-2025 05:35:12 UTC] Immich updateAssetLocation: {"ids":["549cccbd-c880-4e80-bbb5-49477bea1cf5"],"latitude":-20.14284167,"longitude":164.05480556}
+[31-Jul-2025 05:35:12 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:12 UTC] Request data: {"ids":["549cccbd-c880-4e80-bbb5-49477bea1cf5"],"latitude":-20.14284167,"longitude":164.05480556}
+[31-Jul-2025 05:35:12 UTC] Response code: 204
+[31-Jul-2025 05:35:12 UTC] Response body: 
+[31-Jul-2025 05:35:12 UTC] Immich response: true
+[31-Jul-2025 05:35:12 UTC] Immich updateAssetLocation: {"ids":["77657ca9-ac05-49c2-8a07-de11c33ede77"],"latitude":-20.14266944,"longitude":164.05504167}
+[31-Jul-2025 05:35:12 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:12 UTC] Request data: {"ids":["77657ca9-ac05-49c2-8a07-de11c33ede77"],"latitude":-20.14266944,"longitude":164.05504167}
+[31-Jul-2025 05:35:12 UTC] Response code: 204
+[31-Jul-2025 05:35:12 UTC] Response body: 
+[31-Jul-2025 05:35:12 UTC] Immich response: true
+[31-Jul-2025 05:35:13 UTC] Immich updateAssetLocation: {"ids":["4cb4b4e6-81cc-4cde-9c96-76ac714ed8f6"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:13 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:13 UTC] Request data: {"ids":["4cb4b4e6-81cc-4cde-9c96-76ac714ed8f6"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:13 UTC] Response code: 204
+[31-Jul-2025 05:35:13 UTC] Response body: 
+[31-Jul-2025 05:35:13 UTC] Immich response: true
+[31-Jul-2025 05:35:13 UTC] Immich updateAssetLocation: {"ids":["ab1afb4e-1d3a-498f-889f-3d3f10484df4"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:13 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:13 UTC] Request data: {"ids":["ab1afb4e-1d3a-498f-889f-3d3f10484df4"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:13 UTC] Response code: 204
+[31-Jul-2025 05:35:13 UTC] Response body: 
+[31-Jul-2025 05:35:13 UTC] Immich response: true
+[31-Jul-2025 05:35:13 UTC] Immich updateAssetLocation: {"ids":["a621b5b6-2dfb-4fc1-9e7a-32186f07cf00"],"latitude":-20.14300667,"longitude":164.05482667}
+[31-Jul-2025 05:35:13 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:13 UTC] Request data: {"ids":["a621b5b6-2dfb-4fc1-9e7a-32186f07cf00"],"latitude":-20.14300667,"longitude":164.05482667}
+[31-Jul-2025 05:35:14 UTC] Response code: 204
+[31-Jul-2025 05:35:14 UTC] Response body: 
+[31-Jul-2025 05:35:14 UTC] Immich response: true
+[31-Jul-2025 05:35:14 UTC] Immich updateAssetLocation: {"ids":["9b0c8bac-7d51-418b-8059-6124e465c19b"],"latitude":-20.14300556,"longitude":164.05482778}
+[31-Jul-2025 05:35:14 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:14 UTC] Request data: {"ids":["9b0c8bac-7d51-418b-8059-6124e465c19b"],"latitude":-20.14300556,"longitude":164.05482778}
+[31-Jul-2025 05:35:14 UTC] Response code: 204
+[31-Jul-2025 05:35:14 UTC] Response body: 
+[31-Jul-2025 05:35:14 UTC] Immich response: true
+[31-Jul-2025 05:35:14 UTC] Immich updateAssetLocation: {"ids":["04c4f236-0265-4883-9b19-f8947c5f6e22"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:14 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:14 UTC] Request data: {"ids":["04c4f236-0265-4883-9b19-f8947c5f6e22"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:14 UTC] Response code: 204
+[31-Jul-2025 05:35:14 UTC] Response body: 
+[31-Jul-2025 05:35:14 UTC] Immich response: true
+[31-Jul-2025 05:35:15 UTC] Immich updateAssetLocation: {"ids":["042a2c9b-1ee2-4744-ba2b-ade032909b3a"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:15 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:15 UTC] Request data: {"ids":["042a2c9b-1ee2-4744-ba2b-ade032909b3a"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:15 UTC] Response code: 204
+[31-Jul-2025 05:35:15 UTC] Response body: 
+[31-Jul-2025 05:35:15 UTC] Immich response: true
+[31-Jul-2025 05:35:15 UTC] Immich updateAssetLocation: {"ids":["7a0b248d-2efb-4f52-a3d8-28cde62ebd70"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:15 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:15 UTC] Request data: {"ids":["7a0b248d-2efb-4f52-a3d8-28cde62ebd70"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:15 UTC] Response code: 204
+[31-Jul-2025 05:35:15 UTC] Response body: 
+[31-Jul-2025 05:35:15 UTC] Immich response: true
+[31-Jul-2025 05:35:15 UTC] Immich updateAssetLocation: {"ids":["d01e2353-4315-45c1-950a-1fed11260e28"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:15 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:15 UTC] Request data: {"ids":["d01e2353-4315-45c1-950a-1fed11260e28"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:16 UTC] Response code: 204
+[31-Jul-2025 05:35:16 UTC] Response body: 
+[31-Jul-2025 05:35:16 UTC] Immich response: true
+[31-Jul-2025 05:35:16 UTC] Immich updateAssetLocation: {"ids":["93468750-b7ac-4dbf-ad51-4659af452d8b"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:16 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:16 UTC] Request data: {"ids":["93468750-b7ac-4dbf-ad51-4659af452d8b"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:16 UTC] Response code: 204
+[31-Jul-2025 05:35:16 UTC] Response body: 
+[31-Jul-2025 05:35:16 UTC] Immich response: true
+[31-Jul-2025 05:35:16 UTC] Immich updateAssetLocation: {"ids":["9ab4e664-fbcf-4188-94a5-34be922016d9"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:16 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:16 UTC] Request data: {"ids":["9ab4e664-fbcf-4188-94a5-34be922016d9"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:16 UTC] Response code: 204
+[31-Jul-2025 05:35:16 UTC] Response body: 
+[31-Jul-2025 05:35:16 UTC] Immich response: true
+[31-Jul-2025 05:35:17 UTC] Immich updateAssetLocation: {"ids":["6050558a-0ffb-4b19-9432-65666b0763f1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:17 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:17 UTC] Request data: {"ids":["6050558a-0ffb-4b19-9432-65666b0763f1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:17 UTC] Response code: 204
+[31-Jul-2025 05:35:17 UTC] Response body: 
+[31-Jul-2025 05:35:17 UTC] Immich response: true
+[31-Jul-2025 05:35:17 UTC] Immich updateAssetLocation: {"ids":["438048bf-540b-40cf-ab00-fb75b653d7dc"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:17 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:17 UTC] Request data: {"ids":["438048bf-540b-40cf-ab00-fb75b653d7dc"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:17 UTC] Response code: 204
+[31-Jul-2025 05:35:17 UTC] Response body: 
+[31-Jul-2025 05:35:17 UTC] Immich response: true
+[31-Jul-2025 05:35:18 UTC] Immich updateAssetLocation: {"ids":["9ca25919-89ad-4859-85b0-f17259d61de1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:18 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:18 UTC] Request data: {"ids":["9ca25919-89ad-4859-85b0-f17259d61de1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:18 UTC] Response code: 204
+[31-Jul-2025 05:35:18 UTC] Response body: 
+[31-Jul-2025 05:35:18 UTC] Immich response: true
+[31-Jul-2025 05:35:18 UTC] Immich updateAssetLocation: {"ids":["df03885d-6942-4a3c-85b0-3048377c0643"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:18 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:18 UTC] Request data: {"ids":["df03885d-6942-4a3c-85b0-3048377c0643"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:18 UTC] Response code: 204
+[31-Jul-2025 05:35:18 UTC] Response body: 
+[31-Jul-2025 05:35:18 UTC] Immich response: true
+[31-Jul-2025 05:35:19 UTC] Immich updateAssetLocation: {"ids":["ce2b7ad1-b181-4718-8e49-0e1731b01244"],"latitude":-20.14297,"longitude":164.05476833}
+[31-Jul-2025 05:35:19 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:19 UTC] Request data: {"ids":["ce2b7ad1-b181-4718-8e49-0e1731b01244"],"latitude":-20.14297,"longitude":164.05476833}
+[31-Jul-2025 05:35:19 UTC] Response code: 204
+[31-Jul-2025 05:35:19 UTC] Response body: 
+[31-Jul-2025 05:35:19 UTC] Immich response: true
+[31-Jul-2025 05:35:19 UTC] Immich updateAssetLocation: {"ids":["b791c799-9e00-44c8-8c3d-ac03974f3083"],"latitude":-20.14297167,"longitude":164.05475}
+[31-Jul-2025 05:35:19 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:19 UTC] Request data: {"ids":["b791c799-9e00-44c8-8c3d-ac03974f3083"],"latitude":-20.14297167,"longitude":164.05475}
+[31-Jul-2025 05:35:20 UTC] Response code: 204
+[31-Jul-2025 05:35:20 UTC] Response body: 
+[31-Jul-2025 05:35:20 UTC] Immich response: true
+[31-Jul-2025 05:35:20 UTC] Immich updateAssetLocation: {"ids":["be8f457d-0971-4e8e-9aeb-7b682d0a49ec"],"latitude":-20.14306167,"longitude":164.05447167}
+[31-Jul-2025 05:35:20 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:20 UTC] Request data: {"ids":["be8f457d-0971-4e8e-9aeb-7b682d0a49ec"],"latitude":-20.14306167,"longitude":164.05447167}
+[31-Jul-2025 05:35:20 UTC] Response code: 204
+[31-Jul-2025 05:35:20 UTC] Response body: 
+[31-Jul-2025 05:35:20 UTC] Immich response: true
+[31-Jul-2025 05:35:20 UTC] Immich updateAssetLocation: {"ids":["f9468c79-21d9-4067-badd-ae6dc4d67ef4"],"latitude":-20.45231389,"longitude":164.21355}
+[31-Jul-2025 05:35:20 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:20 UTC] Request data: {"ids":["f9468c79-21d9-4067-badd-ae6dc4d67ef4"],"latitude":-20.45231389,"longitude":164.21355}
+[31-Jul-2025 05:35:21 UTC] Response code: 204
+[31-Jul-2025 05:35:21 UTC] Response body: 
+[31-Jul-2025 05:35:21 UTC] Immich response: true
+[31-Jul-2025 05:35:21 UTC] Immich updateAssetLocation: {"ids":["8ac49ae2-6e73-4df9-a7ce-03b4b4bdf9d0"],"latitude":-20.45231333,"longitude":164.21355}
+[31-Jul-2025 05:35:21 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:21 UTC] Request data: {"ids":["8ac49ae2-6e73-4df9-a7ce-03b4b4bdf9d0"],"latitude":-20.45231333,"longitude":164.21355}
+[31-Jul-2025 05:35:21 UTC] Response code: 204
+[31-Jul-2025 05:35:21 UTC] Response body: 
+[31-Jul-2025 05:35:21 UTC] Immich response: true
+[31-Jul-2025 05:35:21 UTC] Immich updateAssetLocation: {"ids":["41c426f4-187b-4c58-b184-0302d7e0a0c0"],"latitude":-20.452275,"longitude":164.21364333}
+[31-Jul-2025 05:35:21 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:21 UTC] Request data: {"ids":["41c426f4-187b-4c58-b184-0302d7e0a0c0"],"latitude":-20.452275,"longitude":164.21364333}
+[31-Jul-2025 05:35:21 UTC] Response code: 204
+[31-Jul-2025 05:35:21 UTC] Response body: 
+[31-Jul-2025 05:35:21 UTC] Immich response: true
+[31-Jul-2025 05:35:22 UTC] Immich updateAssetLocation: {"ids":["f7b9a735-7097-4a91-9e39-a4293f95843d"],"latitude":-20.452275,"longitude":164.21364444}
+[31-Jul-2025 05:35:22 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:22 UTC] Request data: {"ids":["f7b9a735-7097-4a91-9e39-a4293f95843d"],"latitude":-20.452275,"longitude":164.21364444}
+[31-Jul-2025 05:35:22 UTC] Response code: 204
+[31-Jul-2025 05:35:22 UTC] Response body: 
+[31-Jul-2025 05:35:22 UTC] Immich response: true
+[31-Jul-2025 05:35:22 UTC] Immich updateAssetLocation: {"ids":["da577c6e-a53c-4dd3-a6c7-6e223fa029e8"],"latitude":-20.45227333,"longitude":164.21368333}
+[31-Jul-2025 05:35:22 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:22 UTC] Request data: {"ids":["da577c6e-a53c-4dd3-a6c7-6e223fa029e8"],"latitude":-20.45227333,"longitude":164.21368333}
+[31-Jul-2025 05:35:22 UTC] Response code: 204
+[31-Jul-2025 05:35:22 UTC] Response body: 
+[31-Jul-2025 05:35:22 UTC] Immich response: true
+[31-Jul-2025 05:35:22 UTC] Immich updateAssetLocation: {"ids":["4cab77d8-ea24-4552-af7b-5c5f528fe0c9"],"latitude":-20.45226667,"longitude":164.21370556}
+[31-Jul-2025 05:35:22 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:22 UTC] Request data: {"ids":["4cab77d8-ea24-4552-af7b-5c5f528fe0c9"],"latitude":-20.45226667,"longitude":164.21370556}
+[31-Jul-2025 05:35:22 UTC] Response code: 204
+[31-Jul-2025 05:35:22 UTC] Response body: 
+[31-Jul-2025 05:35:22 UTC] Immich response: true
+[31-Jul-2025 05:35:22 UTC] Immich updateAssetLocation: {"ids":["053b80ec-916e-4869-b0ec-4a139966e17a"],"latitude":-20.45226667,"longitude":164.21370667}
+[31-Jul-2025 05:35:22 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:22 UTC] Request data: {"ids":["053b80ec-916e-4869-b0ec-4a139966e17a"],"latitude":-20.45226667,"longitude":164.21370667}
+[31-Jul-2025 05:35:22 UTC] Response code: 204
+[31-Jul-2025 05:35:22 UTC] Response body: 
+[31-Jul-2025 05:35:22 UTC] Immich response: true
+[31-Jul-2025 05:35:22 UTC] Immich updateAssetLocation: {"ids":["63f5c1bf-d01c-4615-a98e-ed1312801c35"],"latitude":-20.45224667,"longitude":164.21357167}
+[31-Jul-2025 05:35:22 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:22 UTC] Request data: {"ids":["63f5c1bf-d01c-4615-a98e-ed1312801c35"],"latitude":-20.45224667,"longitude":164.21357167}
+[31-Jul-2025 05:35:22 UTC] Response code: 204
+[31-Jul-2025 05:35:22 UTC] Response body: 
+[31-Jul-2025 05:35:22 UTC] Immich response: true
+[31-Jul-2025 05:35:23 UTC] Immich updateAssetLocation: {"ids":["55610c45-d45a-4fcc-8fe2-c1b08daf8588"],"latitude":-20.45224722,"longitude":164.21357222}
+[31-Jul-2025 05:35:23 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:23 UTC] Request data: {"ids":["55610c45-d45a-4fcc-8fe2-c1b08daf8588"],"latitude":-20.45224722,"longitude":164.21357222}
+[31-Jul-2025 05:35:23 UTC] Response code: 204
+[31-Jul-2025 05:35:23 UTC] Response body: 
+[31-Jul-2025 05:35:23 UTC] Immich response: true
+[31-Jul-2025 05:35:23 UTC] Immich updateAssetLocation: {"ids":["38f5cbed-c131-49cd-b17e-51e07c5ec028"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:23 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:23 UTC] Request data: {"ids":["38f5cbed-c131-49cd-b17e-51e07c5ec028"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:23 UTC] Response code: 204
+[31-Jul-2025 05:35:23 UTC] Response body: 
+[31-Jul-2025 05:35:23 UTC] Immich response: true
+[31-Jul-2025 05:35:23 UTC] Immich updateAssetLocation: {"ids":["86e763df-37bc-4f1e-ad41-f9100fdd0a2e"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:23 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:23 UTC] Request data: {"ids":["86e763df-37bc-4f1e-ad41-f9100fdd0a2e"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:23 UTC] Response code: 204
+[31-Jul-2025 05:35:23 UTC] Response body: 
+[31-Jul-2025 05:35:23 UTC] Immich response: true
+[31-Jul-2025 05:35:23 UTC] Immich updateAssetLocation: {"ids":["42bc8445-cc68-41fa-8dfe-f93aaf07410a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:23 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:23 UTC] Request data: {"ids":["42bc8445-cc68-41fa-8dfe-f93aaf07410a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:23 UTC] Response code: 204
+[31-Jul-2025 05:35:23 UTC] Response body: 
+[31-Jul-2025 05:35:23 UTC] Immich response: true
+[31-Jul-2025 05:35:23 UTC] Immich updateAssetLocation: {"ids":["8b38250a-eb2d-4ac7-8e09-48b1d915b34a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:23 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:23 UTC] Request data: {"ids":["8b38250a-eb2d-4ac7-8e09-48b1d915b34a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:23 UTC] Response code: 204
+[31-Jul-2025 05:35:23 UTC] Response body: 
+[31-Jul-2025 05:35:23 UTC] Immich response: true
+[31-Jul-2025 05:35:24 UTC] Immich updateAssetLocation: {"ids":["3d963e02-fe30-4542-8d58-1f3d31b2aa78"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:24 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:24 UTC] Request data: {"ids":["3d963e02-fe30-4542-8d58-1f3d31b2aa78"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:24 UTC] Response code: 204
+[31-Jul-2025 05:35:24 UTC] Response body: 
+[31-Jul-2025 05:35:24 UTC] Immich response: true
+[31-Jul-2025 05:35:24 UTC] Immich updateAssetLocation: {"ids":["d47f8414-5cab-4d43-b754-e9243a2e7998"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:24 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:24 UTC] Request data: {"ids":["d47f8414-5cab-4d43-b754-e9243a2e7998"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:24 UTC] Response code: 204
+[31-Jul-2025 05:35:24 UTC] Response body: 
+[31-Jul-2025 05:35:24 UTC] Immich response: true
+[31-Jul-2025 05:35:24 UTC] Immich updateAssetLocation: {"ids":["9cc23754-4bd2-4f82-886d-67ef6f0a1c80"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:24 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:24 UTC] Request data: {"ids":["9cc23754-4bd2-4f82-886d-67ef6f0a1c80"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:24 UTC] Response code: 204
+[31-Jul-2025 05:35:24 UTC] Response body: 
+[31-Jul-2025 05:35:24 UTC] Immich response: true
+[31-Jul-2025 05:35:24 UTC] Immich updateAssetLocation: {"ids":["d0258443-1ac7-412c-8e58-71fa492c7132"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:24 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:24 UTC] Request data: {"ids":["d0258443-1ac7-412c-8e58-71fa492c7132"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:24 UTC] Response code: 204
+[31-Jul-2025 05:35:24 UTC] Response body: 
+[31-Jul-2025 05:35:24 UTC] Immich response: true
+[31-Jul-2025 05:35:24 UTC] Immich updateAssetLocation: {"ids":["73dd2706-0055-47cb-a422-444fc4fd142f"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:24 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:24 UTC] Request data: {"ids":["73dd2706-0055-47cb-a422-444fc4fd142f"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:24 UTC] Response code: 204
+[31-Jul-2025 05:35:24 UTC] Response body: 
+[31-Jul-2025 05:35:24 UTC] Immich response: true
+[31-Jul-2025 05:35:25 UTC] Immich updateAssetLocation: {"ids":["55e3b5a5-0b64-4d61-884b-bbbffe0fde0e"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:25 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:25 UTC] Request data: {"ids":["55e3b5a5-0b64-4d61-884b-bbbffe0fde0e"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:25 UTC] Response code: 204
+[31-Jul-2025 05:35:25 UTC] Response body: 
+[31-Jul-2025 05:35:25 UTC] Immich response: true
+[31-Jul-2025 05:35:25 UTC] Immich updateAssetLocation: {"ids":["f693323f-22fb-499d-a4ab-bb13a3a875a1"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:25 UTC] Request data: {"ids":["f693323f-22fb-499d-a4ab-bb13a3a875a1"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Response code: 204
+[31-Jul-2025 05:35:25 UTC] Response body: 
+[31-Jul-2025 05:35:25 UTC] Immich response: true
+[31-Jul-2025 05:35:25 UTC] Immich updateAssetLocation: {"ids":["ab5fb4e5-164d-4ae4-bd15-851273a49fab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:25 UTC] Request data: {"ids":["ab5fb4e5-164d-4ae4-bd15-851273a49fab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Response code: 204
+[31-Jul-2025 05:35:25 UTC] Response body: 
+[31-Jul-2025 05:35:25 UTC] Immich response: true
+[31-Jul-2025 05:35:25 UTC] Immich updateAssetLocation: {"ids":["d964d044-d825-4ec6-9a16-deb7749f4328"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:25 UTC] Request data: {"ids":["d964d044-d825-4ec6-9a16-deb7749f4328"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Response code: 204
+[31-Jul-2025 05:35:25 UTC] Response body: 
+[31-Jul-2025 05:35:25 UTC] Immich response: true
+[31-Jul-2025 05:35:25 UTC] Immich updateAssetLocation: {"ids":["b540ee92-19dc-4a21-a748-d2b02502136b"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:25 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:25 UTC] Request data: {"ids":["b540ee92-19dc-4a21-a748-d2b02502136b"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:25 UTC] Response code: 204
+[31-Jul-2025 05:35:25 UTC] Response body: 
+[31-Jul-2025 05:35:25 UTC] Immich response: true
+[31-Jul-2025 05:35:25 UTC] Immich updateAssetLocation: {"ids":["79f72441-2102-46e5-98c3-46b6daf37e3f"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:25 UTC] Request data: {"ids":["79f72441-2102-46e5-98c3-46b6daf37e3f"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:25 UTC] Response code: 204
+[31-Jul-2025 05:35:25 UTC] Response body: 
+[31-Jul-2025 05:35:25 UTC] Immich response: true
+[31-Jul-2025 05:35:26 UTC] Immich updateAssetLocation: {"ids":["7a4a8f26-09a5-4dbc-8d1f-e64ac66ae41d"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:26 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:26 UTC] Request data: {"ids":["7a4a8f26-09a5-4dbc-8d1f-e64ac66ae41d"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:26 UTC] Response code: 204
+[31-Jul-2025 05:35:26 UTC] Response body: 
+[31-Jul-2025 05:35:26 UTC] Immich response: true
+[31-Jul-2025 05:35:26 UTC] Immich updateAssetLocation: {"ids":["fba2fa92-8d79-44f5-aa49-07364fe4b102"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:26 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:26 UTC] Request data: {"ids":["fba2fa92-8d79-44f5-aa49-07364fe4b102"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:26 UTC] Response code: 204
+[31-Jul-2025 05:35:26 UTC] Response body: 
+[31-Jul-2025 05:35:26 UTC] Immich response: true
+[31-Jul-2025 05:35:26 UTC] Immich updateAssetLocation: {"ids":["87c80356-b1d2-4f48-a919-53c18f5ad013"],"latitude":-20.450115,"longitude":164.21351167}
+[31-Jul-2025 05:35:26 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:26 UTC] Request data: {"ids":["87c80356-b1d2-4f48-a919-53c18f5ad013"],"latitude":-20.450115,"longitude":164.21351167}
+[31-Jul-2025 05:35:26 UTC] Response code: 204
+[31-Jul-2025 05:35:26 UTC] Response body: 
+[31-Jul-2025 05:35:26 UTC] Immich response: true
+[31-Jul-2025 05:35:26 UTC] Immich updateAssetLocation: {"ids":["2673e558-a075-4fc1-8464-6d24b206ca38"],"latitude":-20.45011389,"longitude":164.21351111}
+[31-Jul-2025 05:35:26 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:26 UTC] Request data: {"ids":["2673e558-a075-4fc1-8464-6d24b206ca38"],"latitude":-20.45011389,"longitude":164.21351111}
+[31-Jul-2025 05:35:26 UTC] Response code: 204
+[31-Jul-2025 05:35:26 UTC] Response body: 
+[31-Jul-2025 05:35:26 UTC] Immich response: true
+[31-Jul-2025 05:35:26 UTC] Immich updateAssetLocation: {"ids":["7e52d0e7-d32b-490e-814b-bceb2ab387ea"],"latitude":-20.45012833,"longitude":164.21348167}
+[31-Jul-2025 05:35:26 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:26 UTC] Request data: {"ids":["7e52d0e7-d32b-490e-814b-bceb2ab387ea"],"latitude":-20.45012833,"longitude":164.21348167}
+[31-Jul-2025 05:35:26 UTC] Response code: 204
+[31-Jul-2025 05:35:26 UTC] Response body: 
+[31-Jul-2025 05:35:26 UTC] Immich response: true
+[31-Jul-2025 05:35:26 UTC] Immich updateAssetLocation: {"ids":["db19fa9c-ff4b-4f0d-b5b3-ed056bb0f2d7"],"latitude":-20.45012778,"longitude":164.21348056}
+[31-Jul-2025 05:35:26 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:26 UTC] Request data: {"ids":["db19fa9c-ff4b-4f0d-b5b3-ed056bb0f2d7"],"latitude":-20.45012778,"longitude":164.21348056}
+[31-Jul-2025 05:35:26 UTC] Response code: 204
+[31-Jul-2025 05:35:26 UTC] Response body: 
+[31-Jul-2025 05:35:26 UTC] Immich response: true
+[31-Jul-2025 05:35:27 UTC] Immich updateAssetLocation: {"ids":["f5ff207d-5d39-4ed8-8a97-78970aab34a3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:27 UTC] Request data: {"ids":["f5ff207d-5d39-4ed8-8a97-78970aab34a3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Response code: 204
+[31-Jul-2025 05:35:27 UTC] Response body: 
+[31-Jul-2025 05:35:27 UTC] Immich response: true
+[31-Jul-2025 05:35:27 UTC] Immich updateAssetLocation: {"ids":["053fea53-0d57-40ba-bfc2-42898c657373"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:27 UTC] Request data: {"ids":["053fea53-0d57-40ba-bfc2-42898c657373"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Response code: 204
+[31-Jul-2025 05:35:27 UTC] Response body: 
+[31-Jul-2025 05:35:27 UTC] Immich response: true
+[31-Jul-2025 05:35:27 UTC] Immich updateAssetLocation: {"ids":["ddbcac1a-f443-4b46-843b-a22ad6ffaef9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:27 UTC] Request data: {"ids":["ddbcac1a-f443-4b46-843b-a22ad6ffaef9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Response code: 204
+[31-Jul-2025 05:35:27 UTC] Response body: 
+[31-Jul-2025 05:35:27 UTC] Immich response: true
+[31-Jul-2025 05:35:27 UTC] Immich updateAssetLocation: {"ids":["7f82996b-de8d-45e2-a691-e285196fe52c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:27 UTC] Request data: {"ids":["7f82996b-de8d-45e2-a691-e285196fe52c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Response code: 204
+[31-Jul-2025 05:35:27 UTC] Response body: 
+[31-Jul-2025 05:35:27 UTC] Immich response: true
+[31-Jul-2025 05:35:27 UTC] Immich updateAssetLocation: {"ids":["c88b3917-3890-4352-8093-0b829c4fb3b8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:27 UTC] Request data: {"ids":["c88b3917-3890-4352-8093-0b829c4fb3b8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Response code: 204
+[31-Jul-2025 05:35:27 UTC] Response body: 
+[31-Jul-2025 05:35:27 UTC] Immich response: true
+[31-Jul-2025 05:35:27 UTC] Immich updateAssetLocation: {"ids":["2b4573c6-29c6-423b-9d35-b82af2d5eea9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:27 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:27 UTC] Request data: {"ids":["2b4573c6-29c6-423b-9d35-b82af2d5eea9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Response code: 204
+[31-Jul-2025 05:35:28 UTC] Response body: 
+[31-Jul-2025 05:35:28 UTC] Immich response: true
+[31-Jul-2025 05:35:28 UTC] Immich updateAssetLocation: {"ids":["fb67b35f-b94f-4dd3-9d89-d0b969c35ac4"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:28 UTC] Request data: {"ids":["fb67b35f-b94f-4dd3-9d89-d0b969c35ac4"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Response code: 204
+[31-Jul-2025 05:35:28 UTC] Response body: 
+[31-Jul-2025 05:35:28 UTC] Immich response: true
+[31-Jul-2025 05:35:28 UTC] Immich updateAssetLocation: {"ids":["40ae815a-fac8-4eec-b0ed-3236827ccbcc"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:28 UTC] Request data: {"ids":["40ae815a-fac8-4eec-b0ed-3236827ccbcc"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Response code: 204
+[31-Jul-2025 05:35:28 UTC] Response body: 
+[31-Jul-2025 05:35:28 UTC] Immich response: true
+[31-Jul-2025 05:35:28 UTC] Immich updateAssetLocation: {"ids":["3c240ec2-ee7f-41bf-b891-275fef6a416e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:28 UTC] Request data: {"ids":["3c240ec2-ee7f-41bf-b891-275fef6a416e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Response code: 204
+[31-Jul-2025 05:35:28 UTC] Response body: 
+[31-Jul-2025 05:35:28 UTC] Immich response: true
+[31-Jul-2025 05:35:28 UTC] Immich updateAssetLocation: {"ids":["d0db44b6-87e4-439b-a02f-7e3644077dab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:28 UTC] Request data: {"ids":["d0db44b6-87e4-439b-a02f-7e3644077dab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Response code: 204
+[31-Jul-2025 05:35:28 UTC] Response body: 
+[31-Jul-2025 05:35:28 UTC] Immich response: true
+[31-Jul-2025 05:35:28 UTC] Immich updateAssetLocation: {"ids":["7591122b-ff6e-4241-b0a9-39ea63345da3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:28 UTC] Request data: {"ids":["7591122b-ff6e-4241-b0a9-39ea63345da3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:28 UTC] Response code: 204
+[31-Jul-2025 05:35:28 UTC] Response body: 
+[31-Jul-2025 05:35:28 UTC] Immich response: true
+[31-Jul-2025 05:35:29 UTC] Immich updateAssetLocation: {"ids":["abd2e240-5175-48a0-b100-b3d541ed8951"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:29 UTC] Request data: {"ids":["abd2e240-5175-48a0-b100-b3d541ed8951"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Response code: 204
+[31-Jul-2025 05:35:29 UTC] Response body: 
+[31-Jul-2025 05:35:29 UTC] Immich response: true
+[31-Jul-2025 05:35:29 UTC] Immich updateAssetLocation: {"ids":["ef41a51b-eb84-45cf-b8db-932e00d5bf9e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:29 UTC] Request data: {"ids":["ef41a51b-eb84-45cf-b8db-932e00d5bf9e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Response code: 204
+[31-Jul-2025 05:35:29 UTC] Response body: 
+[31-Jul-2025 05:35:29 UTC] Immich response: true
+[31-Jul-2025 05:35:29 UTC] Immich updateAssetLocation: {"ids":["9a44a9a9-0a06-43ab-b28f-5f3df9d511a7"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:29 UTC] Request data: {"ids":["9a44a9a9-0a06-43ab-b28f-5f3df9d511a7"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Response code: 204
+[31-Jul-2025 05:35:29 UTC] Response body: 
+[31-Jul-2025 05:35:29 UTC] Immich response: true
+[31-Jul-2025 05:35:29 UTC] Immich updateAssetLocation: {"ids":["1274dfe8-4ba8-4633-abf8-49373ff0417c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:29 UTC] Request data: {"ids":["1274dfe8-4ba8-4633-abf8-49373ff0417c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:29 UTC] Response code: 204
+[31-Jul-2025 05:35:29 UTC] Response body: 
+[31-Jul-2025 05:35:29 UTC] Immich response: true
+[31-Jul-2025 05:35:29 UTC] Immich updateAssetLocation: {"ids":["38f32713-7006-4ca4-b2e5-848da649fb16"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:29 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:29 UTC] Request data: {"ids":["38f32713-7006-4ca4-b2e5-848da649fb16"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:29 UTC] Response code: 204
+[31-Jul-2025 05:35:29 UTC] Response body: 
+[31-Jul-2025 05:35:29 UTC] Immich response: true
+[31-Jul-2025 05:35:30 UTC] Immich updateAssetLocation: {"ids":["fb1c8692-4c5b-4f15-8fac-ce2f8869c60e"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:30 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:30 UTC] Request data: {"ids":["fb1c8692-4c5b-4f15-8fac-ce2f8869c60e"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:30 UTC] Response code: 204
+[31-Jul-2025 05:35:30 UTC] Response body: 
+[31-Jul-2025 05:35:30 UTC] Immich response: true
+[31-Jul-2025 05:35:30 UTC] Immich updateAssetLocation: {"ids":["e9313604-873f-4bb2-bde0-4d90b1bd9d74"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:30 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:30 UTC] Request data: {"ids":["e9313604-873f-4bb2-bde0-4d90b1bd9d74"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:30 UTC] Response code: 204
+[31-Jul-2025 05:35:30 UTC] Response body: 
+[31-Jul-2025 05:35:30 UTC] Immich response: true
+[31-Jul-2025 05:35:30 UTC] Immich updateAssetLocation: {"ids":["6b9a909d-372c-49e5-a5e5-f8b6671261d8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:30 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:30 UTC] Request data: {"ids":["6b9a909d-372c-49e5-a5e5-f8b6671261d8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:30 UTC] Response code: 204
+[31-Jul-2025 05:35:30 UTC] Response body: 
+[31-Jul-2025 05:35:30 UTC] Immich response: true
+[31-Jul-2025 05:35:30 UTC] Immich updateAssetLocation: {"ids":["4835edba-59b2-48ea-bef1-0349d4a38977"],"latitude":-20.45265333,"longitude":164.21318}
+[31-Jul-2025 05:35:30 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:30 UTC] Request data: {"ids":["4835edba-59b2-48ea-bef1-0349d4a38977"],"latitude":-20.45265333,"longitude":164.21318}
+[31-Jul-2025 05:35:30 UTC] Response code: 204
+[31-Jul-2025 05:35:30 UTC] Response body: 
+[31-Jul-2025 05:35:30 UTC] Immich response: true
+[31-Jul-2025 05:35:30 UTC] Immich updateAssetLocation: {"ids":["b6a2eb50-7a83-42c4-a57b-870595d07653"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:30 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:30 UTC] Request data: {"ids":["b6a2eb50-7a83-42c4-a57b-870595d07653"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:30 UTC] Response code: 204
+[31-Jul-2025 05:35:30 UTC] Response body: 
+[31-Jul-2025 05:35:30 UTC] Immich response: true
+[31-Jul-2025 05:35:30 UTC] Immich updateAssetLocation: {"ids":["a0bbf23e-5fec-4498-a7a8-3f37334499bf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:30 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:30 UTC] Request data: {"ids":["a0bbf23e-5fec-4498-a7a8-3f37334499bf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:30 UTC] Response code: 204
+[31-Jul-2025 05:35:30 UTC] Response body: 
+[31-Jul-2025 05:35:30 UTC] Immich response: true
+[31-Jul-2025 05:35:31 UTC] Immich updateAssetLocation: {"ids":["9a1384f4-7570-4195-8dc2-236b7118b393"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:31 UTC] Request data: {"ids":["9a1384f4-7570-4195-8dc2-236b7118b393"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Response code: 204
+[31-Jul-2025 05:35:31 UTC] Response body: 
+[31-Jul-2025 05:35:31 UTC] Immich response: true
+[31-Jul-2025 05:35:31 UTC] Immich updateAssetLocation: {"ids":["18efc6d8-5cc5-43b7-86fa-c5c62d4226cd"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:31 UTC] Request data: {"ids":["18efc6d8-5cc5-43b7-86fa-c5c62d4226cd"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Response code: 204
+[31-Jul-2025 05:35:31 UTC] Response body: 
+[31-Jul-2025 05:35:31 UTC] Immich response: true
+[31-Jul-2025 05:35:31 UTC] Immich updateAssetLocation: {"ids":["f5fdfa84-91c0-41fa-bb1d-d7b2363f5126"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:31 UTC] Request data: {"ids":["f5fdfa84-91c0-41fa-bb1d-d7b2363f5126"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Response code: 204
+[31-Jul-2025 05:35:31 UTC] Response body: 
+[31-Jul-2025 05:35:31 UTC] Immich response: true
+[31-Jul-2025 05:35:31 UTC] Immich updateAssetLocation: {"ids":["644623cd-d40e-4d86-a798-262234454515"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:31 UTC] Request data: {"ids":["644623cd-d40e-4d86-a798-262234454515"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Response code: 204
+[31-Jul-2025 05:35:31 UTC] Response body: 
+[31-Jul-2025 05:35:31 UTC] Immich response: true
+[31-Jul-2025 05:35:31 UTC] Immich updateAssetLocation: {"ids":["748bab91-b3d2-42dc-bcaa-8d0ffe6afacf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:31 UTC] Request data: {"ids":["748bab91-b3d2-42dc-bcaa-8d0ffe6afacf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Response code: 204
+[31-Jul-2025 05:35:31 UTC] Response body: 
+[31-Jul-2025 05:35:31 UTC] Immich response: true
+[31-Jul-2025 05:35:31 UTC] Immich updateAssetLocation: {"ids":["6e35bac2-b696-45df-bd6f-dacb66cdac22"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:31 UTC] Request data: {"ids":["6e35bac2-b696-45df-bd6f-dacb66cdac22"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:31 UTC] Response code: 204
+[31-Jul-2025 05:35:31 UTC] Response body: 
+[31-Jul-2025 05:35:31 UTC] Immich response: true
+[31-Jul-2025 05:35:32 UTC] Immich updateAssetLocation: {"ids":["499fc776-5b75-4537-8882-d31df143e641"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:32 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:32 UTC] Request data: {"ids":["499fc776-5b75-4537-8882-d31df143e641"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:32 UTC] Response code: 204
+[31-Jul-2025 05:35:32 UTC] Response body: 
+[31-Jul-2025 05:35:32 UTC] Immich response: true
+[31-Jul-2025 05:35:32 UTC] Immich updateAssetLocation: {"ids":["023265a6-6cfc-4237-b704-141ab41136fb"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:32 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:32 UTC] Request data: {"ids":["023265a6-6cfc-4237-b704-141ab41136fb"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:32 UTC] Response code: 204
+[31-Jul-2025 05:35:32 UTC] Response body: 
+[31-Jul-2025 05:35:32 UTC] Immich response: true
+[31-Jul-2025 05:35:32 UTC] Immich updateAssetLocation: {"ids":["41ac3982-d9a5-49b7-8de9-3033ee976ce0"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:32 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:32 UTC] Request data: {"ids":["41ac3982-d9a5-49b7-8de9-3033ee976ce0"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:32 UTC] Response code: 204
+[31-Jul-2025 05:35:32 UTC] Response body: 
+[31-Jul-2025 05:35:32 UTC] Immich response: true
+[31-Jul-2025 05:35:32 UTC] Immich updateAssetLocation: {"ids":["a061fc1f-3d68-4237-8d3a-4d30e8dc8a9f"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:32 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:32 UTC] Request data: {"ids":["a061fc1f-3d68-4237-8d3a-4d30e8dc8a9f"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:32 UTC] Response code: 204
+[31-Jul-2025 05:35:32 UTC] Response body: 
+[31-Jul-2025 05:35:32 UTC] Immich response: true
+[31-Jul-2025 05:35:32 UTC] Immich updateAssetLocation: {"ids":["b1d04969-4c07-4825-868b-a2450d8aace4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:32 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:32 UTC] Request data: {"ids":["b1d04969-4c07-4825-868b-a2450d8aace4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:32 UTC] Response code: 204
+[31-Jul-2025 05:35:32 UTC] Response body: 
+[31-Jul-2025 05:35:32 UTC] Immich response: true
+[31-Jul-2025 05:35:33 UTC] Immich updateAssetLocation: {"ids":["e2d4376b-c970-4272-aa73-ed8ef2071f6c"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:33 UTC] Request data: {"ids":["e2d4376b-c970-4272-aa73-ed8ef2071f6c"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Response code: 204
+[31-Jul-2025 05:35:33 UTC] Response body: 
+[31-Jul-2025 05:35:33 UTC] Immich response: true
+[31-Jul-2025 05:35:33 UTC] Immich updateAssetLocation: {"ids":["9d1353d1-2448-435d-9384-b9c1b1aeb9f3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:33 UTC] Request data: {"ids":["9d1353d1-2448-435d-9384-b9c1b1aeb9f3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Response code: 204
+[31-Jul-2025 05:35:33 UTC] Response body: 
+[31-Jul-2025 05:35:33 UTC] Immich response: true
+[31-Jul-2025 05:35:33 UTC] Immich updateAssetLocation: {"ids":["b8186d6d-777e-4837-8ccc-176d01d88cb3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:33 UTC] Request data: {"ids":["b8186d6d-777e-4837-8ccc-176d01d88cb3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Response code: 204
+[31-Jul-2025 05:35:33 UTC] Response body: 
+[31-Jul-2025 05:35:33 UTC] Immich response: true
+[31-Jul-2025 05:35:33 UTC] Immich updateAssetLocation: {"ids":["331b290e-5613-4d85-af96-793dfdd101af"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:33 UTC] Request data: {"ids":["331b290e-5613-4d85-af96-793dfdd101af"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Response code: 204
+[31-Jul-2025 05:35:33 UTC] Response body: 
+[31-Jul-2025 05:35:33 UTC] Immich response: true
+[31-Jul-2025 05:35:33 UTC] Immich updateAssetLocation: {"ids":["7317e023-12ca-4d9d-9061-67a61e75e8e5"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:33 UTC] Request data: {"ids":["7317e023-12ca-4d9d-9061-67a61e75e8e5"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Response code: 204
+[31-Jul-2025 05:35:33 UTC] Response body: 
+[31-Jul-2025 05:35:33 UTC] Immich response: true
+[31-Jul-2025 05:35:33 UTC] Immich updateAssetLocation: {"ids":["32ee3cf9-4b37-4ed3-b04d-ecc0a3404f95"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:33 UTC] Request data: {"ids":["32ee3cf9-4b37-4ed3-b04d-ecc0a3404f95"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:33 UTC] Response code: 204
+[31-Jul-2025 05:35:33 UTC] Response body: 
+[31-Jul-2025 05:35:33 UTC] Immich response: true
+[31-Jul-2025 05:35:34 UTC] Immich updateAssetLocation: {"ids":["b5be26b1-80d0-43f6-9294-31cb3812d222"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:34 UTC] Request data: {"ids":["b5be26b1-80d0-43f6-9294-31cb3812d222"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Response code: 204
+[31-Jul-2025 05:35:34 UTC] Response body: 
+[31-Jul-2025 05:35:34 UTC] Immich response: true
+[31-Jul-2025 05:35:34 UTC] Immich updateAssetLocation: {"ids":["57b1cd64-e544-41bb-aace-634b9c3b74db"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:34 UTC] Request data: {"ids":["57b1cd64-e544-41bb-aace-634b9c3b74db"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Response code: 204
+[31-Jul-2025 05:35:34 UTC] Response body: 
+[31-Jul-2025 05:35:34 UTC] Immich response: true
+[31-Jul-2025 05:35:34 UTC] Immich updateAssetLocation: {"ids":["9fe27778-5262-4693-ac38-3c5dc2db097e"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:34 UTC] Request data: {"ids":["9fe27778-5262-4693-ac38-3c5dc2db097e"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Response code: 204
+[31-Jul-2025 05:35:34 UTC] Response body: 
+[31-Jul-2025 05:35:34 UTC] Immich response: true
+[31-Jul-2025 05:35:34 UTC] Immich updateAssetLocation: {"ids":["d1937909-e4fe-4c99-bb2c-dfcf3a308f77"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:34 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:34 UTC] Request data: {"ids":["d1937909-e4fe-4c99-bb2c-dfcf3a308f77"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Response code: 204
+[31-Jul-2025 05:35:35 UTC] Response body: 
+[31-Jul-2025 05:35:35 UTC] Immich response: true
+[31-Jul-2025 05:35:35 UTC] Immich updateAssetLocation: {"ids":["a230a6dd-4af0-42aa-b7e5-4da3531236e4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:35 UTC] Request data: {"ids":["a230a6dd-4af0-42aa-b7e5-4da3531236e4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Response code: 204
+[31-Jul-2025 05:35:35 UTC] Response body: 
+[31-Jul-2025 05:35:35 UTC] Immich response: true
+[31-Jul-2025 05:35:35 UTC] Immich updateAssetLocation: {"ids":["7b0b7dc9-11e1-4651-a5db-93dd2a1c6c82"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:35 UTC] Request data: {"ids":["7b0b7dc9-11e1-4651-a5db-93dd2a1c6c82"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Response code: 204
+[31-Jul-2025 05:35:35 UTC] Response body: 
+[31-Jul-2025 05:35:35 UTC] Immich response: true
+[31-Jul-2025 05:35:35 UTC] Immich updateAssetLocation: {"ids":["2024d578-aa9f-4535-a150-a136c8b51ed8"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:35 UTC] Request data: {"ids":["2024d578-aa9f-4535-a150-a136c8b51ed8"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Response code: 204
+[31-Jul-2025 05:35:35 UTC] Response body: 
+[31-Jul-2025 05:35:35 UTC] Immich response: true
+[31-Jul-2025 05:35:35 UTC] Immich updateAssetLocation: {"ids":["3735b5ad-d802-4f20-ab6a-8da204b55bbc"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:35 UTC] Request data: {"ids":["3735b5ad-d802-4f20-ab6a-8da204b55bbc"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Response code: 204
+[31-Jul-2025 05:35:35 UTC] Response body: 
+[31-Jul-2025 05:35:35 UTC] Immich response: true
+[31-Jul-2025 05:35:35 UTC] Immich updateAssetLocation: {"ids":["599fd5c3-046d-4752-9824-5239c6f3faed"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:35 UTC] Request data: {"ids":["599fd5c3-046d-4752-9824-5239c6f3faed"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:35 UTC] Response code: 204
+[31-Jul-2025 05:35:35 UTC] Response body: 
+[31-Jul-2025 05:35:35 UTC] Immich response: true
+[31-Jul-2025 05:35:36 UTC] Immich updateAssetLocation: {"ids":["2a723f74-bfe8-40de-812a-549ab36ec0c4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:36 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:36 UTC] Request data: {"ids":["2a723f74-bfe8-40de-812a-549ab36ec0c4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:36 UTC] Response code: 204
+[31-Jul-2025 05:35:36 UTC] Response body: 
+[31-Jul-2025 05:35:36 UTC] Immich response: true
+[31-Jul-2025 05:35:36 UTC] Immich updateAssetLocation: {"ids":["1b30839e-910f-4857-9846-5ed2490e8f02"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:36 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:36 UTC] Request data: {"ids":["1b30839e-910f-4857-9846-5ed2490e8f02"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:36 UTC] Response code: 204
+[31-Jul-2025 05:35:36 UTC] Response body: 
+[31-Jul-2025 05:35:36 UTC] Immich response: true
+[31-Jul-2025 05:35:36 UTC] Immich updateAssetLocation: {"ids":["f7aef515-e6b7-4d1a-bc89-e9e828e3b55e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:36 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:36 UTC] Request data: {"ids":["f7aef515-e6b7-4d1a-bc89-e9e828e3b55e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:36 UTC] Response code: 204
+[31-Jul-2025 05:35:36 UTC] Response body: 
+[31-Jul-2025 05:35:36 UTC] Immich response: true
+[31-Jul-2025 05:35:36 UTC] Immich updateAssetLocation: {"ids":["c6e43836-b2b0-46a4-bd71-0e843466e16d"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:36 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:36 UTC] Request data: {"ids":["c6e43836-b2b0-46a4-bd71-0e843466e16d"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:36 UTC] Response code: 204
+[31-Jul-2025 05:35:36 UTC] Response body: 
+[31-Jul-2025 05:35:36 UTC] Immich response: true
+[31-Jul-2025 05:35:36 UTC] Immich updateAssetLocation: {"ids":["ae0a1d3b-7080-4a87-b956-aaf0cbd4f475"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:36 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:36 UTC] Request data: {"ids":["ae0a1d3b-7080-4a87-b956-aaf0cbd4f475"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:36 UTC] Response code: 204
+[31-Jul-2025 05:35:36 UTC] Response body: 
+[31-Jul-2025 05:35:36 UTC] Immich response: true
+[31-Jul-2025 05:35:37 UTC] Immich updateAssetLocation: {"ids":["dbc08ba7-56ba-4d2b-9ea7-fa476cbadb58"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:37 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:37 UTC] Request data: {"ids":["dbc08ba7-56ba-4d2b-9ea7-fa476cbadb58"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:37 UTC] Response code: 204
+[31-Jul-2025 05:35:37 UTC] Response body: 
+[31-Jul-2025 05:35:37 UTC] Immich response: true
+[31-Jul-2025 05:35:37 UTC] Immich updateAssetLocation: {"ids":["78679769-ec66-4b8f-8506-1239209c5e6e"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:37 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:37 UTC] Request data: {"ids":["78679769-ec66-4b8f-8506-1239209c5e6e"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:37 UTC] Response code: 204
+[31-Jul-2025 05:35:37 UTC] Response body: 
+[31-Jul-2025 05:35:37 UTC] Immich response: true
+[31-Jul-2025 05:35:37 UTC] Immich updateAssetLocation: {"ids":["d7972a50-2031-4cbc-aeef-d54d0d5fdd93"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:37 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:37 UTC] Request data: {"ids":["d7972a50-2031-4cbc-aeef-d54d0d5fdd93"],"latitude":-20.14284167,"longitude":164.054805}
+[31-Jul-2025 05:35:37 UTC] Response code: 204
+[31-Jul-2025 05:35:37 UTC] Response body: 
+[31-Jul-2025 05:35:37 UTC] Immich response: true
+[31-Jul-2025 05:35:37 UTC] Immich updateAssetLocation: {"ids":["549cccbd-c880-4e80-bbb5-49477bea1cf5"],"latitude":-20.14284167,"longitude":164.05480556}
+[31-Jul-2025 05:35:37 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:37 UTC] Request data: {"ids":["549cccbd-c880-4e80-bbb5-49477bea1cf5"],"latitude":-20.14284167,"longitude":164.05480556}
+[31-Jul-2025 05:35:37 UTC] Response code: 204
+[31-Jul-2025 05:35:37 UTC] Response body: 
+[31-Jul-2025 05:35:37 UTC] Immich response: true
+[31-Jul-2025 05:35:37 UTC] Immich updateAssetLocation: {"ids":["77657ca9-ac05-49c2-8a07-de11c33ede77"],"latitude":-20.14266944,"longitude":164.05504167}
+[31-Jul-2025 05:35:37 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:37 UTC] Request data: {"ids":["77657ca9-ac05-49c2-8a07-de11c33ede77"],"latitude":-20.14266944,"longitude":164.05504167}
+[31-Jul-2025 05:35:37 UTC] Response code: 204
+[31-Jul-2025 05:35:37 UTC] Response body: 
+[31-Jul-2025 05:35:37 UTC] Immich response: true
+[31-Jul-2025 05:35:38 UTC] Immich updateAssetLocation: {"ids":["4cb4b4e6-81cc-4cde-9c96-76ac714ed8f6"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:38 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:38 UTC] Request data: {"ids":["4cb4b4e6-81cc-4cde-9c96-76ac714ed8f6"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:38 UTC] Response code: 204
+[31-Jul-2025 05:35:38 UTC] Response body: 
+[31-Jul-2025 05:35:38 UTC] Immich response: true
+[31-Jul-2025 05:35:38 UTC] Immich updateAssetLocation: {"ids":["ab1afb4e-1d3a-498f-889f-3d3f10484df4"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:38 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:38 UTC] Request data: {"ids":["ab1afb4e-1d3a-498f-889f-3d3f10484df4"],"latitude":-20.14267,"longitude":164.05504167}
+[31-Jul-2025 05:35:38 UTC] Response code: 204
+[31-Jul-2025 05:35:38 UTC] Response body: 
+[31-Jul-2025 05:35:38 UTC] Immich response: true
+[31-Jul-2025 05:35:38 UTC] Immich updateAssetLocation: {"ids":["a621b5b6-2dfb-4fc1-9e7a-32186f07cf00"],"latitude":-20.14300667,"longitude":164.05482667}
+[31-Jul-2025 05:35:38 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:38 UTC] Request data: {"ids":["a621b5b6-2dfb-4fc1-9e7a-32186f07cf00"],"latitude":-20.14300667,"longitude":164.05482667}
+[31-Jul-2025 05:35:38 UTC] Response code: 204
+[31-Jul-2025 05:35:38 UTC] Response body: 
+[31-Jul-2025 05:35:38 UTC] Immich response: true
+[31-Jul-2025 05:35:38 UTC] Immich updateAssetLocation: {"ids":["9b0c8bac-7d51-418b-8059-6124e465c19b"],"latitude":-20.14300556,"longitude":164.05482778}
+[31-Jul-2025 05:35:38 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:38 UTC] Request data: {"ids":["9b0c8bac-7d51-418b-8059-6124e465c19b"],"latitude":-20.14300556,"longitude":164.05482778}
+[31-Jul-2025 05:35:38 UTC] Response code: 204
+[31-Jul-2025 05:35:38 UTC] Response body: 
+[31-Jul-2025 05:35:38 UTC] Immich response: true
+[31-Jul-2025 05:35:38 UTC] Immich updateAssetLocation: {"ids":["04c4f236-0265-4883-9b19-f8947c5f6e22"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:38 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:38 UTC] Request data: {"ids":["04c4f236-0265-4883-9b19-f8947c5f6e22"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:38 UTC] Response code: 204
+[31-Jul-2025 05:35:38 UTC] Response body: 
+[31-Jul-2025 05:35:38 UTC] Immich response: true
+[31-Jul-2025 05:35:38 UTC] Immich updateAssetLocation: {"ids":["042a2c9b-1ee2-4744-ba2b-ade032909b3a"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:38 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:38 UTC] Request data: {"ids":["042a2c9b-1ee2-4744-ba2b-ade032909b3a"],"latitude":-20.14300833,"longitude":164.05482833}
+[31-Jul-2025 05:35:39 UTC] Response code: 204
+[31-Jul-2025 05:35:39 UTC] Response body: 
+[31-Jul-2025 05:35:39 UTC] Immich response: true
+[31-Jul-2025 05:35:39 UTC] Immich updateAssetLocation: {"ids":["7a0b248d-2efb-4f52-a3d8-28cde62ebd70"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:39 UTC] Request data: {"ids":["7a0b248d-2efb-4f52-a3d8-28cde62ebd70"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Response code: 204
+[31-Jul-2025 05:35:39 UTC] Response body: 
+[31-Jul-2025 05:35:39 UTC] Immich response: true
+[31-Jul-2025 05:35:39 UTC] Immich updateAssetLocation: {"ids":["d01e2353-4315-45c1-950a-1fed11260e28"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:39 UTC] Request data: {"ids":["d01e2353-4315-45c1-950a-1fed11260e28"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Response code: 204
+[31-Jul-2025 05:35:39 UTC] Response body: 
+[31-Jul-2025 05:35:39 UTC] Immich response: true
+[31-Jul-2025 05:35:39 UTC] Immich updateAssetLocation: {"ids":["93468750-b7ac-4dbf-ad51-4659af452d8b"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:39 UTC] Request data: {"ids":["93468750-b7ac-4dbf-ad51-4659af452d8b"],"latitude":-20.14303056,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Response code: 204
+[31-Jul-2025 05:35:39 UTC] Response body: 
+[31-Jul-2025 05:35:39 UTC] Immich response: true
+[31-Jul-2025 05:35:39 UTC] Immich updateAssetLocation: {"ids":["9ab4e664-fbcf-4188-94a5-34be922016d9"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:39 UTC] Request data: {"ids":["9ab4e664-fbcf-4188-94a5-34be922016d9"],"latitude":-20.14303167,"longitude":164.05483333}
+[31-Jul-2025 05:35:39 UTC] Response code: 204
+[31-Jul-2025 05:35:39 UTC] Response body: 
+[31-Jul-2025 05:35:39 UTC] Immich response: true
+[31-Jul-2025 05:35:39 UTC] Immich updateAssetLocation: {"ids":["6050558a-0ffb-4b19-9432-65666b0763f1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:39 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:39 UTC] Request data: {"ids":["6050558a-0ffb-4b19-9432-65666b0763f1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:39 UTC] Response code: 204
+[31-Jul-2025 05:35:39 UTC] Response body: 
+[31-Jul-2025 05:35:39 UTC] Immich response: true
+[31-Jul-2025 05:35:40 UTC] Immich updateAssetLocation: {"ids":["438048bf-540b-40cf-ab00-fb75b653d7dc"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:40 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:40 UTC] Request data: {"ids":["438048bf-540b-40cf-ab00-fb75b653d7dc"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:40 UTC] Response code: 204
+[31-Jul-2025 05:35:40 UTC] Response body: 
+[31-Jul-2025 05:35:40 UTC] Immich response: true
+[31-Jul-2025 05:35:40 UTC] Immich updateAssetLocation: {"ids":["9ca25919-89ad-4859-85b0-f17259d61de1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:40 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:40 UTC] Request data: {"ids":["9ca25919-89ad-4859-85b0-f17259d61de1"],"latitude":-20.14298889,"longitude":164.05474444}
+[31-Jul-2025 05:35:40 UTC] Response code: 204
+[31-Jul-2025 05:35:40 UTC] Response body: 
+[31-Jul-2025 05:35:40 UTC] Immich response: true
+[31-Jul-2025 05:35:40 UTC] Immich updateAssetLocation: {"ids":["df03885d-6942-4a3c-85b0-3048377c0643"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:40 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:40 UTC] Request data: {"ids":["df03885d-6942-4a3c-85b0-3048377c0643"],"latitude":-20.14299,"longitude":164.05474333}
+[31-Jul-2025 05:35:40 UTC] Response code: 204
+[31-Jul-2025 05:35:40 UTC] Response body: 
+[31-Jul-2025 05:35:40 UTC] Immich response: true
+[31-Jul-2025 05:35:40 UTC] Immich updateAssetLocation: {"ids":["ce2b7ad1-b181-4718-8e49-0e1731b01244"],"latitude":-20.14297,"longitude":164.05476833}
+[31-Jul-2025 05:35:40 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:40 UTC] Request data: {"ids":["ce2b7ad1-b181-4718-8e49-0e1731b01244"],"latitude":-20.14297,"longitude":164.05476833}
+[31-Jul-2025 05:35:40 UTC] Response code: 204
+[31-Jul-2025 05:35:40 UTC] Response body: 
+[31-Jul-2025 05:35:40 UTC] Immich response: true
+[31-Jul-2025 05:35:40 UTC] Immich updateAssetLocation: {"ids":["b791c799-9e00-44c8-8c3d-ac03974f3083"],"latitude":-20.14297167,"longitude":164.05475}
+[31-Jul-2025 05:35:40 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:40 UTC] Request data: {"ids":["b791c799-9e00-44c8-8c3d-ac03974f3083"],"latitude":-20.14297167,"longitude":164.05475}
+[31-Jul-2025 05:35:40 UTC] Response code: 204
+[31-Jul-2025 05:35:40 UTC] Response body: 
+[31-Jul-2025 05:35:40 UTC] Immich response: true
+[31-Jul-2025 05:35:40 UTC] Immich updateAssetLocation: {"ids":["be8f457d-0971-4e8e-9aeb-7b682d0a49ec"],"latitude":-20.14306167,"longitude":164.05447167}
+[31-Jul-2025 05:35:40 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:40 UTC] Request data: {"ids":["be8f457d-0971-4e8e-9aeb-7b682d0a49ec"],"latitude":-20.14306167,"longitude":164.05447167}
+[31-Jul-2025 05:35:40 UTC] Response code: 204
+[31-Jul-2025 05:35:40 UTC] Response body: 
+[31-Jul-2025 05:35:40 UTC] Immich response: true
+[31-Jul-2025 05:35:41 UTC] Immich updateAssetLocation: {"ids":["f9468c79-21d9-4067-badd-ae6dc4d67ef4"],"latitude":-20.45231389,"longitude":164.21355}
+[31-Jul-2025 05:35:41 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:41 UTC] Request data: {"ids":["f9468c79-21d9-4067-badd-ae6dc4d67ef4"],"latitude":-20.45231389,"longitude":164.21355}
+[31-Jul-2025 05:35:41 UTC] Response code: 204
+[31-Jul-2025 05:35:41 UTC] Response body: 
+[31-Jul-2025 05:35:41 UTC] Immich response: true
+[31-Jul-2025 05:35:41 UTC] Immich updateAssetLocation: {"ids":["8ac49ae2-6e73-4df9-a7ce-03b4b4bdf9d0"],"latitude":-20.45231333,"longitude":164.21355}
+[31-Jul-2025 05:35:41 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:41 UTC] Request data: {"ids":["8ac49ae2-6e73-4df9-a7ce-03b4b4bdf9d0"],"latitude":-20.45231333,"longitude":164.21355}
+[31-Jul-2025 05:35:41 UTC] Response code: 204
+[31-Jul-2025 05:35:41 UTC] Response body: 
+[31-Jul-2025 05:35:41 UTC] Immich response: true
+[31-Jul-2025 05:35:41 UTC] Immich updateAssetLocation: {"ids":["41c426f4-187b-4c58-b184-0302d7e0a0c0"],"latitude":-20.452275,"longitude":164.21364333}
+[31-Jul-2025 05:35:41 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:41 UTC] Request data: {"ids":["41c426f4-187b-4c58-b184-0302d7e0a0c0"],"latitude":-20.452275,"longitude":164.21364333}
+[31-Jul-2025 05:35:41 UTC] Response code: 204
+[31-Jul-2025 05:35:41 UTC] Response body: 
+[31-Jul-2025 05:35:41 UTC] Immich response: true
+[31-Jul-2025 05:35:41 UTC] Immich updateAssetLocation: {"ids":["f7b9a735-7097-4a91-9e39-a4293f95843d"],"latitude":-20.452275,"longitude":164.21364444}
+[31-Jul-2025 05:35:41 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:41 UTC] Request data: {"ids":["f7b9a735-7097-4a91-9e39-a4293f95843d"],"latitude":-20.452275,"longitude":164.21364444}
+[31-Jul-2025 05:35:41 UTC] Response code: 204
+[31-Jul-2025 05:35:41 UTC] Response body: 
+[31-Jul-2025 05:35:41 UTC] Immich response: true
+[31-Jul-2025 05:35:41 UTC] Immich updateAssetLocation: {"ids":["da577c6e-a53c-4dd3-a6c7-6e223fa029e8"],"latitude":-20.45227333,"longitude":164.21368333}
+[31-Jul-2025 05:35:41 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:41 UTC] Request data: {"ids":["da577c6e-a53c-4dd3-a6c7-6e223fa029e8"],"latitude":-20.45227333,"longitude":164.21368333}
+[31-Jul-2025 05:35:41 UTC] Response code: 204
+[31-Jul-2025 05:35:41 UTC] Response body: 
+[31-Jul-2025 05:35:41 UTC] Immich response: true
+[31-Jul-2025 05:35:42 UTC] Immich updateAssetLocation: {"ids":["4cab77d8-ea24-4552-af7b-5c5f528fe0c9"],"latitude":-20.45226667,"longitude":164.21370556}
+[31-Jul-2025 05:35:42 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:42 UTC] Request data: {"ids":["4cab77d8-ea24-4552-af7b-5c5f528fe0c9"],"latitude":-20.45226667,"longitude":164.21370556}
+[31-Jul-2025 05:35:42 UTC] Response code: 204
+[31-Jul-2025 05:35:42 UTC] Response body: 
+[31-Jul-2025 05:35:42 UTC] Immich response: true
+[31-Jul-2025 05:35:42 UTC] Immich updateAssetLocation: {"ids":["053b80ec-916e-4869-b0ec-4a139966e17a"],"latitude":-20.45226667,"longitude":164.21370667}
+[31-Jul-2025 05:35:42 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:42 UTC] Request data: {"ids":["053b80ec-916e-4869-b0ec-4a139966e17a"],"latitude":-20.45226667,"longitude":164.21370667}
+[31-Jul-2025 05:35:42 UTC] Response code: 204
+[31-Jul-2025 05:35:42 UTC] Response body: 
+[31-Jul-2025 05:35:42 UTC] Immich response: true
+[31-Jul-2025 05:35:42 UTC] Immich updateAssetLocation: {"ids":["63f5c1bf-d01c-4615-a98e-ed1312801c35"],"latitude":-20.45224667,"longitude":164.21357167}
+[31-Jul-2025 05:35:42 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:42 UTC] Request data: {"ids":["63f5c1bf-d01c-4615-a98e-ed1312801c35"],"latitude":-20.45224667,"longitude":164.21357167}
+[31-Jul-2025 05:35:42 UTC] Response code: 204
+[31-Jul-2025 05:35:42 UTC] Response body: 
+[31-Jul-2025 05:35:42 UTC] Immich response: true
+[31-Jul-2025 05:35:42 UTC] Immich updateAssetLocation: {"ids":["55610c45-d45a-4fcc-8fe2-c1b08daf8588"],"latitude":-20.45224722,"longitude":164.21357222}
+[31-Jul-2025 05:35:42 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:42 UTC] Request data: {"ids":["55610c45-d45a-4fcc-8fe2-c1b08daf8588"],"latitude":-20.45224722,"longitude":164.21357222}
+[31-Jul-2025 05:35:42 UTC] Response code: 204
+[31-Jul-2025 05:35:42 UTC] Response body: 
+[31-Jul-2025 05:35:42 UTC] Immich response: true
+[31-Jul-2025 05:35:42 UTC] Immich updateAssetLocation: {"ids":["38f5cbed-c131-49cd-b17e-51e07c5ec028"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:42 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:42 UTC] Request data: {"ids":["38f5cbed-c131-49cd-b17e-51e07c5ec028"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:42 UTC] Response code: 204
+[31-Jul-2025 05:35:42 UTC] Response body: 
+[31-Jul-2025 05:35:42 UTC] Immich response: true
+[31-Jul-2025 05:35:42 UTC] Immich updateAssetLocation: {"ids":["86e763df-37bc-4f1e-ad41-f9100fdd0a2e"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:42 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:42 UTC] Request data: {"ids":["86e763df-37bc-4f1e-ad41-f9100fdd0a2e"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:42 UTC] Response code: 204
+[31-Jul-2025 05:35:42 UTC] Response body: 
+[31-Jul-2025 05:35:42 UTC] Immich response: true
+[31-Jul-2025 05:35:43 UTC] Immich updateAssetLocation: {"ids":["42bc8445-cc68-41fa-8dfe-f93aaf07410a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:43 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:43 UTC] Request data: {"ids":["42bc8445-cc68-41fa-8dfe-f93aaf07410a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:43 UTC] Response code: 204
+[31-Jul-2025 05:35:43 UTC] Response body: 
+[31-Jul-2025 05:35:43 UTC] Immich response: true
+[31-Jul-2025 05:35:43 UTC] Immich updateAssetLocation: {"ids":["8b38250a-eb2d-4ac7-8e09-48b1d915b34a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:43 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:43 UTC] Request data: {"ids":["8b38250a-eb2d-4ac7-8e09-48b1d915b34a"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:43 UTC] Response code: 204
+[31-Jul-2025 05:35:43 UTC] Response body: 
+[31-Jul-2025 05:35:43 UTC] Immich response: true
+[31-Jul-2025 05:35:43 UTC] Immich updateAssetLocation: {"ids":["3d963e02-fe30-4542-8d58-1f3d31b2aa78"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:43 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:43 UTC] Request data: {"ids":["3d963e02-fe30-4542-8d58-1f3d31b2aa78"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:43 UTC] Response code: 204
+[31-Jul-2025 05:35:43 UTC] Response body: 
+[31-Jul-2025 05:35:43 UTC] Immich response: true
+[31-Jul-2025 05:35:43 UTC] Immich updateAssetLocation: {"ids":["d47f8414-5cab-4d43-b754-e9243a2e7998"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:43 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:43 UTC] Request data: {"ids":["d47f8414-5cab-4d43-b754-e9243a2e7998"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:43 UTC] Response code: 204
+[31-Jul-2025 05:35:43 UTC] Response body: 
+[31-Jul-2025 05:35:43 UTC] Immich response: true
+[31-Jul-2025 05:35:43 UTC] Immich updateAssetLocation: {"ids":["9cc23754-4bd2-4f82-886d-67ef6f0a1c80"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:43 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:43 UTC] Request data: {"ids":["9cc23754-4bd2-4f82-886d-67ef6f0a1c80"],"latitude":-20.45010556,"longitude":164.21352778}
+[31-Jul-2025 05:35:43 UTC] Response code: 204
+[31-Jul-2025 05:35:43 UTC] Response body: 
+[31-Jul-2025 05:35:43 UTC] Immich response: true
+[31-Jul-2025 05:35:43 UTC] Immich updateAssetLocation: {"ids":["d0258443-1ac7-412c-8e58-71fa492c7132"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:43 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:43 UTC] Request data: {"ids":["d0258443-1ac7-412c-8e58-71fa492c7132"],"latitude":-20.45010667,"longitude":164.21352833}
+[31-Jul-2025 05:35:43 UTC] Response code: 204
+[31-Jul-2025 05:35:43 UTC] Response body: 
+[31-Jul-2025 05:35:43 UTC] Immich response: true
+[31-Jul-2025 05:35:44 UTC] Immich updateAssetLocation: {"ids":["73dd2706-0055-47cb-a422-444fc4fd142f"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:44 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:44 UTC] Request data: {"ids":["73dd2706-0055-47cb-a422-444fc4fd142f"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:44 UTC] Response code: 204
+[31-Jul-2025 05:35:44 UTC] Response body: 
+[31-Jul-2025 05:35:44 UTC] Immich response: true
+[31-Jul-2025 05:35:44 UTC] Immich updateAssetLocation: {"ids":["55e3b5a5-0b64-4d61-884b-bbbffe0fde0e"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:44 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:44 UTC] Request data: {"ids":["55e3b5a5-0b64-4d61-884b-bbbffe0fde0e"],"latitude":-20.45010667,"longitude":164.21351833}
+[31-Jul-2025 05:35:44 UTC] Response code: 204
+[31-Jul-2025 05:35:44 UTC] Response body: 
+[31-Jul-2025 05:35:44 UTC] Immich response: true
+[31-Jul-2025 05:35:44 UTC] Immich updateAssetLocation: {"ids":["f693323f-22fb-499d-a4ab-bb13a3a875a1"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:44 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:44 UTC] Request data: {"ids":["f693323f-22fb-499d-a4ab-bb13a3a875a1"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:44 UTC] Response code: 204
+[31-Jul-2025 05:35:44 UTC] Response body: 
+[31-Jul-2025 05:35:44 UTC] Immich response: true
+[31-Jul-2025 05:35:44 UTC] Immich updateAssetLocation: {"ids":["ab5fb4e5-164d-4ae4-bd15-851273a49fab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:44 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:44 UTC] Request data: {"ids":["ab5fb4e5-164d-4ae4-bd15-851273a49fab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:44 UTC] Response code: 204
+[31-Jul-2025 05:35:44 UTC] Response body: 
+[31-Jul-2025 05:35:44 UTC] Immich response: true
+[31-Jul-2025 05:35:44 UTC] Immich updateAssetLocation: {"ids":["d964d044-d825-4ec6-9a16-deb7749f4328"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:44 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:44 UTC] Request data: {"ids":["d964d044-d825-4ec6-9a16-deb7749f4328"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:44 UTC] Response code: 204
+[31-Jul-2025 05:35:44 UTC] Response body: 
+[31-Jul-2025 05:35:44 UTC] Immich response: true
+[31-Jul-2025 05:35:45 UTC] Immich updateAssetLocation: {"ids":["b540ee92-19dc-4a21-a748-d2b02502136b"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:45 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:45 UTC] Request data: {"ids":["b540ee92-19dc-4a21-a748-d2b02502136b"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:45 UTC] Response code: 204
+[31-Jul-2025 05:35:45 UTC] Response body: 
+[31-Jul-2025 05:35:45 UTC] Immich response: true
+[31-Jul-2025 05:35:45 UTC] Immich updateAssetLocation: {"ids":["79f72441-2102-46e5-98c3-46b6daf37e3f"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:45 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:45 UTC] Request data: {"ids":["79f72441-2102-46e5-98c3-46b6daf37e3f"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:45 UTC] Response code: 204
+[31-Jul-2025 05:35:45 UTC] Response body: 
+[31-Jul-2025 05:35:45 UTC] Immich response: true
+[31-Jul-2025 05:35:45 UTC] Immich updateAssetLocation: {"ids":["7a4a8f26-09a5-4dbc-8d1f-e64ac66ae41d"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:45 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:45 UTC] Request data: {"ids":["7a4a8f26-09a5-4dbc-8d1f-e64ac66ae41d"],"latitude":-20.45010556,"longitude":164.21352222}
+[31-Jul-2025 05:35:45 UTC] Response code: 204
+[31-Jul-2025 05:35:45 UTC] Response body: 
+[31-Jul-2025 05:35:45 UTC] Immich response: true
+[31-Jul-2025 05:35:45 UTC] Immich updateAssetLocation: {"ids":["fba2fa92-8d79-44f5-aa49-07364fe4b102"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:45 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:45 UTC] Request data: {"ids":["fba2fa92-8d79-44f5-aa49-07364fe4b102"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:45 UTC] Response code: 204
+[31-Jul-2025 05:35:45 UTC] Response body: 
+[31-Jul-2025 05:35:45 UTC] Immich response: true
+[31-Jul-2025 05:35:45 UTC] Immich updateAssetLocation: {"ids":["87c80356-b1d2-4f48-a919-53c18f5ad013"],"latitude":-20.450115,"longitude":164.21351167}
+[31-Jul-2025 05:35:45 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:45 UTC] Request data: {"ids":["87c80356-b1d2-4f48-a919-53c18f5ad013"],"latitude":-20.450115,"longitude":164.21351167}
+[31-Jul-2025 05:35:45 UTC] Response code: 204
+[31-Jul-2025 05:35:45 UTC] Response body: 
+[31-Jul-2025 05:35:45 UTC] Immich response: true
+[31-Jul-2025 05:35:45 UTC] Immich updateAssetLocation: {"ids":["2673e558-a075-4fc1-8464-6d24b206ca38"],"latitude":-20.45011389,"longitude":164.21351111}
+[31-Jul-2025 05:35:45 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:45 UTC] Request data: {"ids":["2673e558-a075-4fc1-8464-6d24b206ca38"],"latitude":-20.45011389,"longitude":164.21351111}
+[31-Jul-2025 05:35:46 UTC] Response code: 204
+[31-Jul-2025 05:35:46 UTC] Response body: 
+[31-Jul-2025 05:35:46 UTC] Immich response: true
+[31-Jul-2025 05:35:46 UTC] Immich updateAssetLocation: {"ids":["7e52d0e7-d32b-490e-814b-bceb2ab387ea"],"latitude":-20.45012833,"longitude":164.21348167}
+[31-Jul-2025 05:35:46 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:46 UTC] Request data: {"ids":["7e52d0e7-d32b-490e-814b-bceb2ab387ea"],"latitude":-20.45012833,"longitude":164.21348167}
+[31-Jul-2025 05:35:46 UTC] Response code: 204
+[31-Jul-2025 05:35:46 UTC] Response body: 
+[31-Jul-2025 05:35:46 UTC] Immich response: true
+[31-Jul-2025 05:35:46 UTC] Immich updateAssetLocation: {"ids":["db19fa9c-ff4b-4f0d-b5b3-ed056bb0f2d7"],"latitude":-20.45012778,"longitude":164.21348056}
+[31-Jul-2025 05:35:46 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:46 UTC] Request data: {"ids":["db19fa9c-ff4b-4f0d-b5b3-ed056bb0f2d7"],"latitude":-20.45012778,"longitude":164.21348056}
+[31-Jul-2025 05:35:46 UTC] Response code: 204
+[31-Jul-2025 05:35:46 UTC] Response body: 
+[31-Jul-2025 05:35:46 UTC] Immich response: true
+[31-Jul-2025 05:35:46 UTC] Immich updateAssetLocation: {"ids":["f5ff207d-5d39-4ed8-8a97-78970aab34a3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:46 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:46 UTC] Request data: {"ids":["f5ff207d-5d39-4ed8-8a97-78970aab34a3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:46 UTC] Response code: 204
+[31-Jul-2025 05:35:46 UTC] Response body: 
+[31-Jul-2025 05:35:46 UTC] Immich response: true
+[31-Jul-2025 05:35:46 UTC] Immich updateAssetLocation: {"ids":["053fea53-0d57-40ba-bfc2-42898c657373"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:46 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:46 UTC] Request data: {"ids":["053fea53-0d57-40ba-bfc2-42898c657373"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:46 UTC] Response code: 204
+[31-Jul-2025 05:35:46 UTC] Response body: 
+[31-Jul-2025 05:35:46 UTC] Immich response: true
+[31-Jul-2025 05:35:46 UTC] Immich updateAssetLocation: {"ids":["ddbcac1a-f443-4b46-843b-a22ad6ffaef9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:46 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:46 UTC] Request data: {"ids":["ddbcac1a-f443-4b46-843b-a22ad6ffaef9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:46 UTC] Response code: 204
+[31-Jul-2025 05:35:46 UTC] Response body: 
+[31-Jul-2025 05:35:46 UTC] Immich response: true
+[31-Jul-2025 05:35:47 UTC] Immich updateAssetLocation: {"ids":["7f82996b-de8d-45e2-a691-e285196fe52c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:47 UTC] Request data: {"ids":["7f82996b-de8d-45e2-a691-e285196fe52c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Response code: 204
+[31-Jul-2025 05:35:47 UTC] Response body: 
+[31-Jul-2025 05:35:47 UTC] Immich response: true
+[31-Jul-2025 05:35:47 UTC] Immich updateAssetLocation: {"ids":["c88b3917-3890-4352-8093-0b829c4fb3b8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:47 UTC] Request data: {"ids":["c88b3917-3890-4352-8093-0b829c4fb3b8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Response code: 204
+[31-Jul-2025 05:35:47 UTC] Response body: 
+[31-Jul-2025 05:35:47 UTC] Immich response: true
+[31-Jul-2025 05:35:47 UTC] Immich updateAssetLocation: {"ids":["2b4573c6-29c6-423b-9d35-b82af2d5eea9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:47 UTC] Request data: {"ids":["2b4573c6-29c6-423b-9d35-b82af2d5eea9"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Response code: 204
+[31-Jul-2025 05:35:47 UTC] Response body: 
+[31-Jul-2025 05:35:47 UTC] Immich response: true
+[31-Jul-2025 05:35:47 UTC] Immich updateAssetLocation: {"ids":["fb67b35f-b94f-4dd3-9d89-d0b969c35ac4"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:47 UTC] Request data: {"ids":["fb67b35f-b94f-4dd3-9d89-d0b969c35ac4"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Response code: 204
+[31-Jul-2025 05:35:47 UTC] Response body: 
+[31-Jul-2025 05:35:47 UTC] Immich response: true
+[31-Jul-2025 05:35:47 UTC] Immich updateAssetLocation: {"ids":["40ae815a-fac8-4eec-b0ed-3236827ccbcc"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:47 UTC] Request data: {"ids":["40ae815a-fac8-4eec-b0ed-3236827ccbcc"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Response code: 204
+[31-Jul-2025 05:35:47 UTC] Response body: 
+[31-Jul-2025 05:35:47 UTC] Immich response: true
+[31-Jul-2025 05:35:47 UTC] Immich updateAssetLocation: {"ids":["3c240ec2-ee7f-41bf-b891-275fef6a416e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:47 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:47 UTC] Request data: {"ids":["3c240ec2-ee7f-41bf-b891-275fef6a416e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Response code: 204
+[31-Jul-2025 05:35:48 UTC] Response body: 
+[31-Jul-2025 05:35:48 UTC] Immich response: true
+[31-Jul-2025 05:35:48 UTC] Immich updateAssetLocation: {"ids":["d0db44b6-87e4-439b-a02f-7e3644077dab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:48 UTC] Request data: {"ids":["d0db44b6-87e4-439b-a02f-7e3644077dab"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Response code: 204
+[31-Jul-2025 05:35:48 UTC] Response body: 
+[31-Jul-2025 05:35:48 UTC] Immich response: true
+[31-Jul-2025 05:35:48 UTC] Immich updateAssetLocation: {"ids":["7591122b-ff6e-4241-b0a9-39ea63345da3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:48 UTC] Request data: {"ids":["7591122b-ff6e-4241-b0a9-39ea63345da3"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Response code: 204
+[31-Jul-2025 05:35:48 UTC] Response body: 
+[31-Jul-2025 05:35:48 UTC] Immich response: true
+[31-Jul-2025 05:35:48 UTC] Immich updateAssetLocation: {"ids":["abd2e240-5175-48a0-b100-b3d541ed8951"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:48 UTC] Request data: {"ids":["abd2e240-5175-48a0-b100-b3d541ed8951"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Response code: 204
+[31-Jul-2025 05:35:48 UTC] Response body: 
+[31-Jul-2025 05:35:48 UTC] Immich response: true
+[31-Jul-2025 05:35:48 UTC] Immich updateAssetLocation: {"ids":["ef41a51b-eb84-45cf-b8db-932e00d5bf9e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:48 UTC] Request data: {"ids":["ef41a51b-eb84-45cf-b8db-932e00d5bf9e"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Response code: 204
+[31-Jul-2025 05:35:48 UTC] Response body: 
+[31-Jul-2025 05:35:48 UTC] Immich response: true
+[31-Jul-2025 05:35:48 UTC] Immich updateAssetLocation: {"ids":["9a44a9a9-0a06-43ab-b28f-5f3df9d511a7"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:48 UTC] Request data: {"ids":["9a44a9a9-0a06-43ab-b28f-5f3df9d511a7"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:48 UTC] Response code: 204
+[31-Jul-2025 05:35:48 UTC] Response body: 
+[31-Jul-2025 05:35:48 UTC] Immich response: true
+[31-Jul-2025 05:35:49 UTC] Immich updateAssetLocation: {"ids":["1274dfe8-4ba8-4633-abf8-49373ff0417c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:49 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:49 UTC] Request data: {"ids":["1274dfe8-4ba8-4633-abf8-49373ff0417c"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:49 UTC] Response code: 204
+[31-Jul-2025 05:35:49 UTC] Response body: 
+[31-Jul-2025 05:35:49 UTC] Immich response: true
+[31-Jul-2025 05:35:49 UTC] Immich updateAssetLocation: {"ids":["38f32713-7006-4ca4-b2e5-848da649fb16"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:49 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:49 UTC] Request data: {"ids":["38f32713-7006-4ca4-b2e5-848da649fb16"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:49 UTC] Response code: 204
+[31-Jul-2025 05:35:49 UTC] Response body: 
+[31-Jul-2025 05:35:49 UTC] Immich response: true
+[31-Jul-2025 05:35:49 UTC] Immich updateAssetLocation: {"ids":["fb1c8692-4c5b-4f15-8fac-ce2f8869c60e"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:49 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:49 UTC] Request data: {"ids":["fb1c8692-4c5b-4f15-8fac-ce2f8869c60e"],"latitude":-20.45075833,"longitude":164.21316333}
+[31-Jul-2025 05:35:49 UTC] Response code: 204
+[31-Jul-2025 05:35:49 UTC] Response body: 
+[31-Jul-2025 05:35:49 UTC] Immich response: true
+[31-Jul-2025 05:35:49 UTC] Immich updateAssetLocation: {"ids":["e9313604-873f-4bb2-bde0-4d90b1bd9d74"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:49 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:49 UTC] Request data: {"ids":["e9313604-873f-4bb2-bde0-4d90b1bd9d74"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:49 UTC] Response code: 204
+[31-Jul-2025 05:35:49 UTC] Response body: 
+[31-Jul-2025 05:35:49 UTC] Immich response: true
+[31-Jul-2025 05:35:49 UTC] Immich updateAssetLocation: {"ids":["6b9a909d-372c-49e5-a5e5-f8b6671261d8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:49 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:49 UTC] Request data: {"ids":["6b9a909d-372c-49e5-a5e5-f8b6671261d8"],"latitude":-20.45010667,"longitude":164.21352333}
+[31-Jul-2025 05:35:49 UTC] Response code: 204
+[31-Jul-2025 05:35:49 UTC] Response body: 
+[31-Jul-2025 05:35:49 UTC] Immich response: true
+[31-Jul-2025 05:35:49 UTC] Immich updateAssetLocation: {"ids":["4835edba-59b2-48ea-bef1-0349d4a38977"],"latitude":-20.45265333,"longitude":164.21318}
+[31-Jul-2025 05:35:49 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:49 UTC] Request data: {"ids":["4835edba-59b2-48ea-bef1-0349d4a38977"],"latitude":-20.45265333,"longitude":164.21318}
+[31-Jul-2025 05:35:50 UTC] Response code: 204
+[31-Jul-2025 05:35:50 UTC] Response body: 
+[31-Jul-2025 05:35:50 UTC] Immich response: true
+[31-Jul-2025 05:35:50 UTC] Immich updateAssetLocation: {"ids":["b6a2eb50-7a83-42c4-a57b-870595d07653"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:50 UTC] Request data: {"ids":["b6a2eb50-7a83-42c4-a57b-870595d07653"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Response code: 204
+[31-Jul-2025 05:35:50 UTC] Response body: 
+[31-Jul-2025 05:35:50 UTC] Immich response: true
+[31-Jul-2025 05:35:50 UTC] Immich updateAssetLocation: {"ids":["a0bbf23e-5fec-4498-a7a8-3f37334499bf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:50 UTC] Request data: {"ids":["a0bbf23e-5fec-4498-a7a8-3f37334499bf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Response code: 204
+[31-Jul-2025 05:35:50 UTC] Response body: 
+[31-Jul-2025 05:35:50 UTC] Immich response: true
+[31-Jul-2025 05:35:50 UTC] Immich updateAssetLocation: {"ids":["9a1384f4-7570-4195-8dc2-236b7118b393"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:50 UTC] Request data: {"ids":["9a1384f4-7570-4195-8dc2-236b7118b393"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Response code: 204
+[31-Jul-2025 05:35:50 UTC] Response body: 
+[31-Jul-2025 05:35:50 UTC] Immich response: true
+[31-Jul-2025 05:35:50 UTC] Immich updateAssetLocation: {"ids":["18efc6d8-5cc5-43b7-86fa-c5c62d4226cd"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:50 UTC] Request data: {"ids":["18efc6d8-5cc5-43b7-86fa-c5c62d4226cd"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Response code: 204
+[31-Jul-2025 05:35:50 UTC] Response body: 
+[31-Jul-2025 05:35:50 UTC] Immich response: true
+[31-Jul-2025 05:35:50 UTC] Immich updateAssetLocation: {"ids":["f5fdfa84-91c0-41fa-bb1d-d7b2363f5126"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:50 UTC] Request data: {"ids":["f5fdfa84-91c0-41fa-bb1d-d7b2363f5126"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:50 UTC] Response code: 204
+[31-Jul-2025 05:35:50 UTC] Response body: 
+[31-Jul-2025 05:35:50 UTC] Immich response: true
+[31-Jul-2025 05:35:51 UTC] Immich updateAssetLocation: {"ids":["644623cd-d40e-4d86-a798-262234454515"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:51 UTC] Request data: {"ids":["644623cd-d40e-4d86-a798-262234454515"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Response code: 204
+[31-Jul-2025 05:35:51 UTC] Response body: 
+[31-Jul-2025 05:35:51 UTC] Immich response: true
+[31-Jul-2025 05:35:51 UTC] Immich updateAssetLocation: {"ids":["748bab91-b3d2-42dc-bcaa-8d0ffe6afacf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:51 UTC] Request data: {"ids":["748bab91-b3d2-42dc-bcaa-8d0ffe6afacf"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Response code: 204
+[31-Jul-2025 05:35:51 UTC] Response body: 
+[31-Jul-2025 05:35:51 UTC] Immich response: true
+[31-Jul-2025 05:35:51 UTC] Immich updateAssetLocation: {"ids":["6e35bac2-b696-45df-bd6f-dacb66cdac22"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:51 UTC] Request data: {"ids":["6e35bac2-b696-45df-bd6f-dacb66cdac22"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Response code: 204
+[31-Jul-2025 05:35:51 UTC] Response body: 
+[31-Jul-2025 05:35:51 UTC] Immich response: true
+[31-Jul-2025 05:35:51 UTC] Immich updateAssetLocation: {"ids":["499fc776-5b75-4537-8882-d31df143e641"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:51 UTC] Request data: {"ids":["499fc776-5b75-4537-8882-d31df143e641"],"latitude":-20.45265278,"longitude":164.21318056}
+[31-Jul-2025 05:35:51 UTC] Response code: 204
+[31-Jul-2025 05:35:51 UTC] Response body: 
+[31-Jul-2025 05:35:51 UTC] Immich response: true
+[31-Jul-2025 05:35:51 UTC] Immich updateAssetLocation: {"ids":["023265a6-6cfc-4237-b704-141ab41136fb"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:51 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:51 UTC] Request data: {"ids":["023265a6-6cfc-4237-b704-141ab41136fb"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:51 UTC] Response code: 204
+[31-Jul-2025 05:35:51 UTC] Response body: 
+[31-Jul-2025 05:35:51 UTC] Immich response: true
+[31-Jul-2025 05:35:51 UTC] Immich updateAssetLocation: {"ids":["41ac3982-d9a5-49b7-8de9-3033ee976ce0"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:51 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:51 UTC] Request data: {"ids":["41ac3982-d9a5-49b7-8de9-3033ee976ce0"],"latitude":-20.56248833,"longitude":164.28583}
+[31-Jul-2025 05:35:52 UTC] Response code: 204
+[31-Jul-2025 05:35:52 UTC] Response body: 
+[31-Jul-2025 05:35:52 UTC] Immich response: true
+[31-Jul-2025 05:35:52 UTC] Immich updateAssetLocation: {"ids":["a061fc1f-3d68-4237-8d3a-4d30e8dc8a9f"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:52 UTC] Request data: {"ids":["a061fc1f-3d68-4237-8d3a-4d30e8dc8a9f"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Response code: 204
+[31-Jul-2025 05:35:52 UTC] Response body: 
+[31-Jul-2025 05:35:52 UTC] Immich response: true
+[31-Jul-2025 05:35:52 UTC] Immich updateAssetLocation: {"ids":["b1d04969-4c07-4825-868b-a2450d8aace4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:52 UTC] Request data: {"ids":["b1d04969-4c07-4825-868b-a2450d8aace4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Response code: 204
+[31-Jul-2025 05:35:52 UTC] Response body: 
+[31-Jul-2025 05:35:52 UTC] Immich response: true
+[31-Jul-2025 05:35:52 UTC] Immich updateAssetLocation: {"ids":["e2d4376b-c970-4272-aa73-ed8ef2071f6c"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:52 UTC] Request data: {"ids":["e2d4376b-c970-4272-aa73-ed8ef2071f6c"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Response code: 204
+[31-Jul-2025 05:35:52 UTC] Response body: 
+[31-Jul-2025 05:35:52 UTC] Immich response: true
+[31-Jul-2025 05:35:52 UTC] Immich updateAssetLocation: {"ids":["9d1353d1-2448-435d-9384-b9c1b1aeb9f3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:52 UTC] Request data: {"ids":["9d1353d1-2448-435d-9384-b9c1b1aeb9f3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Response code: 204
+[31-Jul-2025 05:35:52 UTC] Response body: 
+[31-Jul-2025 05:35:52 UTC] Immich response: true
+[31-Jul-2025 05:35:52 UTC] Immich updateAssetLocation: {"ids":["b8186d6d-777e-4837-8ccc-176d01d88cb3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:52 UTC] Request data: {"ids":["b8186d6d-777e-4837-8ccc-176d01d88cb3"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:52 UTC] Response code: 204
+[31-Jul-2025 05:35:52 UTC] Response body: 
+[31-Jul-2025 05:35:52 UTC] Immich response: true
+[31-Jul-2025 05:35:53 UTC] Immich updateAssetLocation: {"ids":["331b290e-5613-4d85-af96-793dfdd101af"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:53 UTC] Request data: {"ids":["331b290e-5613-4d85-af96-793dfdd101af"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Response code: 204
+[31-Jul-2025 05:35:53 UTC] Response body: 
+[31-Jul-2025 05:35:53 UTC] Immich response: true
+[31-Jul-2025 05:35:53 UTC] Immich updateAssetLocation: {"ids":["7317e023-12ca-4d9d-9061-67a61e75e8e5"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:53 UTC] Request data: {"ids":["7317e023-12ca-4d9d-9061-67a61e75e8e5"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Response code: 204
+[31-Jul-2025 05:35:53 UTC] Response body: 
+[31-Jul-2025 05:35:53 UTC] Immich response: true
+[31-Jul-2025 05:35:53 UTC] Immich updateAssetLocation: {"ids":["32ee3cf9-4b37-4ed3-b04d-ecc0a3404f95"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:53 UTC] Request data: {"ids":["32ee3cf9-4b37-4ed3-b04d-ecc0a3404f95"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Response code: 204
+[31-Jul-2025 05:35:53 UTC] Response body: 
+[31-Jul-2025 05:35:53 UTC] Immich response: true
+[31-Jul-2025 05:35:53 UTC] Immich updateAssetLocation: {"ids":["b5be26b1-80d0-43f6-9294-31cb3812d222"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:53 UTC] Request data: {"ids":["b5be26b1-80d0-43f6-9294-31cb3812d222"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Response code: 204
+[31-Jul-2025 05:35:53 UTC] Response body: 
+[31-Jul-2025 05:35:53 UTC] Immich response: true
+[31-Jul-2025 05:35:53 UTC] Immich updateAssetLocation: {"ids":["57b1cd64-e544-41bb-aace-634b9c3b74db"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:53 UTC] Request data: {"ids":["57b1cd64-e544-41bb-aace-634b9c3b74db"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:53 UTC] Response code: 204
+[31-Jul-2025 05:35:53 UTC] Response body: 
+[31-Jul-2025 05:35:53 UTC] Immich response: true
+[31-Jul-2025 05:35:54 UTC] Immich updateAssetLocation: {"ids":["9fe27778-5262-4693-ac38-3c5dc2db097e"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:54 UTC] Request data: {"ids":["9fe27778-5262-4693-ac38-3c5dc2db097e"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Response code: 204
+[31-Jul-2025 05:35:54 UTC] Response body: 
+[31-Jul-2025 05:35:54 UTC] Immich response: true
+[31-Jul-2025 05:35:54 UTC] Immich updateAssetLocation: {"ids":["d1937909-e4fe-4c99-bb2c-dfcf3a308f77"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:54 UTC] Request data: {"ids":["d1937909-e4fe-4c99-bb2c-dfcf3a308f77"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Response code: 204
+[31-Jul-2025 05:35:54 UTC] Response body: 
+[31-Jul-2025 05:35:54 UTC] Immich response: true
+[31-Jul-2025 05:35:54 UTC] Immich updateAssetLocation: {"ids":["a230a6dd-4af0-42aa-b7e5-4da3531236e4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:54 UTC] Request data: {"ids":["a230a6dd-4af0-42aa-b7e5-4da3531236e4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Response code: 204
+[31-Jul-2025 05:35:54 UTC] Response body: 
+[31-Jul-2025 05:35:54 UTC] Immich response: true
+[31-Jul-2025 05:35:54 UTC] Immich updateAssetLocation: {"ids":["7b0b7dc9-11e1-4651-a5db-93dd2a1c6c82"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:54 UTC] Request data: {"ids":["7b0b7dc9-11e1-4651-a5db-93dd2a1c6c82"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Response code: 204
+[31-Jul-2025 05:35:54 UTC] Response body: 
+[31-Jul-2025 05:35:54 UTC] Immich response: true
+[31-Jul-2025 05:35:54 UTC] Immich updateAssetLocation: {"ids":["2024d578-aa9f-4535-a150-a136c8b51ed8"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:54 UTC] Request data: {"ids":["2024d578-aa9f-4535-a150-a136c8b51ed8"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Response code: 204
+[31-Jul-2025 05:35:54 UTC] Response body: 
+[31-Jul-2025 05:35:54 UTC] Immich response: true
+[31-Jul-2025 05:35:54 UTC] Immich updateAssetLocation: {"ids":["3735b5ad-d802-4f20-ab6a-8da204b55bbc"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:54 UTC] Request data: {"ids":["3735b5ad-d802-4f20-ab6a-8da204b55bbc"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:54 UTC] Response code: 204
+[31-Jul-2025 05:35:54 UTC] Response body: 
+[31-Jul-2025 05:35:54 UTC] Immich response: true
+[31-Jul-2025 05:35:55 UTC] Immich updateAssetLocation: {"ids":["599fd5c3-046d-4752-9824-5239c6f3faed"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:55 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:55 UTC] Request data: {"ids":["599fd5c3-046d-4752-9824-5239c6f3faed"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:55 UTC] Response code: 204
+[31-Jul-2025 05:35:55 UTC] Response body: 
+[31-Jul-2025 05:35:55 UTC] Immich response: true
+[31-Jul-2025 05:35:55 UTC] Immich updateAssetLocation: {"ids":["2a723f74-bfe8-40de-812a-549ab36ec0c4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:55 UTC] Immich API Call: PUT http://192.168.1.110:3001/api/assets
+[31-Jul-2025 05:35:55 UTC] Request data: {"ids":["2a723f74-bfe8-40de-812a-549ab36ec0c4"],"latitude":-20.56251833,"longitude":164.28591}
+[31-Jul-2025 05:35:55 UTC] Response code: 204
+[31-Jul-2025 05:35:55 UTC] Response body: 
+[31-Jul-2025 05:35:55 UTC] Immich response: true
