@@ -118,7 +118,7 @@ class ImmichClient
     /**
      * Effectuer une requête API
      */
-    private function makeRequest($endpoint, $method = 'GET', $data = null): ?array
+    private function makeRequest($endpoint, $method = 'GET', $data = null)
     {
         $url = $this->apiUrl . $endpoint;
 
@@ -152,7 +152,11 @@ class ImmichClient
             return null;
         }
 
-        if ($httpCode !== 200) {
+        if ($httpCode === 204) {
+            return true;
+        }
+
+        if ($httpCode !== 200 && $httpCode !== 204) {
             error_log("Erreur API Immich: HTTP {$httpCode} - {$response}");
             return null;
         }
@@ -168,6 +172,34 @@ class ImmichClient
         return $this->makeRequest('/api/server-info/statistics');
     }
 
+    /**
+     * Metre à jour les assets de immich
+     *
+     * @param [type] $assetId
+     * @param [type] $latitude
+     * @param [type] $longitude
+     * @return void
+     */
+    public function updateAssetLocation($assetId, $latitude, $longitude)
+    {
+        // L'API Immich utilise PUT /api/assets avec un array d'IDs
+        $data = [
+            'ids' => [$assetId]
+        ];
+
+        // Pour définir les coordonnées
+        if ($latitude !== null && $longitude !== null) {
+            $data['latitude'] = floatval($latitude);
+            $data['longitude'] = floatval($longitude);
+        } else {
+            // Pour supprimer les coordonnées, envoyer 0
+            // (Immich ne semble pas accepter null)
+            $data['latitude'] = 0;
+            $data['longitude'] = 0;
+        }
+
+        return $this->makeRequest('/api/assets', 'PUT', $data);
+    }
     /**
      * Rechercher des assets
      */

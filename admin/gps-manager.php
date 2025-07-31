@@ -41,22 +41,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
 
             $updated = 0;
             foreach ($assetIds as $assetId) {
+                // Mettre à jour dans la base locale
                 $stmt = $db->getPDO()->prepare("
-                    UPDATE gallery_images 
-                    SET latitude = ?, longitude = ?, location_name = NULL
-                    WHERE gallery_id = ? AND immich_asset_id = ?
-                ");
+                UPDATE gallery_images 
+                SET latitude = ?, longitude = ?, location_name = NULL
+                WHERE gallery_id = ? AND immich_asset_id = ?
+            ");
                 if ($stmt->execute([$latitude, $longitude, $galleryId, $assetId])) {
+                    // NOUVEAU : Mettre à jour dans Immich aussi
+                    $immichClient->updateAssetLocation($assetId, $latitude, $longitude);
                     $updated++;
                 }
             }
-
-            echo json_encode([
-                'success' => true,
-                'updated' => $updated,
-                'message' => "$updated photos mises à jour"
-            ]);
-            exit;
 
         case 'remove_gps':
             $assetIds = json_decode($_POST['asset_ids'], true);
@@ -64,11 +60,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
             $updated = 0;
             foreach ($assetIds as $assetId) {
                 $stmt = $db->getPDO()->prepare("
-                    UPDATE gallery_images 
-                    SET latitude = NULL, longitude = NULL, location_name = NULL
-                    WHERE gallery_id = ? AND immich_asset_id = ?
-                ");
+            UPDATE gallery_images 
+            SET latitude = NULL, longitude = NULL, location_name = NULL
+            WHERE gallery_id = ? AND immich_asset_id = ?
+        ");
                 if ($stmt->execute([$galleryId, $assetId])) {
+                    // NOUVEAU : Supprimer aussi dans Immich (mettre null)
+                    $immichClient->updateAssetLocation($assetId, null, null);
                     $updated++;
                 }
             }
