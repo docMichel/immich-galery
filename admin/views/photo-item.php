@@ -39,7 +39,9 @@ $index = $index ?? uniqid(); // Index unique si non fourni
         <div class="photo-caption-text">
             <?= htmlspecialchars($image['caption'] ?: 'Photo') ?>
             <?php if ($hasGPS): ?>
-                <br><small>📍 <?= number_format($image['latitude'], 4) ?>, <?= number_format($image['longitude'], 4) ?></small>
+                <br><small>📍 <?= number_format($image['latitude'], 4) ?>,
+                    <?= number_format($image['longitude'], 4) ?></small>
+                <br><?= htmlspecialchars($image['immich_asset_id']) ?>
             <?php endif; ?>
         </div>
     </div>
