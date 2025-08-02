@@ -1,6 +1,5 @@
 <?php
 session_start();
-#require_once 'session_check.php';
 require_once 'config/config.php';
 ?>
 <!DOCTYPE html>
@@ -33,11 +32,8 @@ require_once 'config/config.php';
     <!-- JS -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script>
-        const CONFIG = {
-            immichUrl: '<?php echo IMMICH_URL; ?>',
-            apiKey: '<?php echo $_SESSION['api_key']; ?>',
-            proxyUrl: 'proxy.php'
-        };
+        //   const IMMICH_API_KEY = '<?php echo $_SESSION['immich_api_key'] ?? ''; ?>';
+        //  const IMMICH_BASE_URL = '<?php echo IMMICH_URL; ?>';
     </script>
 
     <!-- JS modules -->
