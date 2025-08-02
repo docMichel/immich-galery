@@ -67,6 +67,7 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
 
     <div class="container">
         <!-- Toolbar -->
+        <!-- Toolbar -->
         <div class="toolbar">
             <div class="view-toggle">
                 <button class="view-btn active" data-view="grid">Grille</button>
@@ -96,11 +97,16 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
                 <div class="toolbar-group">
                     <button id="btnCopyGPS" class="btn btn-primary" disabled>📍 Copier GPS</button>
                     <button id="btnPasteGPS" class="btn btn-primary" disabled>📋 Coller GPS</button>
+                    <button id="btnMapSelect" class="btn btn-primary" disabled>🗺️ Carte</button>
                     <button id="btnRemoveGPS" class="btn btn-danger" disabled>🗑️ Supprimer GPS</button>
+                </div>
+
+                <div class="clipboard-info" id="clipboardInfo" style="display: none;">
+                    <img id="clipboardThumb" src="" alt="">
+                    <span id="clipboardCoords"></span>
                 </div>
             </div>
         </div>
-
         <!-- Vue Grille -->
         <div id="viewGrid" class="view-container active">
             <div class="photo-grid" id="photoGrid">
