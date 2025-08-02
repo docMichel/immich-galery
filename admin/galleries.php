@@ -298,9 +298,9 @@ $immichAlbums = $immichClient->getAllAlbums();
             $('#modalGallery').removeClass('hidden').addClass('flex');
         }
 
-        // Ouvrir PhotoEdit (GPS Manager)
+        // Ouvrir PhotoEdit
         function openPhotoEdit(galleryId) {
-            window.location.href = `gps-manager.php?gallery=${galleryId}`;
+            window.location.href = `edit-photos.php?gallery=${galleryId}`;
         }
 
         // Supprimer une galerie

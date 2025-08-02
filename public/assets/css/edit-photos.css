@@ -1,0 +1,438 @@
+/* public/assets/css/edit-photos.css */
+
+/* Toolbar */
+.toolbar {
+    background: white;
+    border-radius: 8px;
+    padding: 16px 20px;
+    margin: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: sticky;
+    top: 70px;
+    z-index: 90;
+}
+
+.toolbar-actions {
+    display: flex;
+    gap: 15px;
+    flex: 1;
+    flex-wrap: wrap;
+}
+
+.toolbar-group {
+    display: flex;
+    gap: 8px;
+    padding: 0 10px;
+    border-left: 1px solid #e5e7eb;
+}
+
+.toolbar-group:first-child {
+    border-left: none;
+}
+
+/* Vue Toggle */
+.view-toggle {
+    display: flex;
+    gap: 5px;
+    background: #f3f4f6;
+    padding: 4px;
+    border-radius: 6px;
+}
+
+.view-btn {
+    padding: 6px 12px;
+    border: none;
+    background: transparent;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s;
+}
+
+.view-btn.active {
+    background: white;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+}
+
+/* Vues */
+.view-container {
+    display: none;
+}
+
+.view-container.active {
+    display: block;
+}
+
+/* Séparateur de date dans la grille */
+.date-separator {
+    grid-column: 1 / -1;
+    background: #f8f9fa;
+    padding: 10px 15px;
+    margin: 10px -10px;
+    border-radius: 6px;
+    position: sticky;
+    top: 140px;
+    z-index: 5;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.date-separator.hidden {
+    display: none;
+}
+
+.date-label {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-weight: 600;
+    color: #495057;
+    user-select: none;
+}
+
+.date-select {
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.date-text {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.date-count {
+    font-weight: normal;
+    color: #6c757d;
+    font-size: 14px;
+}
+
+/* Ajustement de la grille pour les séparateurs */
+.photo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 12px;
+    margin-bottom: 40px;
+    padding: 0 10px;
+}
+
+/* Photo avec pile (doublons) */
+.photo-item.has-duplicates {
+    position: relative;
+}
+
+.photo-item.has-duplicates::before,
+.photo-item.has-duplicates::after {
+    content: '';
+    position: absolute;
+    top: -3px;
+    left: -3px;
+    right: -3px;
+    bottom: -3px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    z-index: -1;
+}
+
+.photo-item.has-duplicates::after {
+    top: -6px;
+    left: -6px;
+    right: -6px;
+    bottom: -6px;
+    z-index: -2;
+}
+
+.duplicate-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    background: #ff6b6b;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    z-index: 3;
+}
+
+/* Clipboard amélioré */
+.clipboard-info {
+    background: #e3f2fd;
+    padding: 8px 12px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+}
+
+#clipboardThumb {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 2px solid white;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+/* Vue Doublons */
+.duplicates-controls {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.duplicates-controls label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#duplicateThreshold {
+    width: 150px;
+}
+
+#duplicatesResults {
+    padding: 20px;
+}
+
+.duplicate-group {
+    background: white;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.duplicate-group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #e9ecef;
+}
+
+.duplicate-photos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 10px;
+}
+
+/* Photo sélectionnée dans les doublons */
+.duplicate-photos .photo-item {
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.duplicate-photos .photo-item:hover {
+    border-color: #007bff;
+}
+
+.duplicate-photos .photo-item.selected {
+    border-color: #28a745;
+    transform: scale(0.95);
+}
+
+/* Animation de pile dépliée */
+.duplicate-group.expanded .duplicate-photos {
+    animation: expandPile 0.3s ease-out;
+}
+
+@keyframes expandPile {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Ajustements responsive */
+@media (max-width: 768px) {
+    .toolbar {
+        position: static;
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .toolbar-actions {
+        flex-direction: column;
+    }
+    
+    .toolbar-group {
+        border-left: none;
+        border-top: 1px solid #e5e7eb;
+        padding: 10px 0;
+    }
+    
+    .date-photos,
+    .duplicate-photos {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+}
+
+/* Styles pour les doublons dans la grille */
+.duplicate-photo {
+    position: relative;
+    border: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.duplicate-photo.primary {
+    border-color: #10b981;
+}
+
+.duplicate-photo.marked-for-deletion {
+    opacity: 0.5;
+    border-color: #ef4444;
+}
+
+.duplicate-photo .photo-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    color: white;
+    padding: 5px;
+    font-size: 11px;
+}
+
+.duplicate-photo .badge {
+    display: inline-block;
+    padding: 2px 6px;
+    background: #10b981;
+    border-radius: 10px;
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.duplicate-photo .photo-actions {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    display: flex;
+    gap: 5px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.duplicate-photo:hover .photo-actions {
+    opacity: 1;
+}
+
+.btn-icon {
+    width: 28px;
+    height: 28px;
+    border: none;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.9);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    transition: all 0.2s;
+}
+
+.btn-icon:hover {
+    background: white;
+    transform: scale(1.1);
+}
+
+.btn-icon.danger {
+    color: #ef4444;
+}
+
+.btn-icon.danger:hover {
+    background: #fee;
+}
+
+/* Messages et états vides */
+.empty-message,
+.error-message,
+.loading {
+    text-align: center;
+    padding: 40px;
+    color: #6b7280;
+}
+
+.error-message {
+    color: #ef4444;
+    background: #fee;
+    border-radius: 8px;
+    border: 1px solid #fcc;
+}
+
+.loading {
+    color: #3b82f6;
+}
+
+/* Résumé des doublons */
+.duplicates-summary {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.duplicates-summary h3 {
+    margin: 0;
+    color: #1f2937;
+}
+
+/* Actions de groupe */
+.group-actions {
+    padding: 15px;
+    background: #f9fafb;
+    border-top: 1px solid #e5e7eb;
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+/* Progress bar générique */
+.progress-container {
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 8px;
+    background: #e5e7eb;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: #3b82f6;
+    transition: width 0.3s ease;
+    border-radius: 4px;
+}
+
+.progress-fill.complete {
+    background: #10b981;
+}
+
+.progress-text {
+    text-align: center;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #6b7280;
+}

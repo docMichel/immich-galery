@@ -1,0 +1,26 @@
+Reste à faire
+gps-manager doit changer de nom et devenir "edit-photos"
+
+edit-photos
+    afficher les jours et les rendre selectionnables
+    enlever "meme jour" du coup inutile
+
+    - carte
+        montrer plusieurs images selectionnées et non selectionnées sur la carte
+        comment récupérer des fonds de carte quand manquants 
+    - clipboardthumb
+        image en 300x300 ou autre, par css
+        enlever le carré gris
+
+  - rajouter doublons
+    dans edit-photos, il faut un menu doublons
+      si photos sélectionnées, sur la selection avec un coef moyen (je veux un seul coucher de soleil sut le total)
+      si rien de selectionné, sur la totalité mais avec un coeff très élevé
+
+    quand une photo fait partie de doublons, on doit voir la photo et une image de pile dessous. 
+      doubleclick déplie la pile
+
+editer légende devrait etre dans gps manager. actuellement c'est cassé
+
+rajouter "pivoter" dans les deux sens, et le sauver dans les immich assets.
+l'application le fait donc ca doit etre possible
