@@ -2,7 +2,9 @@ Reste à faire
 gps-manager doit changer de nom et devenir "edit-photos"
 
 edit-photos
-    afficher les jours et les rendre selectionnables
+    afficher les jours et les rendre selectionnables:
+      dans la grille de photo, chaque jour est séparé par un séparateur avec
+      date et case à cocher, qui selectionne toutes les photos de ce jour là
     enlever "meme jour" du coup inutile
 
     - carte
