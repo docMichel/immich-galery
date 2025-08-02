@@ -28,8 +28,7 @@ if ($_POST) {
 
             // Générer les légendes automatiquement si demandé
             if (isset($_POST['auto_generate_captions'])) {
-                $captionGenerator = new CaptionGenerator();
-                $captionGenerator->generateForGallery($galleryId);
+                // TODO: Implémenter
             }
             break;
 
@@ -37,6 +36,8 @@ if ($_POST) {
             $galleryModel->updateGallery($_POST['gallery_id'], [
                 'name' => $_POST['gallery_name'],
                 'description' => $_POST['gallery_description'],
+                'is_public' => isset($_POST['is_public']),
+                'requires_auth' => isset($_POST['requires_auth']),
                 'immich_album_ids' => $_POST['selected_albums'] ?? []
             ]);
             break;
@@ -102,9 +103,13 @@ $immichAlbums = $immichClient->getAllAlbums();
                         </div>
 
                         <div class="flex space-x-2">
-                            <button onclick="editGallery(<?= $gallery['id'] ?>)"
+                            <button onclick="editGallery(<?= htmlspecialchars(json_encode($gallery)) ?>)"
                                 class="text-blue-500 hover:text-blue-600 px-3 py-1 border border-blue-300 rounded">
                                 Modifier
+                            </button>
+                            <button onclick="openPhotoEdit(<?= $gallery['id'] ?>)"
+                                class="text-green-500 hover:text-green-600 px-3 py-1 border border-green-300 rounded">
+                                📸 PhotoEdit
                             </button>
                             <button onclick="deleteGallery(<?= $gallery['id'] ?>)"
                                 class="text-red-500 hover:text-red-600 px-3 py-1 border border-red-300 rounded">
@@ -132,30 +137,30 @@ $immichAlbums = $immichClient->getAllAlbums();
             <?php endforeach; ?>
         </div>
 
-        <!-- Modal de création -->
-        <!-- Modal de création -->
-        <div id="modalCreate" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
+        <!-- Modal de création/édition -->
+        <div id="modalGallery" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50 p-4">
             <div class="bg-white rounded-lg w-full max-w-4xl h-[90vh] flex flex-col">
                 <!-- Header sticky -->
                 <div class="px-6 py-4 border-b bg-white sticky top-0 z-10">
-                    <h2 class="text-2xl font-bold">Créer une nouvelle galerie</h2>
+                    <h2 class="text-2xl font-bold" id="modalTitle">Créer une nouvelle galerie</h2>
                 </div>
 
                 <!-- Contenu scrollable -->
                 <div class="flex-1 overflow-y-auto px-6 py-4">
-                    <form method="POST" id="createForm">
-                        <input type="hidden" name="action" value="create_gallery">
+                    <form method="POST" id="galleryForm">
+                        <input type="hidden" name="action" id="formAction" value="create_gallery">
+                        <input type="hidden" name="gallery_id" id="galleryId">
 
                         <!-- Informations de base -->
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Nom de la galerie</label>
-                                <input type="text" name="gallery_name" required
+                                <input type="text" name="gallery_name" id="galleryName" required
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 mb-1">Slug URL</label>
-                                <input type="text" name="gallery_slug" required placeholder="ma-galerie"
+                                <input type="text" name="gallery_slug" id="gallerySlug" required placeholder="ma-galerie"
                                     pattern="[a-z0-9-]+"
                                     class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm">
                             </div>
@@ -163,7 +168,7 @@ $immichAlbums = $immichClient->getAllAlbums();
 
                         <div class="mb-4">
                             <label class="block text-sm font-medium text-gray-700 mb-1">Description</label>
-                            <textarea name="gallery_description" rows="2"
+                            <textarea name="gallery_description" id="galleryDescription" rows="2"
                                 class="w-full px-3 py-2 border border-gray-300 rounded-md text-sm"></textarea>
                         </div>
 
@@ -173,11 +178,11 @@ $immichAlbums = $immichClient->getAllAlbums();
                                 <h4 class="text-sm font-medium text-gray-700 mb-2">Options</h4>
                                 <div class="space-y-1">
                                     <label class="flex items-center text-sm">
-                                        <input type="checkbox" name="is_public" class="mr-2">
+                                        <input type="checkbox" name="is_public" id="isPublic" class="mr-2">
                                         Galerie publique
                                     </label>
                                     <label class="flex items-center text-sm">
-                                        <input type="checkbox" name="requires_auth" class="mr-2">
+                                        <input type="checkbox" name="requires_auth" id="requiresAuth" class="mr-2">
                                         Authentification requise
                                     </label>
                                 </div>
@@ -204,10 +209,11 @@ $immichAlbums = $immichClient->getAllAlbums();
                         <!-- Albums plus compacts -->
                         <div class="mb-4">
                             <h4 class="text-sm font-medium text-gray-700 mb-2">Albums Immich</h4>
-                            <div class="grid grid-cols-2 md:grid-cols-3 gap-1 h-48 overflow-y-auto border border-gray-200 rounded p-2">
+                            <div class="grid grid-cols-2 md:grid-cols-3 gap-1 h-48 overflow-y-auto border border-gray-200 rounded p-2" id="albumsList">
                                 <?php foreach ($immichAlbums as $album): ?>
                                     <label class="flex items-start p-2 border border-gray-200 rounded hover:bg-gray-50 cursor-pointer text-sm">
-                                        <input type="checkbox" name="selected_albums[]" value="<?= $album['id'] ?>" class="mr-2 mt-0.5">
+                                        <input type="checkbox" name="selected_albums[]" value="<?= $album['id'] ?>"
+                                            data-album-id="<?= $album['id'] ?>" class="mr-2 mt-0.5 album-checkbox">
                                         <div class="min-w-0">
                                             <div class="font-medium truncate"><?= htmlspecialchars($album['albumName']) ?></div>
                                             <div class="text-xs text-gray-500"><?= $album['assetCount'] ?> photos</div>
@@ -226,9 +232,9 @@ $immichAlbums = $immichClient->getAllAlbums();
                             class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100">
                             Annuler
                         </button>
-                        <button type="submit" form="createForm"
+                        <button type="submit" form="galleryForm"
                             class="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600">
-                            Créer la galerie
+                            <span id="btnSubmitText">Créer la galerie</span>
                         </button>
                     </div>
                 </div>
@@ -238,28 +244,66 @@ $immichAlbums = $immichClient->getAllAlbums();
 
     <script>
         $(document).ready(function() {
-            // Ouvrir le modal
+            // Ouvrir le modal pour création
             $('#btnNewGallery').click(function() {
-                $('#modalCreate').removeClass('hidden').addClass('flex');
+                resetForm();
+                $('#modalTitle').text('Créer une nouvelle galerie');
+                $('#formAction').val('create_gallery');
+                $('#btnSubmitText').text('Créer la galerie');
+                $('#modalGallery').removeClass('hidden').addClass('flex');
             });
 
             // Fermer le modal
             $('#btnCancel').click(function() {
-                $('#modalCreate').removeClass('flex').addClass('hidden');
+                $('#modalGallery').removeClass('flex').addClass('hidden');
             });
 
             // Fermer en cliquant en dehors
-            $('#modalCreate').click(function(e) {
+            $('#modalGallery').click(function(e) {
                 if (e.target === this) {
                     $(this).removeClass('flex').addClass('hidden');
                 }
             });
         });
 
-        function editGallery(id) {
-            alert('Edition non implémentée - ID: ' + id);
+        // Réinitialiser le formulaire
+        function resetForm() {
+            $('#galleryForm')[0].reset();
+            $('#galleryId').val('');
+            $('.album-checkbox').prop('checked', false);
         }
 
+        // Éditer une galerie
+        function editGallery(gallery) {
+            resetForm();
+
+            // Remplir le formulaire avec les données existantes
+            $('#modalTitle').text('Modifier la galerie');
+            $('#formAction').val('update_gallery');
+            $('#btnSubmitText').text('Enregistrer les modifications');
+            $('#galleryId').val(gallery.id);
+            $('#galleryName').val(gallery.name);
+            $('#gallerySlug').val(gallery.slug).prop('readonly', true); // Slug non modifiable
+            $('#galleryDescription').val(gallery.description);
+            $('#isPublic').prop('checked', gallery.is_public == 1);
+            $('#requiresAuth').prop('checked', gallery.requires_auth == 1);
+
+            // Cocher les albums associés
+            if (gallery.albums && Array.isArray(gallery.albums)) {
+                gallery.albums.forEach(function(album) {
+                    $(`input[data-album-id="${album.id}"]`).prop('checked', true);
+                });
+            }
+
+            $('#modalGallery').removeClass('hidden').addClass('flex');
+        }
+
+        // Ouvrir PhotoEdit (GPS Manager)
+        function openPhotoEdit(galleryId) {
+            window.location.href = `gps-manager.php?gallery=${galleryId}`;
+        }
+
+        // Supprimer une galerie
         function deleteGallery(id) {
             if (confirm('Êtes-vous sûr de vouloir supprimer cette galerie ?')) {
                 $('<form>', {
