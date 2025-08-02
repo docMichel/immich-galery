@@ -67,7 +67,6 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
 
     <div class="container">
         <!-- Toolbar -->
-        <!-- Toolbar -->
         <div class="toolbar">
             <div class="view-toggle">
                 <button class="view-btn active" data-view="grid">Grille</button>
@@ -91,22 +90,22 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
                 </div>
 
                 <div class="toolbar-group">
-                    <button id="btnEditCaption" class="btn btn-secondary" disabled>Éditer légende</button>
-                </div>
-
-                <div class="toolbar-group">
                     <button id="btnCopyGPS" class="btn btn-primary" disabled>📍 Copier GPS</button>
                     <button id="btnPasteGPS" class="btn btn-primary" disabled>📋 Coller GPS</button>
                     <button id="btnMapSelect" class="btn btn-primary" disabled>🗺️ Carte</button>
                     <button id="btnRemoveGPS" class="btn btn-danger" disabled>🗑️ Supprimer GPS</button>
                 </div>
-
+                <div class="toolbar-group">
+                    <button id="btnFindDuplicates" class="btn btn-primary" disabled>DoublonS</button>
+                </div>
                 <div class="clipboard-info" id="clipboardInfo" style="display: none;">
                     <img id="clipboardThumb" src="" alt="">
                     <span id="clipboardCoords"></span>
                 </div>
             </div>
         </div>
+
+
         <!-- Vue Grille -->
         <div id="viewGrid" class="view-container active">
             <div class="photo-grid" id="photoGrid">
@@ -130,7 +129,7 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
 
         <!-- Vue Carte -->
         <div id="viewMap" class="view-container">
-            <div id="map" style="height: 600px;"></div>
+            <div id="mainMap" style="height: 600px;"></div>
         </div>
 
         <!-- Vue Doublons -->
@@ -166,9 +165,13 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
         </div>
     </div>
 
+
+
+    <!-- MapModal -->
+    <?php include 'views/map-modal.php'; ?>
+
     <!-- Toast -->
     <div id="toast" class="toast"></div>
-
     <!-- Configuration -->
     <script>
         window.editPhotosConfig = {
@@ -183,6 +186,8 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
 
     <!-- JS -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    <script src="../public/assets/js/modules/MapManager.js"></script>
+
     <script src="../public/assets/js/edit-photos/main.js" type="module"></script>
 </body>
 

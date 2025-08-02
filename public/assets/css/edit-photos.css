@@ -145,6 +145,26 @@
     right: -6px;
     bottom: -6px;
     z-index: -2;
+}/* Sélection visible */
+.photo-item.selected {
+    border: 3px solid #007bff !important;
+    transform: scale(0.95);
+}
+
+.photo-item.selected .selection-checkbox label::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.photo-item.selected .selection-checkbox label {
+    background: #007bff;
+    border-color: #007bff;
 }
 
 .duplicate-badge {
@@ -159,6 +179,8 @@
     font-weight: 600;
     z-index: 3;
 }
+
+
 
 /* Clipboard amélioré */
 .clipboard-info {

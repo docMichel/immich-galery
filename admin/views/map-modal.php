@@ -7,7 +7,7 @@
             <h3>Sélectionner une position GPS</h3>
             <button class="btn-close" onclick="closeMapModal()">✕</button>
         </div>
-        <div id="map"></div>
+        <div id="mapModalContent"></div> <!-- Changez l'id ici -->
         <div class="map-footer">
             <div class="map-coords">
                 Cliquez sur la carte pour sélectionner une position
@@ -65,9 +65,12 @@
         font-size: 18px;
     }
 
-    #map {
+    #mapModalContent {
         flex: 1;
         width: 100%;
+        min-height: 400px;
+        /* Ajouter une hauteur minimale */
+
     }
 
     .map-footer {

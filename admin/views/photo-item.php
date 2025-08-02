@@ -34,6 +34,13 @@ $index = $index ?? uniqid(); // Index unique si non fourni
 
     <!-- Badge doublons (sera ajouté dynamiquement) -->
 
+    <!-- Bouton éditer légende (au survol) -->
+    <button class="caption-edit-btn"
+        onclick="event.stopPropagation(); window.open('../admin/edit-caption.php?asset=<?= $photo['immich_asset_id'] ?>&gallery=<?= $galleryId ?>', 'caption-editor', 'width=1000,height=700')"
+        title="Éditer la légende">
+        ✏️
+    </button>
+
     <!-- Légende au survol -->
     <div class="photo-caption">
         <div class="photo-caption-text">
@@ -42,6 +49,7 @@ $index = $index ?? uniqid(); // Index unique si non fourni
                 <br><small>📍 <?= number_format($photo['latitude'], 4) ?>,
                     <?= number_format($photo['longitude'], 4) ?></small>
             <?php endif; ?>
+            <br><small style="opacity: 0.7;">ID: <?= htmlspecialchars($photo['immich_asset_id']) ?></small>
         </div>
     </div>
 </div>

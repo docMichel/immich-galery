@@ -108,6 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
                 <div class="metadata-box">
                     <h4>Métadonnées</h4>
                     <?php if ($assetInfo): ?>
+                        <p><strong>Asset ID:</strong> <?= htmlspecialchars($assetId) ?></p>
                         <p><strong>Fichier:</strong> <?= htmlspecialchars($assetInfo['originalFileName'] ?? 'N/A') ?></p>
                         <p><strong>Date:</strong> <?= date('d/m/Y H:i', strtotime($assetInfo['fileCreatedAt'] ?? 'now')) ?></p>
                         <?php if ($latitude !== null && $longitude !== null): ?>

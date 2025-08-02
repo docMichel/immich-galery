@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test API Détection Doublons</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        h1 { color: #333; }
+        
+        .test-section {
+            margin: 20px 0;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .asset-ids {
+            width: 100%;
+            min-height: 100px;
+            font-family: monospace;
+            margin: 10px 0;
+        }
+        
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        
+        button:hover { background: #0056b3; }
+        
+        .results {
+            margin-top: 20px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 4px;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        
+        .duplicate-group {
+            margin: 10px 0;
+            padding: 15px;
+            background: #e9ecef;
+            border-radius: 4px;
+        }
+        
+        .duplicate-images {
+            display: flex;
+            gap: 10px;
+            margin-top: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .duplicate-image {
+            border: 2px solid #ddd;
+            padding: 5px;
+            border-radius: 4px;
+            text-align: center;
+            background: white;
+        }
+        
+        .duplicate-image.best {
+            border-color: #28a745;
+        }
+        
+        .duplicate-image img {
+            max-width: 200px;
+            max-height: 200px;
+            display: block;
+        }
+        
+        .loading { color: #007bff; }
+        .error { color: #dc3545; }
+        .success { color: #28a745; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Test API Détection de Doublons</h1>
+        
+        <div class="test-section">
+            <h2>Configuration</h2>
+            <label>
+                URL du serveur Flask:
+                <input type="text" id="serverUrl" value="http://localhost:5001" style="width: 300px;">
+            </label>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test 1: Détection avec Asset IDs</h2>
+            <p>Entrez les asset IDs (un par ligne) :</p>
+            <textarea id="assetIds" class="asset-ids">f7aef515-e6b7-4d1a-bc89-e9e828e3b55e
+9a7475c0-a286-42bf-b02c-94246c5cf937
+0f5c707b-2b5b-45c0-b881-e62f6eddc06d</textarea>
+            
+            <label>
+                Seuil de similarité:
+                <input type="range" id="threshold" min="0.5" max="1" step="0.05" value="0.85">
+                <span id="thresholdValue">0.85</span>
+            </label>
+            
+            <div style="margin-top: 10px;">
+                <button onclick="testFindSimilar()">Tester Détection</button>
+                <button onclick="clearResults()">Effacer</button>
+            </div>
+            
+            <div id="results" class="results"></div>
+        </div>
+        
+        <div class="test-section">
+            <h2>Test 2: Affichage Visuel</h2>
+            <div id="visualResults"></div>
+        </div>
+    </div>
+    
+    <script>
+        // Configuration
+        const getServerUrl = () => document.getElementById('serverUrl').value;
+        
+        // Mise à jour valeur seuil
+        document.getElementById('threshold').addEventListener('input', (e) => {
+            document.getElementById('thresholdValue').textContent = e.target.value;
+        });
+        
+        // Fonction de test principal
+        async function testFindSimilar() {
+            const resultsDiv = document.getElementById('results');
+            const visualDiv = document.getElementById('visualResults');
+            
+            resultsDiv.innerHTML = '<div class="loading">⏳ Recherche de doublons en cours...</div>';
+            visualDiv.innerHTML = '';
+            
+            // Récupérer les asset IDs
+            const assetIds = document.getElementById('assetIds').value
+                .split('\n')
+                .map(id => id.trim())
+                .filter(id => id);
+            
+            if (assetIds.length < 2) {
+                resultsDiv.innerHTML = '<div class="error">❌ Entrez au moins 2 asset IDs</div>';
+                return;
+            }
+            
+            const threshold = parseFloat(document.getElementById('threshold').value);
+            
+            try {
+                const response = await fetch(`${getServerUrl()}/api/duplicates/find-similar`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        asset_ids: assetIds,
+                        threshold: threshold
+                    })
+                });
+                
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                }
+                
+                const result = await response.json();
+                
+                // Afficher les résultats JSON
+                resultsDiv.innerHTML = `<div class="success">✅ Réponse reçue</div>
+<pre>${JSON.stringify(result, null, 2)}</pre>`;
+                
+                // Afficher visuellement
+                displayVisualResults(result);
+                
+            } catch (error) {
+                resultsDiv.innerHTML = `<div class="error">❌ Erreur: ${error.message}</div>`;
+                console.error('Erreur:', error);
+            }
+        }
+        
+        // Affichage visuel des résultats
+        function displayVisualResults(result) {
+            const visualDiv = document.getElementById('visualResults');
+            
+            if (!result.success) {
+                visualDiv.innerHTML = '<div class="error">Erreur dans la réponse</div>';
+                return;
+            }
+            
+            if (!result.groups || result.groups.length === 0) {
+                visualDiv.innerHTML = '<div class="success">✅ Aucun doublon trouvé</div>';
+                return;
+            }
+            
+            visualDiv.innerHTML = `
+                <h3>📊 Résultats: ${result.groups.length} groupe(s) de doublons</h3>
+                ${result.groups.map((group, index) => `
+                    <div class="duplicate-group">
+                        <h4>Groupe ${index + 1}</h4>
+                        <p>
+                            ID: ${group.group_id}<br>
+                            Similarité moyenne: ${(group.similarity_avg * 100).toFixed(2)}%<br>
+                            ${group.total_images} images similaires
+                        </p>
+                        <div class="duplicate-images">
+                            ${group.images.map(img => `
+                                <div class="duplicate-image ${img.is_best ? 'best' : ''}">
+                                    <div>
+                                        <strong>${img.is_best ? '⭐ Meilleure' : ''}</strong><br>
+                                        ID: ${img.asset_id.substring(0, 8)}...<br>
+                                        Similarité: ${(img.similarity * 100).toFixed(2)}%<br>
+                                        Score qualité: ${img.quality_metrics.quality_score}
+                                    </div>
+                                    <!-- Pour afficher l'image si vous avez un proxy -->
+                                    <!-- <img src="/image-proxy.php?id=${img.asset_id}&type=thumbnail" alt=""> -->
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+        
+        // Effacer les résultats
+        function clearResults() {
+            document.getElementById('results').innerHTML = '';
+            document.getElementById('visualResults').innerHTML = '';
+        }
+        
+        // Test au chargement
+        window.addEventListener('load', () => {
+            console.log('Page de test chargée. Serveur:', getServerUrl());
+        });
+    </script>
+</body>
+</html>
