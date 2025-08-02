@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once 'session_check.php';
-require_once 'config.php';
+#require_once 'session_check.php';
+require_once 'config/config.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
