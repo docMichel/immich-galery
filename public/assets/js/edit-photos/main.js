@@ -143,6 +143,8 @@ class EditPhotos {
         document.getElementById('btnPasteGPS').disabled = !hasSelection || !this.photoManager.hasClipboardGPS();
         document.getElementById('btnRemoveGPS').disabled = !hasSelection;
         document.getElementById('btnMapSelect').disabled = !hasSelection;
+        document.getElementById('btnFindDuplicates').disabled = !hasSelection;
+
 
         // Boutons rotation
         document.getElementById('btnRotateLeft').disabled = !hasSelection;

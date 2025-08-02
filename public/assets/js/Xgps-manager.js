@@ -386,7 +386,7 @@ class GPSManager {
         this.btnRemoveGPS.disabled = !hasSelection;
         this.btnSameDay.disabled = !singleSelection;
         this.btnMapSelect.disabled = !hasSelection;
-        this.btnFindDuplicates.disabled = !hasSelection;
+        //this.btnFindDuplicates.disabled = !hasSelection;
 
 
         // Info presse-papier
