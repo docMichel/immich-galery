@@ -13,7 +13,7 @@
             </div>
 
             <?php if ($auth->isAdmin()): ?>
-                <a href="../admin/galleries.php" class="admin-link">Administration</a>
+                <a href="/admin/galleries.php" class="admin-link">Administration</a>
             <?php endif; ?>
 
             <a href="?logout=1" class="logout-link">Déconnexion</a>
