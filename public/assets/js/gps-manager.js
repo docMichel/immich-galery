@@ -386,6 +386,8 @@ class GPSManager {
         this.btnRemoveGPS.disabled = !hasSelection;
         this.btnSameDay.disabled = !singleSelection;
         this.btnMapSelect.disabled = !hasSelection;
+        this.btnFindDuplicates.disabled = !hasSelection;
+
 
         // Info presse-papier
         if (this.clipboardGPS) {
@@ -441,16 +443,16 @@ class GPSManager {
 }
 
 // Fonctions globales pour la modal
-window.closeMapModal = function() {
+window.closeMapModal = function () {
     window.gpsManager.mapManager.closeModal();
 }
 
-window.confirmMapLocation = function() {
+window.confirmMapLocation = function () {
     const manager = window.gpsManager;
     const coords = manager.mapManager.getSelectedCoords();
-    
+
     if (!coords || manager.selectedPhotos.size === 0) return;
-    
+
     // Copier les coordonnées de la carte dans le presse-papier
     manager.clipboardGPS = {
         latitude: coords.latitude,
@@ -458,13 +460,13 @@ window.confirmMapLocation = function() {
         assetId: 'map-selection',
         thumbSrc: ''
     };
-    
+
     // Fermer la modal
     manager.mapManager.closeModal();
-    
+
     // Mettre à jour l'UI
     manager.updateUI();
-    
+
     // Coller automatiquement si souhaité
     if (confirm('Appliquer ces coordonnées aux photos sélectionnées ?')) {
         manager.pasteGPS();
