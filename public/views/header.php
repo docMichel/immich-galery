@@ -2,10 +2,8 @@
 // public/views/header.php
 // Variables disponibles: $auth, $userRole, $selectedGallery (optionnel)
 
-// Déterminer le chemin de base de manière robuste
-$scriptPath = $_SERVER['SCRIPT_NAME'];
-$isInGallerySymlink = strpos($scriptPath, '/gallery/') !== false;
-$adminPath = $isInGallerySymlink ? '/admin/galleries.php' : '../admin/galleries.php';
+// Gérer les différents points d'accès (symlink /gallery/ ou /immich-gallery/public/)
+$adminPath = '/immich-gallery/admin/galleries.php';
 ?>
 <div class="header">
     <div class="header-content">
