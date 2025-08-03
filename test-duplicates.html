@@ -3,234 +3,664 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Test API Détection Doublons</title>
+    <title>Test Complet API Détection Doublons</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
-            max-width: 1200px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 1400px;
             margin: 0 auto;
             padding: 20px;
-            background: #f5f5f5;
+            background: #f0f2f5;
         }
         
         .container {
             background: white;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
         
-        h1 { color: #333; }
+        h1 { 
+            color: #1a1a1a;
+            margin-bottom: 30px;
+        }
+        
+        h2 {
+            color: #333;
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 10px;
+        }
         
         .test-section {
-            margin: 20px 0;
-            padding: 20px;
+            margin: 30px 0;
+            padding: 25px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fafafa;
+        }
+        
+        .input-group {
+            margin: 15px 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #555;
+        }
+        
+        input[type="text"], textarea {
+            width: 100%;
+            padding: 10px;
             border: 1px solid #ddd;
             border-radius: 4px;
+            font-family: monospace;
+            box-sizing: border-box;
         }
         
         .asset-ids {
-            width: 100%;
-            min-height: 100px;
-            font-family: monospace;
-            margin: 10px 0;
+            min-height: 120px;
+            resize: vertical;
         }
         
         button {
             background: #007bff;
             color: white;
             border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
+            padding: 12px 24px;
+            border-radius: 6px;
             cursor: pointer;
             margin-right: 10px;
+            font-size: 16px;
+            transition: background 0.2s;
         }
         
-        button:hover { background: #0056b3; }
+        button:hover { 
+            background: #0056b3;
+        }
+        
+        button:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+        }
+        
+        button.secondary {
+            background: #6c757d;
+        }
+        
+        button.danger {
+            background: #dc3545;
+        }
         
         .results {
             margin-top: 20px;
             padding: 20px;
             background: #f8f9fa;
-            border-radius: 4px;
-            white-space: pre-wrap;
+            border-radius: 8px;
             font-family: monospace;
-            max-height: 400px;
+            max-height: 500px;
             overflow-y: auto;
+            white-space: pre-wrap;
+            border: 1px solid #dee2e6;
+        }
+        
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e9ecef;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(to right, #007bff, #0056b3);
+            transition: width 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .status {
+            padding: 10px 15px;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        
+        .status.loading {
+            background: #cfe2ff;
+            color: #084298;
+            border: 1px solid #b6d4fe;
+        }
+        
+        .status.error {
+            background: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+        
+        .status.success {
+            background: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
         }
         
         .duplicate-group {
-            margin: 10px 0;
-            padding: 15px;
-            background: #e9ecef;
-            border-radius: 4px;
+            margin: 20px 0;
+            padding: 20px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
         }
         
         .duplicate-images {
             display: flex;
-            gap: 10px;
-            margin-top: 10px;
+            gap: 15px;
+            margin-top: 15px;
             flex-wrap: wrap;
         }
         
         .duplicate-image {
             border: 2px solid #ddd;
-            padding: 5px;
-            border-radius: 4px;
+            padding: 10px;
+            border-radius: 6px;
             text-align: center;
-            background: white;
+            background: #f8f9fa;
+            min-width: 200px;
         }
         
-        .duplicate-image.best {
+        .duplicate-image.primary {
             border-color: #28a745;
+            background: #d4edda;
         }
         
         .duplicate-image img {
             max-width: 200px;
             max-height: 200px;
             display: block;
+            margin: 10px auto;
+            border-radius: 4px;
         }
         
-        .loading { color: #007bff; }
-        .error { color: #dc3545; }
-        .success { color: #28a745; }
+        .config-info {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+            border: 1px solid #b3d9ff;
+        }
+        
+        .threshold-display {
+            display: inline-block;
+            margin-left: 10px;
+            font-weight: bold;
+            color: #007bff;
+        }
+        
+        .tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #dee2e6;
+        }
+        
+        .tab {
+            padding: 10px 20px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            color: #6c757d;
+            border-bottom: 3px solid transparent;
+            transition: all 0.2s;
+        }
+        
+        .tab.active {
+            color: #007bff;
+            border-bottom-color: #007bff;
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>🔍 Test API Détection de Doublons</h1>
+        <h1>🔍 Test Complet API Détection de Doublons</h1>
         
-        <div class="test-section">
-            <h2>Configuration</h2>
-            <label>
-                URL du serveur Flask:
-                <input type="text" id="serverUrl" value="http://localhost:5001" style="width: 300px;">
-            </label>
-        </div>
-        
-        <div class="test-section">
-            <h2>Test 1: Détection avec Asset IDs</h2>
-            <p>Entrez les asset IDs (un par ligne) :</p>
-            <textarea id="assetIds" class="asset-ids">f7aef515-e6b7-4d1a-bc89-e9e828e3b55e
-9a7475c0-a286-42bf-b02c-94246c5cf937
-0f5c707b-2b5b-45c0-b881-e62f6eddc06d</textarea>
-            
-            <label>
-                Seuil de similarité:
-                <input type="range" id="threshold" min="0.5" max="1" step="0.05" value="0.85">
-                <span id="thresholdValue">0.85</span>
-            </label>
-            
-            <div style="margin-top: 10px;">
-                <button onclick="testFindSimilar()">Tester Détection</button>
-                <button onclick="clearResults()">Effacer</button>
+        <div class="config-info">
+            <h3>⚙️ Configuration</h3>
+            <div class="input-group">
+                <label>URL du serveur Caption Maker:</label>
+                <input type="text" id="serverUrl" value="http://localhost:5000" style="width: 400px;">
             </div>
-            
-            <div id="results" class="results"></div>
+            <button onclick="testHealth()">🏥 Test Health Check</button>
+            <button onclick="testStatus()">📊 Test Status Service</button>
+            <div id="configResults" style="margin-top: 10px;"></div>
         </div>
-        
-        <div class="test-section">
-            <h2>Test 2: Affichage Visuel</h2>
-            <div id="visualResults"></div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('sync')">Test Synchrone</button>
+            <button class="tab" onclick="showTab('async')">Test Asynchrone (SSE)</button>
+            <button class="tab" onclick="showTab('album')">Analyse Album</button>
+        </div>
+
+        <!-- Test Synchrone -->
+        <div id="sync-tab" class="tab-content active">
+            <div class="test-section">
+                <h2>🚀 Test Synchrone - Détection Simple</h2>
+                <p>Test rapide avec peu d'assets (max 10 recommandé)</p>
+                
+                <div class="input-group">
+                    <label>Asset IDs Immich (un par ligne) :</label>
+                    <textarea id="assetIds" class="asset-ids" placeholder="Collez ici des asset IDs depuis Immich..."></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label>
+                        Seuil de similarité:
+                        <input type="range" id="threshold" min="0.5" max="1" step="0.05" value="0.85">
+                        <span class="threshold-display" id="thresholdValue">85%</span>
+                    </label>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button onclick="testSyncDetection()">🔍 Lancer Détection</button>
+                    <button class="secondary" onclick="loadSampleIds()">📝 Charger IDs d'exemple</button>
+                    <button class="secondary" onclick="clearResults('sync')">🗑️ Effacer</button>
+                </div>
+                
+                <div id="syncStatus"></div>
+                <div id="syncResults" class="results" style="display:none;"></div>
+                <div id="syncVisual"></div>
+            </div>
+        </div>
+
+        <!-- Test Asynchrone -->
+        <div id="async-tab" class="tab-content">
+            <div class="test-section">
+                <h2>📡 Test Asynchrone avec SSE</h2>
+                <p>Pour de nombreux assets avec progression en temps réel</p>
+                
+                <div class="input-group">
+                    <label>Asset IDs Immich (un par ligne) :</label>
+                    <textarea id="asyncAssetIds" class="asset-ids" placeholder="Collez ici des asset IDs..."></textarea>
+                </div>
+                
+                <div class="input-group">
+                    <label>Options:</label>
+                    <input type="checkbox" id="groupByTime" checked> Grouper par fenêtre temporelle
+                    <input type="number" id="timeWindow" value="24" min="1" max="168" style="width: 60px; margin-left: 10px;"> heures
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button onclick="testAsyncDetection()">🚀 Lancer Analyse SSE</button>
+                    <button class="danger" onclick="stopSSE()">⏹️ Arrêter</button>
+                    <button class="secondary" onclick="clearResults('async')">🗑️ Effacer</button>
+                </div>
+                
+                <div id="asyncProgress"></div>
+                <div class="progress-bar" id="progressBar" style="display:none;">
+                    <div class="progress-fill" id="progressFill" style="width: 0%">0%</div>
+                </div>
+                <div id="asyncResults" class="results" style="display:none;"></div>
+                <div id="asyncVisual"></div>
+            </div>
+        </div>
+
+        <!-- Analyse Album -->
+        <div id="album-tab" class="tab-content">
+            <div class="test-section">
+                <h2>📸 Analyse Album Complet</h2>
+                <p>Analyse tous les assets d'un album Immich</p>
+                
+                <div class="input-group">
+                    <label>Album ID:</label>
+                    <input type="text" id="albumId" placeholder="ID de l'album Immich">
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <button onclick="testAlbumAnalysis()">📊 Analyser Album</button>
+                    <button class="secondary" onclick="clearResults('album')">🗑️ Effacer</button>
+                </div>
+                
+                <div id="albumStatus"></div>
+                <div id="albumResults" class="results" style="display:none;"></div>
+            </div>
         </div>
     </div>
-    
+
     <script>
-        // Configuration
+        // Configuration globale
+        let eventSource = null;
         const getServerUrl = () => document.getElementById('serverUrl').value;
-        
-        // Mise à jour valeur seuil
+
+        // Gestion des tabs
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        // Mise à jour du seuil
         document.getElementById('threshold').addEventListener('input', (e) => {
-            document.getElementById('thresholdValue').textContent = e.target.value;
+            document.getElementById('thresholdValue').textContent = Math.round(e.target.value * 100) + '%';
         });
-        
-        // Fonction de test principal
-        async function testFindSimilar() {
-            const resultsDiv = document.getElementById('results');
-            const visualDiv = document.getElementById('visualResults');
+
+        // Health Check
+        async function testHealth() {
+            const div = document.getElementById('configResults');
+            div.innerHTML = '<div class="status loading">⏳ Test connexion...</div>';
             
-            resultsDiv.innerHTML = '<div class="loading">⏳ Recherche de doublons en cours...</div>';
-            visualDiv.innerHTML = '';
+            try {
+                const response = await fetch(`${getServerUrl()}/api/health`);
+                const data = await response.json();
+                
+                if (data.status === 'healthy') {
+                    div.innerHTML = `<div class="status success">✅ Serveur OK - Services: 
+                        Geo: ${data.services.geo_service ? '✓' : '✗'}, 
+                        AI: ${data.services.ai_service ? '✓' : '✗'}, 
+                        Immich: ${data.services.immich_service ? '✓' : '✗'},
+                        Duplicate: ${data.services.duplicate_service ? '✓' : '✗'}
+                    </div>`;
+                } else {
+                    div.innerHTML = `<div class="status error">⚠️ Serveur partiel: ${data.status}</div>`;
+                }
+            } catch (error) {
+                div.innerHTML = `<div class="status error">❌ Erreur connexion: ${error.message}</div>`;
+            }
+        }
+
+        // Status Service
+        async function testStatus() {
+            const div = document.getElementById('configResults');
             
-            // Récupérer les asset IDs
+            try {
+                const response = await fetch(`${getServerUrl()}/api/duplicates/status`);
+                const data = await response.json();
+                
+                if (data.clip_available) {
+                    div.innerHTML = `<div class="status success">✅ CLIP disponible - 
+                        Modèle: ${data.model_info.model_name}, 
+                        Dimension: ${data.model_info.embedding_dimension}
+                    </div>`;
+                } else {
+                    div.innerHTML = '<div class="status error">❌ CLIP non disponible</div>';
+                }
+            } catch (error) {
+                div.innerHTML = `<div class="status error">❌ Erreur: ${error.message}</div>`;
+            }
+        }
+
+        // Charger des IDs d'exemple
+        function loadSampleIds() {
+            // IDs d'exemple - remplacer par de vrais IDs
+            document.getElementById('assetIds').value = `# Remplacez ces IDs par de vrais asset IDs de votre Immich
+# Utilisez /api/search/metadata pour récupérer des IDs
+a1234567-89ab-cdef-0123-456789abcdef
+b2345678-9abc-def0-1234-56789abcdef0
+c3456789-abcd-ef01-2345-6789abcdef01`;
+        }
+
+        // Test Synchrone
+        async function testSyncDetection() {
+            const statusDiv = document.getElementById('syncStatus');
+            const resultsDiv = document.getElementById('syncResults');
+            const visualDiv = document.getElementById('syncVisual');
+            
+            // Récupérer les IDs
             const assetIds = document.getElementById('assetIds').value
                 .split('\n')
-                .map(id => id.trim())
-                .filter(id => id);
+                .map(line => line.trim())
+                .filter(line => line && !line.startsWith('#'));
             
             if (assetIds.length < 2) {
-                resultsDiv.innerHTML = '<div class="error">❌ Entrez au moins 2 asset IDs</div>';
+                statusDiv.innerHTML = '<div class="status error">❌ Entrez au moins 2 asset IDs</div>';
                 return;
             }
+            
+            statusDiv.innerHTML = '<div class="status loading">⏳ Détection en cours...</div>';
+            resultsDiv.style.display = 'none';
+            visualDiv.innerHTML = '';
             
             const threshold = parseFloat(document.getElementById('threshold').value);
             
             try {
                 const response = await fetch(`${getServerUrl()}/api/duplicates/find-similar`, {
                     method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
+                    headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
-                        asset_ids: assetIds,
+                        selected_asset_ids: assetIds,
                         threshold: threshold
                     })
                 });
                 
-                if (!response.ok) {
-                    throw new Error(`HTTP ${response.status}: ${response.statusText}`);
-                }
-                
                 const result = await response.json();
                 
-                // Afficher les résultats JSON
-                resultsDiv.innerHTML = `<div class="success">✅ Réponse reçue</div>
-<pre>${JSON.stringify(result, null, 2)}</pre>`;
-                
-                // Afficher visuellement
-                displayVisualResults(result);
+                if (result.success) {
+                    statusDiv.innerHTML = `<div class="status success">✅ Analyse terminée - ${result.total_groups} groupe(s) trouvé(s)</div>`;
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.innerHTML = JSON.stringify(result, null, 2);
+                    displayVisualResults(result, 'syncVisual');
+                } else {
+                    statusDiv.innerHTML = `<div class="status error">❌ Erreur: ${result.error}</div>`;
+                }
                 
             } catch (error) {
-                resultsDiv.innerHTML = `<div class="error">❌ Erreur: ${error.message}</div>`;
+                statusDiv.innerHTML = `<div class="status error">❌ Erreur: ${error.message}</div>`;
                 console.error('Erreur:', error);
             }
         }
-        
-        // Affichage visuel des résultats
-        function displayVisualResults(result) {
-            const visualDiv = document.getElementById('visualResults');
+
+        // Test Asynchrone avec SSE
+        async function testAsyncDetection() {
+            const statusDiv = document.getElementById('asyncProgress');
+            const resultsDiv = document.getElementById('asyncResults');
+            const progressBar = document.getElementById('progressBar');
+            const progressFill = document.getElementById('progressFill');
             
-            if (!result.success) {
-                visualDiv.innerHTML = '<div class="error">Erreur dans la réponse</div>';
+            // Fermer connexion existante
+            if (eventSource) {
+                eventSource.close();
+            }
+            
+            const assetIds = document.getElementById('asyncAssetIds').value
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line && !line.startsWith('#'));
+            
+            if (assetIds.length === 0) {
+                statusDiv.innerHTML = '<div class="status error">❌ Entrez des asset IDs</div>';
                 return;
             }
             
+            statusDiv.innerHTML = '<div class="status loading">🚀 Démarrage analyse asynchrone...</div>';
+            resultsDiv.style.display = 'none';
+            progressBar.style.display = 'block';
+            
+            try {
+                // Démarrer l'analyse
+                const requestId = `web-test-${Date.now()}`;
+                const startResponse = await fetch(`${getServerUrl()}/api/duplicates/find-similar-async`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        request_id: requestId,
+                        selected_asset_ids: assetIds,
+                        threshold: parseFloat(document.getElementById('threshold').value),
+                        group_by_time: document.getElementById('groupByTime').checked,
+                        time_window_hours: parseInt(document.getElementById('timeWindow').value)
+                    })
+                });
+                
+                const startResult = await startResponse.json();
+                
+                if (!startResult.success) {
+                    throw new Error(startResult.error);
+                }
+                
+                // Se connecter au flux SSE
+                eventSource = new EventSource(`${getServerUrl()}${startResult.sse_url}`);
+                
+                eventSource.onopen = () => {
+                    statusDiv.innerHTML = '<div class="status success">✅ Connexion SSE établie</div>';
+                };
+                
+                eventSource.onmessage = (event) => {
+                    try {
+                        const data = JSON.parse(event.data);
+                        handleSSEMessage(data);
+                    } catch (e) {
+                        console.error('Erreur parsing SSE:', e);
+                    }
+                };
+                
+                eventSource.onerror = (error) => {
+                    console.error('Erreur SSE:', error);
+                    statusDiv.innerHTML = '<div class="status error">❌ Erreur connexion SSE</div>';
+                    eventSource.close();
+                };
+                
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="status error">❌ Erreur: ${error.message}</div>`;
+                progressBar.style.display = 'none';
+            }
+        }
+
+        // Gérer les messages SSE
+        function handleSSEMessage(data) {
+            const statusDiv = document.getElementById('asyncProgress');
+            const resultsDiv = document.getElementById('asyncResults');
+            const progressFill = document.getElementById('progressFill');
+            
+            switch (data.event) {
+                case 'connected':
+                    statusDiv.innerHTML = '<div class="status success">✅ ' + data.message + '</div>';
+                    break;
+                    
+                case 'progress':
+                    const progress = data.data.progress;
+                    const details = data.data.details;
+                    progressFill.style.width = progress + '%';
+                    progressFill.textContent = progress + '%';
+                    statusDiv.innerHTML = `<div class="status loading">⏳ ${details}</div>`;
+                    break;
+                    
+                case 'result':
+                    statusDiv.innerHTML = `<div class="status success">✅ Étape terminée: ${data.data.step}</div>`;
+                    break;
+                    
+                case 'complete':
+                    eventSource.close();
+                    document.getElementById('progressBar').style.display = 'none';
+                    statusDiv.innerHTML = '<div class="status success">🎉 Analyse terminée!</div>';
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.innerHTML = JSON.stringify(data.data, null, 2);
+                    displayVisualResults(data.data, 'asyncVisual');
+                    break;
+                    
+                case 'error':
+                    eventSource.close();
+                    document.getElementById('progressBar').style.display = 'none';
+                    statusDiv.innerHTML = `<div class="status error">❌ Erreur: ${data.data.error}</div>`;
+                    break;
+            }
+        }
+
+        // Arrêter SSE
+        function stopSSE() {
+            if (eventSource) {
+                eventSource.close();
+                eventSource = null;
+                document.getElementById('asyncProgress').innerHTML = '<div class="status">🛑 Analyse arrêtée</div>';
+                document.getElementById('progressBar').style.display = 'none';
+            }
+        }
+
+        // Test Album
+        async function testAlbumAnalysis() {
+            const albumId = document.getElementById('albumId').value;
+            const statusDiv = document.getElementById('albumStatus');
+            const resultsDiv = document.getElementById('albumResults');
+            
+            if (!albumId) {
+                statusDiv.innerHTML = '<div class="status error">❌ Entrez un album ID</div>';
+                return;
+            }
+            
+            statusDiv.innerHTML = '<div class="status loading">⏳ Analyse de l\'album...</div>';
+            resultsDiv.style.display = 'none';
+            
+            try {
+                const response = await fetch(`${getServerUrl()}/api/duplicates/analyze-album/${albumId}`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        threshold: parseFloat(document.getElementById('threshold').value),
+                        group_by_time: true,
+                        time_window_hours: 24
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    statusDiv.innerHTML = `<div class="status success">✅ Analyse démarrée - Connectez-vous au flux SSE</div>`;
+                    resultsDiv.style.display = 'block';
+                    resultsDiv.innerHTML = `SSE URL: ${result.sse_url}\nRequest ID: ${result.request_id}`;
+                    
+                    // TODO: Se connecter automatiquement au SSE
+                } else {
+                    statusDiv.innerHTML = `<div class="status error">❌ Erreur: ${result.error}</div>`;
+                }
+                
+            } catch (error) {
+                statusDiv.innerHTML = `<div class="status error">❌ Erreur: ${error.message}</div>`;
+            }
+        }
+
+        // Affichage visuel des résultats
+        function displayVisualResults(result, targetId) {
+            const visualDiv = document.getElementById(targetId);
+            
             if (!result.groups || result.groups.length === 0) {
-                visualDiv.innerHTML = '<div class="success">✅ Aucun doublon trouvé</div>';
+                visualDiv.innerHTML = '<div class="status success">✅ Aucun doublon trouvé</div>';
                 return;
             }
             
             visualDiv.innerHTML = `
-                <h3>📊 Résultats: ${result.groups.length} groupe(s) de doublons</h3>
+                <h3>📊 ${result.groups.length} groupe(s) de doublons trouvés</h3>
                 ${result.groups.map((group, index) => `
                     <div class="duplicate-group">
-                        <h4>Groupe ${index + 1}</h4>
-                        <p>
-                            ID: ${group.group_id}<br>
-                            Similarité moyenne: ${(group.similarity_avg * 100).toFixed(2)}%<br>
-                            ${group.total_images} images similaires
-                        </p>
+                        <h4>Groupe ${index + 1} - ${group.images.length} images similaires</h4>
+                        <p>Similarité moyenne: <strong>${(group.similarity_avg * 100).toFixed(1)}%</strong></p>
                         <div class="duplicate-images">
                             ${group.images.map(img => `
-                                <div class="duplicate-image ${img.is_best ? 'best' : ''}">
+                                <div class="duplicate-image ${img.is_primary ? 'primary' : ''}">
                                     <div>
-                                        <strong>${img.is_best ? '⭐ Meilleure' : ''}</strong><br>
-                                        ID: ${img.asset_id.substring(0, 8)}...<br>
-                                        Similarité: ${(img.similarity * 100).toFixed(2)}%<br>
-                                        Score qualité: ${img.quality_metrics.quality_score}
+                                        ${img.is_primary ? '<strong>⭐ Image principale</strong><br>' : ''}
+                                        <small>ID: ${img.asset_id.substring(0, 8)}...</small><br>
+                                        ${img.filename ? `<small>Fichier: ${img.filename}</small><br>` : ''}
+                                        ${img.date ? `<small>Date: ${new Date(img.date).toLocaleDateString()}</small><br>` : ''}
+                                        ${img.size ? `<small>Taille: ${(img.size / 1024 / 1024).toFixed(1)} MB</small>` : ''}
                                     </div>
-                                    <!-- Pour afficher l'image si vous avez un proxy -->
-                                    <img src="/image-proxy.php?id=${img.asset_id}&type=thumbnail" alt="">
+                                    <!-- Si vous avez un proxy pour afficher les images -->
+                                    <!-- <img src="${getServerUrl()}/api/assets/${img.asset_id}/thumbnail?size=preview"> -->
                                 </div>
                             `).join('')}
                         </div>
@@ -238,16 +668,29 @@
                 `).join('')}
             `;
         }
-        
+
         // Effacer les résultats
-        function clearResults() {
-            document.getElementById('results').innerHTML = '';
-            document.getElementById('visualResults').innerHTML = '';
+        function clearResults(section) {
+            if (section === 'sync') {
+                document.getElementById('syncStatus').innerHTML = '';
+                document.getElementById('syncResults').style.display = 'none';
+                document.getElementById('syncVisual').innerHTML = '';
+            } else if (section === 'async') {
+                stopSSE();
+                document.getElementById('asyncProgress').innerHTML = '';
+                document.getElementById('asyncResults').style.display = 'none';
+                document.getElementById('asyncVisual').innerHTML = '';
+                document.getElementById('progressBar').style.display = 'none';
+            } else if (section === 'album') {
+                document.getElementById('albumStatus').innerHTML = '';
+                document.getElementById('albumResults').style.display = 'none';
+            }
         }
-        
+
         // Test au chargement
         window.addEventListener('load', () => {
-            console.log('Page de test chargée. Serveur:', getServerUrl());
+            console.log('🚀 Page de test chargée');
+            testHealth();
         });
     </script>
 </body>
