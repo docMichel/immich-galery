@@ -21,20 +21,20 @@ class SSEManager {
 
         const sseUrl = `${this.config.flaskApiUrl}/api/ai/generate-caption-stream/${requestId}`;
         console.log('🚀 Ouverture connexion SSE:', sseUrl);
-        
+
         try {
             this.eventSource = new EventSource(sseUrl);
         } catch (error) {
             console.error('❌ Impossible de créer EventSource:', error);
-            this._triggerHandler('error', { 
-                error: 'Impossible de se connecter au flux SSE' 
+            this._triggerHandler('error', {
+                error: 'Impossible de se connecter au flux SSE'
             });
             return false;
         }
-        
+
         // Démarrer la surveillance du timeout
         this._startTimeout();
-        
+
         // Handler d'ouverture
         this.eventSource.onopen = (event) => {
             console.log('✅ Connexion SSE établie');
@@ -43,10 +43,32 @@ class SSEManager {
         };
 
         // Handler principal pour les messages
-        this.eventSource.onmessage = (event) => {
-            this._handleMessage(event);
-        };
+        /* this.eventSource.onmessage = (event) => {
+             this._handleMessage(event);
+         };
+ */
+        // Handler principal pour les messages SANS type d'événement spécifique
+        eventSource.onmessage = (event) => {
+            connection.lastMessageTime = Date.now();
 
+            try {
+                const data = JSON.parse(event.data);
+
+                // Ne traiter que les messages qui n'ont PAS de listener spécifique
+                const eventType = data.event;
+                if (['progress', 'result', 'complete', 'error'].includes(eventType)) {
+                    // Ces événements ont des listeners dédiés, on les ignore ici
+                    return;
+                }
+
+                // Traiter connected, heartbeat et autres messages génériques
+                console.log('📨 MESSAGE SSE (onmessage):', data);
+                this.handleMessage(id, data);
+            } catch (error) {
+                console.error('Erreur parsing:', error, 'Data:', event.data);
+                this.log(id, `⚠️ Message non-JSON: ${event.data}`, 'warning');
+            }
+        };
         // Handlers pour les événements spécifiques
         ['progress', 'result', 'complete', 'error', 'connected', 'heartbeat'].forEach(eventType => {
             this.eventSource.addEventListener(eventType, (event) => {
@@ -74,14 +96,14 @@ class SSEManager {
     // Gérer les messages génériques
     _handleMessage(event) {
         this._resetTimeout();
-        
+
         try {
             console.log('📨 Message SSE:', event.data);
-            
+
             if (!event.data || event.data.trim() === '') {
                 return;
             }
-            
+
             const message = JSON.parse(event.data);
             this._processMessage(message);
         } catch (error) {
@@ -93,7 +115,7 @@ class SSEManager {
     // Gérer les événements typés
     _handleTypedEvent(eventType, event) {
         this._resetTimeout();
-        
+
         try {
             const data = JSON.parse(event.data);
             this._processMessage({ event: eventType, data: data });
@@ -105,7 +127,7 @@ class SSEManager {
     // Traiter un message
     _processMessage(message) {
         console.log('🔄 Message SSE:', message);
-        
+
         switch (message.event) {
             case 'connected':
                 this._triggerHandler('connected', message);
@@ -151,7 +173,7 @@ class SSEManager {
     // Gérer les erreurs de connexion
     _handleError(error) {
         console.error('❌ Erreur SSE:', error);
-        
+
         if (this.eventSource.readyState === EventSource.CONNECTING) {
             this._triggerHandler('connecting');
         } else if (this.eventSource.readyState === EventSource.CLOSED) {
@@ -177,7 +199,7 @@ class SSEManager {
             this.disconnect();
         }, 60000);
     }
-    
+
     _resetTimeout() {
         this.lastMessageTime = Date.now();
         if (this.sseTimeout) {
@@ -185,7 +207,7 @@ class SSEManager {
             this._startTimeout();
         }
     }
-    
+
     _clearTimeout() {
         if (this.sseTimeout) {
             clearTimeout(this.sseTimeout);

@@ -1,0 +1,1714 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Complet API Caption Maker & Doublons</title>
+    <!-- Librairie EXIF.js pour lire les métadonnées GPS -->
+    <script src="https://cdn.jsdelivr.net/npm/exif-js@2.3.0/exif.js"></script>
+<style>
+    /* Variables pour le thème clair (par défaut) */
+:root {
+    --bg-primary: #f0f2f5;
+    --bg-secondary: white;
+    --bg-tertiary: #fafafa;
+    --text-primary: #1a1a1a;
+    --text-secondary: #333;
+    --text-tertiary: #555;
+    --text-muted: #666;
+    --border-color: #e0e0e0;
+    --border-light: #dee2e6;
+    --border-dark: #ddd;
+    --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --code-bg: #f8f9fa;
+    --success-bg: #d1e7dd;
+    --success-text: #0f5132;
+    --success-border: #badbcc;
+    --error-bg: #f8d7da;
+    --error-text: #842029;
+    --error-border: #f5c2c7;
+    --info-bg: #cfe2ff;
+    --info-text: #084298;
+    --info-border: #b6d4fe;
+    --warning-bg: #fff3cd;
+    --warning-text: #856404;
+    --warning-border: #ffeaa7;
+    --caption-bg: #f0f8ff;
+    --gps-bg: #e8f4f8;
+    --sse-bg: #2d2d2d;
+    --sse-text: #00ff00;
+    --button-primary: #007bff;
+    --button-primary-hover: #0056b3;
+    --button-secondary: #6c757d;
+    --button-danger: #dc3545;
+    --duplicate-primary-bg: #d4edda;
+    --duplicate-primary-border: #28a745;
+    --duplicate-bg: #f8f9fa;
+    --tab-active: #007bff;
+    --input-bg: white;
+    --progress-bg: #e9ecef;
+    --progress-fill: linear-gradient(to right, #007bff, #0056b3);
+}
+
+/* Mode sombre automatique selon les préférences système */
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg-primary: #1a1a1a;
+        --bg-secondary: #2d2d2d;
+        --bg-tertiary: #333333;
+        --text-primary: #e0e0e0;
+        --text-secondary: #cccccc;
+        --text-tertiary: #aaaaaa;
+        --text-muted: #999;
+        --border-color: #444444;
+        --border-light: #555555;
+        --border-dark: #666666;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        --code-bg: #1e1e1e;
+        --success-bg: #1c3829;
+        --success-text: #75b798;
+        --success-border: #2d5a47;
+        --error-bg: #3d1f1f;
+        --error-text: #ea868f;
+        --error-border: #842029;
+        --info-bg: #1c2e4a;
+        --info-text: #6ea8fe;
+        --info-border: #3d5a80;
+        --warning-bg: #3d3319;
+        --warning-text: #f0c674;
+        --warning-border: #5a4f2f;
+        --caption-bg: #1e3a5f;
+        --gps-bg: #1a3845;
+        --sse-bg: #0d0d0d;
+        --sse-text: #00ff00;
+        --button-primary: #0d6efd;
+        --button-primary-hover: #0b5ed7;
+        --button-secondary: #5c636a;
+        --button-danger: #bb2d3b;
+        --duplicate-primary-bg: #1c3829;
+        --duplicate-primary-border: #75b798;
+        --duplicate-bg: #1e1e1e;
+        --tab-active: #0d6efd;
+        --input-bg: #2d2d2d;
+        --progress-bg: #333333;
+        --progress-fill: linear-gradient(to right, #0d6efd, #0b5ed7);
+    }
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 20px;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+}
+
+.container {
+    background: var(--bg-secondary);
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+}
+
+h1 {
+    color: var(--text-primary);
+    margin-bottom: 30px;
+}
+
+h2 {
+    color: var(--text-secondary);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.test-section {
+    margin: 30px 0;
+    padding: 25px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    background: var(--bg-tertiary);
+}
+
+.input-group {
+    margin: 15px 0;
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--text-tertiary);
+}
+
+input[type="text"],
+input[type="password"],
+textarea,
+select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid var(--border-dark);
+    border-radius: 4px;
+    font-family: inherit;
+    box-sizing: border-box;
+    background: var(--input-bg);
+    color: var(--text-primary);
+}
+
+.asset-ids {
+    min-height: 120px;
+    resize: vertical;
+    font-family: monospace;
+    background: var(--code-bg);
+    color: var(--text-primary);
+}
+
+button {
+    background: var(--button-primary);
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    margin-right: 10px;
+    font-size: 16px;
+    transition: background 0.2s;
+}
+
+button:hover {
+    background: var(--button-primary-hover);
+}
+
+button:disabled {
+    background: var(--button-secondary);
+    cursor: not-allowed;
+}
+
+button.secondary {
+    background: var(--button-secondary);
+}
+
+button.danger {
+    background: var(--button-danger);
+}
+
+.results {
+    margin-top: 20px;
+    padding: 20px;
+    background: var(--code-bg);
+    border-radius: 8px;
+    font-family: monospace;
+    max-height: 500px;
+    overflow-y: auto;
+    white-space: pre-wrap;
+    border: 1px solid var(--border-light);
+    color: var(--text-primary);
+}
+
+.progress-bar {
+    width: 100%;
+    height: 30px;
+    background: var(--progress-bg);
+    border-radius: 15px;
+    overflow: hidden;
+    margin: 20px 0;
+}
+
+.progress-fill {
+    height: 100%;
+    background: var(--progress-fill);
+    transition: width 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+}
+
+.status {
+    padding: 10px 15px;
+    border-radius: 6px;
+    margin: 10px 0;
+}
+
+.status.loading {
+    background: var(--info-bg);
+    color: var(--info-text);
+    border: 1px solid var(--info-border);
+}
+
+.status.error {
+    background: var(--error-bg);
+    color: var(--error-text);
+    border: 1px solid var(--error-border);
+}
+
+.status.success {
+    background: var(--success-bg);
+    color: var(--success-text);
+    border: 1px solid var(--success-border);
+}
+
+.duplicate-group {
+    margin: 20px 0;
+    padding: 20px;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    border-radius: 8px;
+}
+
+.duplicate-images {
+    display: flex;
+    gap: 15px;
+    margin-top: 15px;
+    flex-wrap: wrap;
+}
+
+.duplicate-image {
+    border: 2px solid var(--border-dark);
+    padding: 10px;
+    border-radius: 6px;
+    text-align: center;
+    background: var(--duplicate-bg);
+    min-width: 200px;
+}
+
+.duplicate-image.primary {
+    border-color: var(--duplicate-primary-border);
+    background: var(--duplicate-primary-bg);
+}
+
+.duplicate-image img {
+    max-width: 200px;
+    max-height: 200px;
+    display: block;
+    margin: 10px auto;
+    border-radius: 4px;
+}
+
+.config-info {
+    background: var(--info-bg);
+    padding: 15px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+    border: 1px solid var(--info-border);
+}
+
+.threshold-display {
+    display: inline-block;
+    margin-left: 10px;
+    font-weight: bold;
+    color: var(--button-primary);
+}
+
+.tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--border-light);
+}
+
+.tab {
+    padding: 10px 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--button-secondary);
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+}
+
+.tab.active {
+    color: var(--tab-active);
+    border-bottom-color: var(--tab-active);
+}
+
+.tab-content {
+    display: none;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.sse-log {
+    background: var(--sse-bg);
+    color: var(--sse-text);
+    padding: 10px;
+    border-radius: 5px;
+    font-family: 'Courier New', monospace;
+    font-size: 12px;
+    max-height: 300px;
+    overflow-y: auto;
+    margin-top: 10px;
+}
+
+.caption-display {
+    background: var(--caption-bg);
+    padding: 20px;
+    border-radius: 8px;
+    margin: 15px 0;
+    border-left: 4px solid var(--button-primary);
+}
+
+.caption-text {
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.gps-info {
+    background: var(--gps-bg);
+    padding: 10px;
+    border-radius: 5px;
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.gps-source {
+    display: inline-block;
+    padding: 2px 8px;
+    background: var(--button-primary);
+    color: white;
+    border-radius: 3px;
+    font-size: 12px;
+    margin-left: 10px;
+}
+
+#imagePreview img {
+    border: 1px solid var(--border-color);
+}
+
+#imagePreview p {
+    color: var(--text-muted);
+}
+
+input[type="file"] {
+    color: var(--text-primary);
+}
+
+input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+input[type="range"] {
+    background: var(--progress-bg);
+}
+
+small {
+    color: var(--text-tertiary);
+}
+</style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>🧪 Test Complet API Caption Maker & Détection Doublons</h1>
+
+        <div class="config-info">
+            <h3>⚙️ Configuration</h3>
+            <div class="input-group">
+                <label>URL du serveur Caption Maker:</label>
+                <input type="text" id="serverUrl" value="http://localhost:5000" style="width: 400px;">
+            </div>
+            <div class="input-group">
+                <label>URL Immich (pour les thumbnails):</label>
+                <input type="text" id="immichUrl" value="http://localhost:3001" style="width: 400px;">
+            </div>
+            <div class="input-group">
+                <label>API Key Immich:</label>
+                <input type="text" id="immichApiKey" placeholder="Votre API Key Immich" style="width: 400px;">
+            </div>
+            <div class="input-group">
+                <label>URL du proxy d'images (optionnel):</label>
+                <input type="text" id="proxyUrl" value="http://m4.local:8080/immich-gallery/public/image-proxy.php"
+                    placeholder="http://m4.local:8080/immich-gallery/public/image-proxy.php" style="width: 400px;">
+
+            </div>
+            <button onclick="testHealth()">🏥 Test Health Check</button>
+            <button onclick="testConfig()">🤖 Configuration IA</button>
+            <button onclick="testStatus()">📊 Test Status Doublons</button>
+            <div id="configResults" style="margin-top: 10px;"></div>
+        </div>
+
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('caption')">📝 Génération Légendes</button>
+            <button class="tab" onclick="showTab('duplicates')">🔍 Détection Doublons</button>
+            <button class="tab" onclick="showTab('admin')">⚙️ Administration</button>
+        </div>
+
+        <!-- TAB: Génération de Légendes -->
+        <div id="caption-tab" class="tab-content active">
+            <!-- Upload d'image -->
+            <div class="test-section">
+                <h2>📸 Image de Test</h2>
+                <input type="file" id="imageUpload" accept="image/*" />
+                <div id="imagePreview"></div>
+
+                <div class="input-group">
+                    <label>Coordonnées GPS (optionnel):</label>
+                    <div style="display: flex; gap: 10px;">
+                        <input type="text" id="testLat" placeholder="Latitude" style="flex: 1;">
+                        <input type="text" id="testLon" placeholder="Longitude" style="flex: 1;">
+                        <button onclick="useParisCoords()">📍 Paris</button>
+                        <button onclick="useNoumeaCoords()">🏝️ Nouméa</button>
+                        <button onclick="clearCoords()">❌ Effacer</button>
+                    </div>
+                    <div id="gpsInfo" class="gps-info" style="display: none;">
+                        <strong>📍 GPS détecté dans l'image:</strong>
+                        <span id="gpsDetails"></span>
+                        <span class="gps-source">EXIF</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test Synchrone -->
+            <div class="test-section">
+                <h2>🚀 Test Synchrone - Génération Simple</h2>
+
+                <div class="input-group">
+                    <label>Style:</label>
+                    <select id="captionStyle">
+                        <option value="creative" selected>Créatif (poétique)</option>
+                        <option value="descriptive">Descriptif (informatif)</option>
+                        <option value="minimal">Minimaliste (court)</option>
+                    </select>
+                </div>
+
+                <div class="input-group">
+                    <label>Langue:</label>
+                    <select id="captionLanguage">
+                        <option value="français" selected>Français</option>
+                        <option value="english">English</option>
+                        <option value="bilingual">Bilingue FR/EN</option>
+                    </select>
+                </div>
+
+                <button onclick="testSyncCaption()">🎨 Générer Légende</button>
+                <button onclick="testSyncCaptionNoGPS()">📷 Sans GPS</button>
+
+                <div id="syncCaptionResults" class="results" style="display:none;"></div>
+            </div>
+
+            <!-- Test Asynchrone Légendes -->
+            <div class="test-section">
+                <h2>📡 Test Asynchrone (SSE) - Génération avec Progression</h2>
+
+                <button onclick="testAsyncCaption()">🚀 Lancer Génération SSE</button>
+                <button onclick="testAsyncCaptionNoGPS()">📸 SSE Sans GPS</button>
+                <button class="danger" onclick="stopCurrentSSE()">⏹️ Arrêter</button>
+
+                <div id="asyncCaptionStatus"></div>
+                <div class="progress-bar" id="captionProgressBar" style="display:none;">
+                    <div class="progress-fill" id="captionProgressFill" style="width: 0%">0%</div>
+                </div>
+                <div class="sse-log" id="captionSSELog" style="display:none;"></div>
+                <div id="asyncCaptionResults" class="results" style="display:none;"></div>
+            </div>
+
+            <!-- Test Régénération -->
+            <div class="test-section">
+                <h2>♻️ Régénération de Légende</h2>
+                <button onclick="testRegenerate()">Régénérer avec contexte modifié</button>
+                <div id="regenResults" class="results" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- TAB: Détection de Doublons -->
+        <div id="duplicates-tab" class="tab-content">
+            <!-- Test Synchrone Doublons -->
+            <div class="test-section">
+                <h2>🔍 Test Synchrone - Détection Simple</h2>
+                <p>Test rapide avec peu d'assets (max 10 recommandé)</p>
+
+                <div class="input-group">
+                    <label>Asset IDs Immich (un par ligne) :</label>
+                    <textarea id="assetIds" class="asset-ids"
+                        placeholder="Collez ici des asset IDs depuis Immich..."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>
+                        Seuil de similarité:
+                        <input type="range" id="threshold" min="0.5" max="1" step="0.05" value="0.85">
+                        <span class="threshold-display" id="thresholdValue">85%</span>
+                    </label>
+                </div>
+
+                <button onclick="testSyncDuplicates()">🔍 Lancer Détection</button>
+                <button class="secondary" onclick="loadSampleIds()">📝 Charger IDs d'exemple</button>
+                <button class="secondary" onclick="clearResults('syncDup')">🗑️ Effacer</button>
+
+                <div id="syncDupStatus"></div>
+                <div id="syncDupResults" class="results" style="display:none;"></div>
+                <div id="syncDupVisual"></div>
+            </div>
+
+            <!-- Test Asynchrone Doublons -->
+            <div class="test-section">
+                <h2>📡 Test Asynchrone avec SSE</h2>
+                <p>Pour de nombreux assets avec progression en temps réel</p>
+
+                <div class="input-group">
+                    <label>Asset IDs Immich (un par ligne) :</label>
+                    <textarea id="asyncAssetIds" class="asset-ids" placeholder="Collez ici des asset IDs..."></textarea>
+                </div>
+
+                <div class="input-group">
+                    <label>Options:</label>
+                    <input type="checkbox" id="groupByTime" checked> Grouper par fenêtre temporelle
+                    <input type="number" id="timeWindow" value="24" min="1" max="168"
+                        style="width: 60px; margin-left: 10px;"> heures
+                </div>
+
+                <button onclick="testAsyncDuplicates()">🚀 Lancer Analyse SSE</button>
+                <button class="danger" onclick="stopCurrentSSE()">⏹️ Arrêter</button>
+                <button class="secondary" onclick="clearResults('asyncDup')">🗑️ Effacer</button>
+
+                <div id="asyncDupProgress"></div>
+                <div class="progress-bar" id="dupProgressBar" style="display:none;">
+                    <div class="progress-fill" id="dupProgressFill" style="width: 0%">0%</div>
+                </div>
+                <div class="sse-log" id="dupSSELog" style="display:none;"></div>
+                <div id="asyncDupResults" class="results" style="display:none;"></div>
+                <div id="asyncDupVisual"></div>
+            </div>
+
+            <!-- Analyse Album -->
+            <div class="test-section">
+                <h2>📸 Analyse Album Complet</h2>
+                <p>Analyse tous les assets d'un album Immich</p>
+
+                <div class="input-group">
+                    <label>Album ID:</label>
+                    <input type="text" id="albumId" placeholder="ID de l'album Immich">
+                </div>
+
+                <button onclick="testAlbumAnalysis()">📊 Analyser Album</button>
+                <button class="secondary" onclick="clearResults('album')">🗑️ Effacer</button>
+
+                <div id="albumStatus"></div>
+                <div id="albumResults" class="results" style="display:none;"></div>
+            </div>
+        </div>
+
+        <!-- TAB: Administration -->
+        <div id="admin-tab" class="tab-content">
+            <!-- Statistiques -->
+            <div class="test-section">
+                <h2>📊 Statistiques</h2>
+                <button onclick="testStats()">Afficher les stats</button>
+                <div id="statsResults" class="results" style="display:none;"></div>
+            </div>
+
+            <!-- Cache -->
+            <div class="test-section">
+                <h2>💾 Gestion du Cache</h2>
+                <button onclick="testCacheInfo()">Info Cache</button>
+                <button onclick="testClearCache()">Vider le Cache</button>
+                <div id="cacheResults" class="results" style="display:none;"></div>
+            </div>
+
+            <!-- Test Pipeline -->
+            <div class="test-section">
+                <h2>🧪 Test Pipeline Complet</h2>
+                <button onclick="testPipeline()">Tester le Pipeline IA</button>
+                <div id="pipelineResults" class="results" style="display:none;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // =================================================================
+        // MODULE SSE MANAGER - Réutilisable
+        // =================================================================
+        // =================================================================
+        // MODULE SSE MANAGER - Réutilisable
+        // =================================================================
+        class SSEManager {
+            constructor() {
+                this.connections = new Map();
+            }
+
+            connect(id, url, handlers = {}) {
+                // Fermer connexion existante
+                this.close(id);
+
+                const eventSource = new EventSource(url);
+                const connection = {
+                    eventSource,
+                    url,
+                    handlers,
+                    logs: [],
+                    lastMessageTime: Date.now(),
+                    completed: false,  // Flag pour savoir si on a reçu complete
+                    hasReceivedComplete: false
+                };
+
+                // Handler d'ouverture
+                eventSource.onopen = (e) => {
+                    this.log(id, '✅ Connexion SSE établie', 'success');
+                    if (handlers.onOpen) handlers.onOpen(e);
+                };
+
+                // Handler principal pour les messages SANS type d'événement spécifique
+                // (messages envoyés avec juste "data:" comme connected et heartbeat)
+                // Handler principal pour les messages SANS type d'événement spécifique
+                eventSource.onmessage = (event) => {
+                    connection.lastMessageTime = Date.now();
+
+                    try {
+                        const data = JSON.parse(event.data);
+
+                        // Ne traiter que les messages qui n'ont PAS de listener spécifique
+                        const eventType = data.event;
+                        if (['progress', 'result', 'complete', 'error'].includes(eventType)) {
+                            // Ces événements ont des listeners dédiés, on les ignore ici
+                            return;
+                        }
+
+                        // Traiter connected, heartbeat et autres messages génériques
+                        console.log('📨 MESSAGE SSE (onmessage):', data);
+                        this.handleMessage(id, data);
+                    } catch (error) {
+                        console.error('Erreur parsing:', error, 'Data:', event.data);
+                        this.log(id, `⚠️ Message non-JSON: ${event.data}`, 'warning');
+                    }
+                };
+
+                // IMPORTANT: Ajouter des listeners pour CHAQUE type d'événement spécifique
+                // (messages envoyés avec "event: type" puis "data:")
+                const typedEvents = ['progress', 'result', 'complete', 'error'];
+
+                typedEvents.forEach(eventType => {
+                    eventSource.addEventListener(eventType, (event) => {
+                        connection.lastMessageTime = Date.now();
+
+                        try {
+                            const data = JSON.parse(event.data);
+                            console.log(`📨 MESSAGE SSE [${eventType}]:`, data);
+                            this.handleMessage(id, data);
+                        } catch (error) {
+                            console.error(`Erreur parsing ${eventType}:`, error, 'Data:', event.data);
+                            this.log(id, `⚠️ Erreur parsing ${eventType}: ${event.data}`, 'warning');
+                        }
+                    });
+                });
+
+                // Handler d'erreur
+                eventSource.onerror = (e) => {
+                    const connection = this.connections.get(id);
+
+                    // Si on a déjà reçu complete, c'est une fermeture normale
+                    if (connection && connection.hasReceivedComplete) {
+                        this.log(id, '✅ Connexion fermée après succès', 'info');
+                        return;
+                    }
+
+                    // Sinon, c'est une vraie erreur
+                    console.error('Erreur SSE:', e);
+                    this.log(id, `❌ Erreur SSE: readyState=${eventSource.readyState}`, 'error');
+
+                    if (eventSource.readyState === EventSource.CLOSED) {
+                        this.log(id, '🔌 Connexion fermée (erreur)', 'error');
+                        if (handlers.onError) handlers.onError('Connexion fermée de manière inattendue');
+                        // Ne pas fermer ici, laisser le navigateur gérer la reconnexion
+                    } else if (eventSource.readyState === EventSource.CONNECTING) {
+                        this.log(id, '🔄 Tentative de reconnexion...', 'info');
+                        if (handlers.onConnecting) handlers.onConnecting();
+                    }
+                };
+
+                // Enregistrer la connexion
+                this.connections.set(id, connection);
+
+                // Démarrer le monitoring de timeout
+                this.startTimeoutMonitor(id);
+
+                return eventSource;
+            }
+
+            handleMessage(id, data) {
+                const connection = this.connections.get(id);
+                if (!connection) return;
+
+                const handlers = connection.handlers;
+                const eventType = data.event;
+
+                // Log tous les messages
+                this.log(id, `📩 [${eventType}] Message reçu`, 'info');
+
+                switch (eventType) {
+                    case 'connected':
+                        this.log(id, '🔗 ' + (data.message || 'Connecté'), 'info');
+                        if (handlers.onConnected) handlers.onConnected(data);
+                        break;
+
+                    case 'progress':
+                        const progress = data.data?.progress || data.progress || 0;
+                        const details = data.data?.details || data.details || '';
+                        const step = data.data?.step || data.step || '';
+                        this.log(id, `📊 [${progress}%] ${step}: ${details}`, 'progress');
+                        if (handlers.onProgress) handlers.onProgress(progress, details, step);
+                        break;
+
+                    case 'result':
+                        const resultStep = data.data?.step || data.step || 'unknown';
+                        const result = data.data?.result || data.result || {};
+                        this.log(id, `📝 [${resultStep}] Résultat intermédiaire reçu`, 'result');
+                        if (handlers.onResult) handlers.onResult(resultStep, result);
+                        break;
+
+                    case 'complete':
+                        // Marquer comme complété AVANT de traiter
+                        connection.hasReceivedComplete = true;
+                        connection.completed = true;
+
+                        this.log(id, '🎉 Génération terminée avec succès!', 'success');
+
+                        // Passer les données complètes au handler
+                        if (handlers.onComplete) {
+                            const completeData = data.data || data;
+                            console.log('✅ Données complètes reçues:', completeData);
+                            handlers.onComplete(completeData);
+                        }
+
+                        // Fermer proprement après un petit délai pour laisser le handler finir
+                        setTimeout(() => {
+                            this.close(id, true); // true = fermeture normale
+                        }, 100);
+                        break;
+
+                    case 'error':
+                        const error = data.data?.error || data.error || 'Erreur inconnue';
+                        const code = data.data?.code || data.code || 'UNKNOWN_ERROR';
+                        this.log(id, `❌ Erreur serveur: ${error} (${code})`, 'error');
+
+                        if (handlers.onError) {
+                            handlers.onError(error, code);
+                        }
+
+                        // Fermer après une erreur serveur
+                        setTimeout(() => {
+                            this.close(id, false); // false = fermeture sur erreur
+                        }, 100);
+                        break;
+
+                    case 'heartbeat':
+                        this.log(id, '💓 Heartbeat', 'heartbeat');
+                        if (handlers.onHeartbeat) handlers.onHeartbeat(data);
+                        break;
+
+                    default:
+                        this.log(id, `❓ Événement inconnu: ${eventType}`, 'unknown');
+                        if (handlers.onUnknown) handlers.onUnknown(data);
+                }
+            }
+
+            startTimeoutMonitor(id) {
+                const checkInterval = setInterval(() => {
+                    const connection = this.connections.get(id);
+                    if (!connection) {
+                        clearInterval(checkInterval);
+                        return;
+                    }
+
+                    // Ne pas timeout si on a reçu complete
+                    if (connection.completed) {
+                        clearInterval(checkInterval);
+                        return;
+                    }
+
+                    const timeSinceLastMessage = Date.now() - connection.lastMessageTime;
+                    if (timeSinceLastMessage > 60000) { // 60 secondes
+                        this.log(id, '⏱️ Timeout: pas de message depuis 60s', 'error');
+                        if (connection.handlers.onTimeout) {
+                            connection.handlers.onTimeout();
+                        }
+                        this.close(id, false);
+                        clearInterval(checkInterval);
+                    }
+                }, 5000); // Vérifier toutes les 5 secondes
+
+                // Stocker l'interval pour pouvoir le nettoyer
+                const connection = this.connections.get(id);
+                if (connection) {
+                    connection.timeoutMonitor = checkInterval;
+                }
+            }
+
+            log(id, message, type = 'info') {
+                const connection = this.connections.get(id);
+                if (!connection) return;
+
+                const timestamp = new Date().toISOString().split('T')[1].split('.')[0];
+                const logEntry = { timestamp, message, type };
+                connection.logs.push(logEntry);
+
+                // Limiter la taille des logs
+                if (connection.logs.length > 100) {
+                    connection.logs.shift();
+                }
+
+                // Appeler le handler de log si défini
+                if (connection.handlers.onLog) {
+                    connection.handlers.onLog(logEntry);
+                }
+
+                // Log console avec emoji selon le type
+                const emoji = {
+                    'success': '✅',
+                    'error': '❌',
+                    'warning': '⚠️',
+                    'info': 'ℹ️',
+                    'progress': '📊',
+                    'result': '📝',
+                    'heartbeat': '💓',
+                    'unknown': '❓'
+                }[type] || '📌';
+
+                console.log(`[${timestamp}] ${emoji} ${message}`);
+            }
+
+            close(id, isNormalClosure = false) {
+                const connection = this.connections.get(id);
+                if (connection) {
+                    // Nettoyer le timeout monitor
+                    if (connection.timeoutMonitor) {
+                        clearInterval(connection.timeoutMonitor);
+                    }
+
+                    // Fermer l'EventSource
+                    connection.eventSource.close();
+
+                    // Supprimer de la map
+                    this.connections.delete(id);
+
+                    // Log approprié selon le type de fermeture
+                    if (isNormalClosure || connection.completed) {
+                        console.log(`✅ Connexion SSE fermée normalement: ${id}`);
+                    } else {
+                        console.log(`🛑 Connexion SSE fermée (erreur): ${id}`);
+                    }
+                }
+            }
+
+            closeAll() {
+                for (const id of this.connections.keys()) {
+                    this.close(id);
+                }
+            }
+
+            isConnected(id) {
+                const connection = this.connections.get(id);
+                return connection && connection.eventSource.readyState === EventSource.OPEN;
+            }
+
+            getConnection(id) {
+                return this.connections.get(id);
+            }
+
+            getLogs(id) {
+                const connection = this.connections.get(id);
+                return connection ? connection.logs : [];
+            }
+
+            getStats() {
+                const stats = {
+                    activeConnections: this.connections.size,
+                    connections: []
+                };
+
+                for (const [id, connection] of this.connections) {
+                    stats.connections.push({
+                        id: id,
+                        readyState: connection.eventSource.readyState,
+                        completed: connection.completed,
+                        lastMessageTime: new Date(connection.lastMessageTime).toISOString(),
+                        logsCount: connection.logs.length
+                    });
+                }
+
+                return stats;
+            }
+        }
+
+        // Instance globale du SSE Manager
+        const sseManager = new SSEManager();
+        // =================================================================
+        // CONFIGURATION GLOBALE
+        // =================================================================
+        let testImageBase64 = null;
+        let exifGPSData = null;
+
+        // Fonction pour obtenir l'URL du serveur
+        function getServerUrl() {
+            return document.getElementById('serverUrl').value.replace(/\/$/, '');
+        }
+
+        // =================================================================
+        // FONCTIONS UTILITAIRES
+        // =================================================================
+        async function apiCall(method, endpoint, data = null) {
+            const url = `${getServerUrl()}${endpoint}`;
+            console.log(`🔗 ${method} ${url}`);
+
+            const options = {
+                method: method,
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'omit'
+            };
+
+            if (data && method !== 'GET') {
+                options.body = JSON.stringify(data);
+            }
+
+            try {
+                const response = await fetch(url, options);
+                const result = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}: ${result.error || 'Erreur inconnue'}`);
+                }
+
+                return result;
+            } catch (error) {
+                console.error('Erreur API:', error);
+                throw error;
+            }
+        }
+
+        function showStatus(elementId, message, type = 'info') {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.className = `status ${type}`;
+                element.innerHTML = message;
+                element.style.display = 'block';
+            }
+        }
+
+        function showResults(elementId, data, asJson = true) {
+            const element = document.getElementById(elementId);
+            if (element) {
+                element.style.display = 'block';
+                if (asJson && typeof data === 'object') {
+                    element.textContent = JSON.stringify(data, null, 2);
+                } else {
+                    element.innerHTML = data;
+                }
+            }
+        }
+
+        // Gestion des tabs
+        function showTab(tabName) {
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            document.querySelectorAll('.tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+
+            event.target.classList.add('active');
+            document.getElementById(`${tabName}-tab`).classList.add('active');
+        }
+
+        // =================================================================
+        // GESTION IMAGE ET GPS
+        // =================================================================
+        document.getElementById('imageUpload').addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            // Extraire les données GPS EXIF
+            extractGPSFromEXIF(file);
+
+            // Lire l'image en base64
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                testImageBase64 = e.target.result;
+                document.getElementById('imagePreview').innerHTML =
+                    `<img src="${testImageBase64}" style="max-width: 200px; margin-top: 10px; border-radius: 5px;">`;
+            };
+            reader.readAsDataURL(file);
+        });
+
+        function extractGPSFromEXIF(file) {
+            EXIF.getData(file, function () {
+                const lat = EXIF.getTag(this, 'GPSLatitude');
+                const lon = EXIF.getTag(this, 'GPSLongitude');
+                const latRef = EXIF.getTag(this, 'GPSLatitudeRef');
+                const lonRef = EXIF.getTag(this, 'GPSLongitudeRef');
+
+                if (lat && lon) {
+                    const decimalLat = convertDMSToDD(lat, latRef);
+                    const decimalLon = convertDMSToDD(lon, lonRef);
+
+                    if (decimalLat && decimalLon) {
+                        exifGPSData = {
+                            latitude: decimalLat,
+                            longitude: decimalLon
+                        };
+
+                        document.getElementById('testLat').value = decimalLat.toFixed(6);
+                        document.getElementById('testLon').value = decimalLon.toFixed(6);
+                        document.getElementById('gpsInfo').style.display = 'block';
+                        document.getElementById('gpsDetails').textContent =
+                            `Lat: ${decimalLat.toFixed(6)}, Lon: ${decimalLon.toFixed(6)}`;
+                    }
+                } else {
+                    exifGPSData = null;
+                    document.getElementById('gpsInfo').style.display = 'none';
+                }
+            });
+        }
+
+        function convertDMSToDD(dms, ref) {
+            if (!dms || dms.length !== 3) return null;
+            let dd = dms[0] + dms[1] / 60 + dms[2] / 3600;
+            if (ref === 'S' || ref === 'W') dd = -dd;
+            return dd;
+        }
+
+        function useParisCoords() {
+            document.getElementById('testLat').value = '48.8566';
+            document.getElementById('testLon').value = '2.3522';
+        }
+
+        function useNoumeaCoords() {
+            document.getElementById('testLat').value = '-22.2697';
+            document.getElementById('testLon').value = '166.4381';
+        }
+
+        function clearCoords() {
+            document.getElementById('testLat').value = '';
+            document.getElementById('testLon').value = '';
+            document.getElementById('gpsInfo').style.display = 'none';
+        }
+
+        function getCurrentCoordinates() {
+            const lat = document.getElementById('testLat').value;
+            const lon = document.getElementById('testLon').value;
+
+            if (lat && lon) {
+                return {
+                    latitude: parseFloat(lat),
+                    longitude: parseFloat(lon)
+                };
+            }
+            return null;
+        }
+
+        // =================================================================
+        // TESTS HEALTH & CONFIG
+        // =================================================================
+        async function testHealth() {
+            try {
+                showStatus('configResults', '⏳ Test en cours...', 'loading');
+                const result = await apiCall('GET', '/api/health');
+                showStatus('configResults',
+                    `✅ Status: ${result.status} | Services: ${JSON.stringify(result.services)}`,
+                    'success'
+                );
+            } catch (error) {
+                showStatus('configResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testConfig() {
+            try {
+                showStatus('configResults', '⏳ Chargement config IA...', 'loading');
+                const result = await apiCall('GET', '/api/ai/config');
+                showStatus('configResults', '✅ Configuration IA chargée', 'success');
+                console.log('Config IA:', result);
+            } catch (error) {
+                showStatus('configResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testStatus() {
+            try {
+                showStatus('configResults', '⏳ Test status doublons...', 'loading');
+                const result = await apiCall('GET', '/api/duplicates/status');
+
+                if (result.clip_available) {
+                    showStatus('configResults',
+                        `✅ CLIP disponible - Modèle: ${result.model_info.model_name}`,
+                        'success'
+                    );
+                } else {
+                    showStatus('configResults', '❌ CLIP non disponible', 'error');
+                }
+            } catch (error) {
+                showStatus('configResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        // =================================================================
+        // TESTS LÉGENDES - SYNCHRONE
+        // =================================================================
+        async function testSyncCaption() {
+            if (!testImageBase64) {
+                showStatus('syncCaptionResults', '⚠️ Veuillez charger une image', 'error');
+                return;
+            }
+
+            try {
+                showStatus('syncCaptionResults', '⏳ Génération en cours...', 'loading');
+
+                const coords = getCurrentCoordinates();
+                const style = document.getElementById('captionStyle').value;
+                const language = document.getElementById('captionLanguage').value;
+
+                const requestData = {
+                    asset_id: `test-sync-${Date.now()}`,
+                    image_base64: testImageBase64,
+                    language: language,
+                    style: style
+                };
+
+                if (coords) {
+                    requestData.latitude = coords.latitude;
+                    requestData.longitude = coords.longitude;
+                }
+
+                const result = await apiCall('POST', '/api/ai/generate-caption', requestData);
+
+                if (result.success) {
+                    displayCaption('syncCaptionResults', result);
+                } else {
+                    showStatus('syncCaptionResults', `❌ ${result.error}`, 'error');
+                }
+            } catch (error) {
+                showStatus('syncCaptionResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testSyncCaptionNoGPS() {
+            if (!testImageBase64) {
+                showStatus('syncCaptionResults', '⚠️ Veuillez charger une image', 'error');
+                return;
+            }
+
+            try {
+                showStatus('syncCaptionResults', '⏳ Génération sans GPS...', 'loading');
+
+                const result = await apiCall('POST', '/api/ai/generate-caption', {
+                    asset_id: `test-sync-nogps-${Date.now()}`,
+                    image_base64: testImageBase64,
+                    language: document.getElementById('captionLanguage').value,
+                    style: document.getElementById('captionStyle').value
+                });
+
+                if (result.success) {
+                    displayCaption('syncCaptionResults', result);
+                }
+            } catch (error) {
+                showStatus('syncCaptionResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        function displayCaption(elementId, result) {
+            let html = `
+                <div class="caption-display">
+                    <div class="caption-text">"${result.caption}"</div>
+                    <div style="margin-top: 15px; color: #666; font-size: 14px;">
+                        🎯 Confiance: ${(result.confidence_score * 100).toFixed(0)}%<br>
+                        ⏱️ Temps: ${result.generation_time?.toFixed(1) || '?'}s<br>
+                        🌍 Langue: ${result.language}<br>
+                        🎨 Style: ${result.style}
+                    </div>
+                </div>
+            `;
+
+            if (result.intermediate_results?.geo_context?.location_basic) {
+                html += `
+                    <div style="background: #f0fff0; padding: 15px; border-radius: 5px; margin: 10px 0;">
+                        <strong>📍 Contexte géographique:</strong><br>
+                        ${result.intermediate_results.geo_context.location_basic}
+                    </div>
+                `;
+            }
+
+            showResults(elementId, html, false);
+        }
+
+        // =================================================================
+        // TESTS LÉGENDES - ASYNCHRONE SSE
+        // =================================================================
+        async function testAsyncCaption() {
+            if (!testImageBase64) {
+                showStatus('asyncCaptionStatus', '⚠️ Veuillez charger une image', 'error');
+                return;
+            }
+
+            const requestId = `caption-${Date.now()}`;
+
+            try {
+                showStatus('asyncCaptionStatus', '🚀 Démarrage génération SSE...', 'loading');
+
+                const coords = getCurrentCoordinates();
+                const requestData = {
+                    request_id: requestId,
+                    asset_id: `test-async-${Date.now()}`,
+                    image_base64: testImageBase64,
+                    language: document.getElementById('captionLanguage').value,
+                    style: document.getElementById('captionStyle').value
+                };
+
+                if (coords) {
+                    requestData.latitude = coords.latitude;
+                    requestData.longitude = coords.longitude;
+                }
+
+                const startResult = await apiCall('POST', '/api/ai/generate-caption-async', requestData);
+
+                if (startResult.success) {
+                    connectCaptionSSE(requestId);
+                } else {
+                    throw new Error(startResult.error);
+                }
+
+            } catch (error) {
+                showStatus('asyncCaptionStatus', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testAsyncCaptionNoGPS() {
+            if (!testImageBase64) {
+                showStatus('asyncCaptionStatus', '⚠️ Veuillez charger une image', 'error');
+                return;
+            }
+
+            const requestId = `caption-nogps-${Date.now()}`;
+
+            try {
+                const startResult = await apiCall('POST', '/api/ai/generate-caption-async', {
+                    request_id: requestId,
+                    asset_id: `test-async-nogps-${Date.now()}`,
+                    image_base64: testImageBase64,
+                    language: document.getElementById('captionLanguage').value,
+                    style: document.getElementById('captionStyle').value
+                });
+
+                if (startResult.success) {
+                    connectCaptionSSE(requestId);
+                }
+            } catch (error) {
+                showStatus('asyncCaptionStatus', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        function connectCaptionSSE(requestId) {
+
+            const sseUrl = `${getServerUrl()}/api/ai/generate-caption-stream/${requestId}`;
+
+            document.getElementById('captionProgressBar').style.display = 'block';
+            document.getElementById('captionSSELog').style.display = 'block';
+            document.getElementById('captionSSELog').innerHTML = '';
+
+            //  sseManager.connect(`caption-${requestId}`, sseUrl, {
+            sseManager.connect(`${requestId}`, sseUrl, {
+
+                onProgress: (progress, details, step) => {
+                    updateProgress('captionProgressFill', progress, details);
+                },
+                onComplete: (data) => {
+                    displayCaption('asyncCaptionResults', data);
+                    document.getElementById('captionProgressBar').style.display = 'none';
+                },
+                onError: (error) => {
+                    showStatus('asyncCaptionStatus', `❌ ${error}`, 'error');
+                },
+                onLog: (logEntry) => {
+                    addSSELog('captionSSELog', logEntry);
+                }
+            });
+        }
+
+        // =================================================================
+        // TESTS DOUBLONS - SYNCHRONE
+        // =================================================================
+        async function testSyncDuplicates() {
+            try {
+                showStatus('syncDupStatus', '⏳ Détection en cours...', 'loading');
+
+                const assetIds = document.getElementById('assetIds').value
+                    .split('\n')
+                    .map(line => line.trim())
+                    .filter(line => line && !line.startsWith('#'));
+
+                if (assetIds.length < 2) {
+                    showStatus('syncDupStatus', '❌ Entrez au moins 2 asset IDs', 'error');
+                    return;
+                }
+
+                const threshold = parseFloat(document.getElementById('threshold').value);
+
+                const response = await apiCall('POST', '/api/duplicates/find-similar', {
+                    selected_asset_ids: assetIds,
+                    threshold: threshold
+                });
+
+                if (response.success) {
+                    showStatus('syncDupStatus',
+                        `✅ Analyse terminée - ${response.total_groups} groupe(s) trouvé(s)`,
+                        'success'
+                    );
+                    showResults('syncDupResults', response);
+                    displayVisualResults(response, 'syncDupVisual');
+                } else {
+                    showStatus('syncDupStatus', `❌ ${response.error}`, 'error');
+                }
+
+            } catch (error) {
+                showStatus('syncDupStatus', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        // =================================================================
+        // TESTS DOUBLONS - ASYNCHRONE SSE
+        // =================================================================
+        async function testAsyncDuplicates() {
+            sseManager.closeAll(); // Fermer toutes les connexions existantes
+
+            const assetIds = document.getElementById('asyncAssetIds').value
+                .split('\n')
+                .map(line => line.trim())
+                .filter(line => line && !line.startsWith('#'));
+
+            if (assetIds.length === 0) {
+                showStatus('asyncDupProgress', '❌ Entrez des asset IDs', 'error');
+                return;
+            }
+
+            showStatus('asyncDupProgress', '🚀 Démarrage analyse asynchrone...', 'loading');
+            document.getElementById('dupProgressBar').style.display = 'block';
+            document.getElementById('dupSSELog').style.display = 'block';
+            document.getElementById('dupSSELog').innerHTML = '';
+
+            try {
+                const requestId = `dup-${Date.now()}`;
+                const response = await apiCall('POST', '/api/duplicates/find-similar-async', {
+                    request_id: requestId,
+                    selected_asset_ids: assetIds,
+                    threshold: parseFloat(document.getElementById('threshold').value),
+                    group_by_time: document.getElementById('groupByTime').checked,
+                    time_window_hours: parseInt(document.getElementById('timeWindow').value)
+                });
+
+                if (response.success) {
+                    showStatus('asyncDupProgress', '✅ Détection démarrée', 'success');
+                    connectDuplicateSSE(requestId);
+                } else {
+                    throw new Error(response.error);
+                }
+
+            } catch (error) {
+                showStatus('asyncDupProgress', `❌ ${error.message}`, 'error');
+                document.getElementById('dupProgressBar').style.display = 'none';
+            }
+        }
+
+        function connectDuplicateSSE(requestId) {
+            const sseUrl = `${getServerUrl()}/api/duplicates/find-similar-stream/${requestId}`;
+
+            sseManager.connect(`dup-${requestId}`, sseUrl, {
+                onProgress: (progress, details, step) => {
+                    updateProgress('dupProgressFill', progress, details);
+                },
+                onComplete: (data) => {
+                    showStatus('asyncDupProgress', '✅ Analyse terminée!', 'success');
+                    showResults('asyncDupResults', data);
+                    displayVisualResults(data, 'asyncDupVisual');
+                    document.getElementById('dupProgressBar').style.display = 'none';
+                },
+                onError: (error) => {
+                    showStatus('asyncDupProgress', `❌ ${error}`, 'error');
+                    document.getElementById('dupProgressBar').style.display = 'none';
+                },
+                onLog: (logEntry) => {
+                    addSSELog('dupSSELog', logEntry);
+                }
+            });
+        }
+
+        // =================================================================
+        // FONCTIONS D'AFFICHAGE
+        // =================================================================
+        function updateProgress(fillId, percent, details) {
+            const fill = document.getElementById(fillId);
+            if (fill) {
+                fill.style.width = `${percent}%`;
+                fill.textContent = `${percent}% - ${details}`;
+            }
+        }
+
+        function addSSELog(logId, logEntry) {
+            const log = document.getElementById(logId);
+            if (!log) return;
+
+            const colors = {
+                'success': '#00ff00',
+                'error': '#ff4444',
+                'warning': '#ffaa00',
+                'info': '#00aaff',
+                'progress': '#aaaaff',
+                'result': '#ffff00',
+                'heartbeat': '#888888',
+                'unknown': '#ff00ff'
+            };
+
+            const color = colors[logEntry.type] || '#ffffff';
+            log.innerHTML += `<span style="color: ${color}">[${logEntry.timestamp}] ${logEntry.message}</span>\n`;
+            log.scrollTop = log.scrollHeight;
+        }
+        function displayVisualResults(result, targetId) {
+            const visualDiv = document.getElementById(targetId);
+            if (!visualDiv) return;
+
+            if (!result.groups || result.groups.length === 0) {
+                visualDiv.innerHTML = '<div class="status success">✅ Aucun doublon trouvé</div>';
+                return;
+            }
+
+            // Récupérer l'URL du proxy si fournie, sinon utiliser l'URL Immich directe
+            const proxyUrl = document.getElementById('proxyUrl').value;
+            const immichBaseUrl = document.getElementById('immichUrl').value || 'http://localhost:3001';
+            const immichApiKey = document.getElementById('immichApiKey').value;
+
+            visualDiv.innerHTML = `
+        <h3>📊 ${result.groups.length} groupe(s) de doublons trouvés</h3>
+        ${result.groups.map((group, index) => `
+            <div class="duplicate-group">
+                <h4>Groupe ${index + 1} - ${group.images.length} images similaires</h4>
+                <p>Similarité moyenne: <strong>${(group.similarity_avg * 100).toFixed(1)}%</strong></p>
+                <div class="duplicate-images">
+                    ${group.images.map(img => {
+                // Utiliser le proxy s'il est disponible, sinon l'URL directe
+                const imgSrc = proxyUrl
+                    ? `${proxyUrl}?id=${img.asset_id}&type=thumbnail`
+                    : `${immichBaseUrl}/api/assets/${img.asset_id}/thumbnail?size=preview${immichApiKey ? '&key=' + immichApiKey : ''}`;
+
+                return `
+                            <div class="duplicate-image ${img.is_primary ? 'primary' : ''}">
+                                <img src="${imgSrc}" 
+                                     alt="${img.filename || 'Image'}"
+                                     onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22200%22 height=%22200%22 fill=%22%23ddd%22/><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22>Image non disponible</text></svg>'">
+                                <div>
+                                    ${img.is_primary ? '<strong>⭐ Image principale</strong><br>' : ''}
+                                    <small>ID: ${img.asset_id.substring(0, 8)}...</small><br>
+                                    ${img.filename ? `<small>Fichier: ${img.filename}</small><br>` : ''}
+                                    ${img.date ? `<small>Date: ${new Date(img.date).toLocaleDateString()}</small><br>` : ''}
+                                    ${img.size ? `<small>Taille: ${(img.size / 1024 / 1024).toFixed(1)} MB</small>` : ''}
+                                </div>
+                            </div>
+                        `;
+            }).join('')}
+                </div>
+            </div>
+        `).join('')}
+    `;
+        }
+        function XdisplayVisualResults(result, targetId) {
+            const visualDiv = document.getElementById(targetId);
+            if (!visualDiv) return;
+
+            if (!result.groups || result.groups.length === 0) {
+                visualDiv.innerHTML = '<div class="status success">✅ Aucun doublon trouvé</div>';
+                return;
+            }
+
+            // Récupérer l'URL et l'API Key Immich depuis les champs de config
+            const immichBaseUrl = document.getElementById('immichUrl').value || 'http://localhost:3001';
+            const immichApiKey = document.getElementById('immichApiKey').value;
+
+            visualDiv.innerHTML = `
+                <h3>📊 ${result.groups.length} groupe(s) de doublons trouvés</h3>
+                ${result.groups.map((group, index) => `
+                    <div class="duplicate-group">
+                        <h4>Groupe ${index + 1} - ${group.images.length} images similaires</h4>
+                        <p>Similarité moyenne: <strong>${(group.similarity_avg * 100).toFixed(1)}%</strong></p>
+                        <div class="duplicate-images">
+                            ${group.images.map(img => `
+                                <div class="duplicate-image ${img.is_primary ? 'primary' : ''}">
+                                    <img src="${immichBaseUrl}/api/assets/${img.asset_id}/thumbnail?size=preview${immichApiKey ? '&key=' + immichApiKey : ''}" 
+                                         alt="${img.filename || 'Image'}"
+                                         onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 width=%22200%22 height=%22200%22><rect width=%22200%22 height=%22200%22 fill=%22%23ddd%22/><text x=%2250%%22 y=%2250%%22 dominant-baseline=%22middle%22 text-anchor=%22middle%22 fill=%22%23666%22>Image non disponible</text></svg>'">
+                                    <div>
+                                        ${img.is_primary ? '<strong>⭐ Image principale</strong><br>' : ''}
+                                        <small>ID: ${img.asset_id.substring(0, 8)}...</small><br>
+                                        ${img.filename ? `<small>Fichier: ${img.filename}</small><br>` : ''}
+                                        ${img.date ? `<small>Date: ${new Date(img.date).toLocaleDateString()}</small><br>` : ''}
+                                        ${img.size ? `<small>Taille: ${(img.size / 1024 / 1024).toFixed(1)} MB</small>` : ''}
+                                    </div>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `).join('')}
+            `;
+        }
+        // =================================================================
+        // AUTRES TESTS
+        // =================================================================
+        async function testAlbumAnalysis() {
+            const albumId = document.getElementById('albumId').value;
+            if (!albumId) {
+                showStatus('albumStatus', '❌ Entrez un album ID', 'error');
+                return;
+            }
+
+            try {
+                showStatus('albumStatus', '⏳ Analyse de l\'album...', 'loading');
+
+                const response = await apiCall('POST', `/api/duplicates/analyze-album/${albumId}`, {
+                    threshold: parseFloat(document.getElementById('threshold').value),
+                    group_by_time: true,
+                    time_window_hours: 24
+                });
+
+                if (response.success) {
+                    showStatus('albumStatus',
+                        `✅ Analyse démarrée - Request ID: ${response.request_id}`,
+                        'success'
+                    );
+                    showResults('albumResults', response);
+                    // Connecter au SSE pour suivre la progression
+                    connectDuplicateSSE(response.request_id);
+                }
+            } catch (error) {
+                showStatus('albumStatus', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testRegenerate() {
+            try {
+                showStatus('regenResults', '⏳ Régénération...', 'loading');
+
+                const result = await apiCall('POST', '/api/ai/regenerate-final', {
+                    image_description: "Une magnifique plage de sable blanc avec des palmiers",
+                    geo_context: "Nouméa, Nouvelle-Calédonie",
+                    cultural_enrichment: "Lagon inscrit au patrimoine mondial de l'UNESCO",
+                    language: 'français',
+                    style: 'minimal'
+                });
+
+                if (result.success) {
+                    showResults('regenResults',
+                        `✅ Nouvelle légende: "${result.caption}"`,
+                        false
+                    );
+                }
+            } catch (error) {
+                showStatus('regenResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testStats() {
+            try {
+                showStatus('statsResults', '⏳ Chargement...', 'loading');
+                const result = await apiCall('GET', '/api/ai/stats');
+                showResults('statsResults', result);
+            } catch (error) {
+                showStatus('statsResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testCacheInfo() {
+            try {
+                showStatus('cacheResults', '⏳ Chargement...', 'loading');
+                const result = await apiCall('GET', '/api/ai/cache/info');
+                showResults('cacheResults', result);
+            } catch (error) {
+                showStatus('cacheResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testClearCache() {
+            try {
+                showStatus('cacheResults', '⏳ Vidage du cache...', 'loading');
+                const result = await apiCall('POST', '/api/ai/clear-cache');
+                showResults('cacheResults', result);
+            } catch (error) {
+                showStatus('cacheResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        async function testPipeline() {
+            try {
+                showStatus('pipelineResults', '⏳ Test du pipeline...', 'loading');
+                const result = await apiCall('POST', '/api/ai/test');
+                showResults('pipelineResults', result);
+            } catch (error) {
+                showStatus('pipelineResults', `❌ ${error.message}`, 'error');
+            }
+        }
+
+        // =================================================================
+        // UTILITAIRES
+        // =================================================================
+        function loadSampleIds() {
+            document.getElementById('assetIds').value = `# IDs d'exemple - remplacez par de vrais IDs
+a1234567-89ab-cdef-0123-456789abcdef
+b2345678-9abc-def0-1234-56789abcdef0
+c3456789-abcd-ef01-2345-6789abcdef01`;
+        }
+
+        function clearResults(section) {
+            if (section === 'syncDup') {
+                document.getElementById('syncDupStatus').innerHTML = '';
+                document.getElementById('syncDupResults').style.display = 'none';
+                document.getElementById('syncDupVisual').innerHTML = '';
+            } else if (section === 'asyncDup') {
+                document.getElementById('asyncDupProgress').innerHTML = '';
+                document.getElementById('asyncDupResults').style.display = 'none';
+                document.getElementById('asyncDupVisual').innerHTML = '';
+                document.getElementById('dupProgressBar').style.display = 'none';
+                document.getElementById('dupSSELog').style.display = 'none';
+            } else if (section === 'album') {
+                document.getElementById('albumStatus').innerHTML = '';
+                document.getElementById('albumResults').style.display = 'none';
+            }
+        }
+
+        function stopCurrentSSE() {
+            sseManager.closeAll();
+            showStatus('asyncCaptionStatus', '🛑 SSE arrêté', 'info');
+            showStatus('asyncDupProgress', '🛑 SSE arrêté', 'info');
+        }
+
+        // Mise à jour du slider
+        document.getElementById('threshold').addEventListener('input', (e) => {
+            document.getElementById('thresholdValue').textContent = Math.round(e.target.value * 100) + '%';
+        });
+
+        // Créer une image de test par défaut
+        function createDefaultTestImage() {
+            const canvas = document.createElement('canvas');
+            canvas.width = 100;
+            canvas.height = 100;
+            const ctx = canvas.getContext('2d');
+            ctx.fillStyle = 'red';
+            ctx.fillRect(0, 0, 100, 100);
+            testImageBase64 = canvas.toDataURL('image/jpeg');
+            document.getElementById('imagePreview').innerHTML =
+                `<img src="${testImageBase64}" style="max-width: 200px; margin-top: 10px; border-radius: 5px;">
+                 <p style="color: #666;">Image de test par défaut</p>`;
+        }
+
+        // Au chargement
+        window.onload = () => {
+            createDefaultTestImage();
+            console.log('🚀 Client de test complet prêt!');
+            testHealth();
+        };
+    </script>
+</body>
+
+</html>
