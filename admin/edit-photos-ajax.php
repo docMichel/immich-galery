@@ -24,7 +24,7 @@ function handleAjaxRequest($action, $data, $galleryId, $db, $immichClient)
                 break;
 
             case 'find_duplicates':
-                $result = findDuplicates($data, $galleryId, $db);
+                $result = LocalfindDuplicates($data, $galleryId, $db);
                 break;
 
             default:
@@ -126,7 +126,7 @@ function updateCaption($data, $galleryId, $db)
     ];
 }
 
-function findDuplicates($data, $galleryId, $db)
+function LocalfindDuplicates($data, $galleryId, $db)
 {
     $threshold = floatval($data['threshold'] ?? 0.85);
     $assetIds = isset($data['asset_ids']) ? json_decode($data['asset_ids'], true) : null;

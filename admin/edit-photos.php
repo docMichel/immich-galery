@@ -52,6 +52,60 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
     <link rel="stylesheet" href="../public/assets/css/gallery.css">
     <link rel="stylesheet" href="../public/assets/css/edit-photos.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css">
+    <style>
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            border-radius: 8px;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            padding: 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .modal-body {
+            padding: 20px;
+        }
+
+        .modal-footer {
+            padding: 20px;
+            border-top: 1px solid #ddd;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #f0f0f0;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #007bff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
 </head>
 
 <body>
@@ -75,6 +129,7 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
                 <button class="view-btn" data-view="clipboard">Presse-papier</button>
             </div>
 
+            <!-- Dans edit-photos.php, modifier la section toolbar-actions -->
             <div class="toolbar-actions">
                 <div class="selection-info">
                     <span id="selectionCount">0</span> photo(s) sélectionnée(s)
@@ -95,12 +150,15 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
                     <button id="btnMapSelect" class="btn btn-primary" disabled>🗺️ Carte</button>
                     <button id="btnRemoveGPS" class="btn btn-danger" disabled>🗑️ Supprimer GPS</button>
                 </div>
+
+                <!-- NOUVEAU : Groupe doublons -->
                 <div class="toolbar-group">
-                    <button id="btnFindDuplicates" class="btn btn-primary" disabled>DoublonS</button>
-                </div>
-                <div class="clipboard-info" id="clipboardInfo" style="display: none;">
-                    <img id="clipboardThumb" src="" alt="">
-                    <span id="clipboardCoords"></span>
+                    <button id="btnFindDuplicatesSelection" class="btn btn-warning" disabled>
+                        🔍 Doublons sélection
+                    </button>
+                    <button id="btnFindDuplicatesAll" class="btn btn-warning">
+                        🔍 Doublons galerie
+                    </button>
                 </div>
             </div>
         </div>
@@ -153,7 +211,7 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
         </div>
     </div>
 
-    <!-- Modal Caption -->
+    <!-- Modal Caption 
     <div id="captionModal" class="modal">
         <div class="modal-content">
             <h2>Éditer la légende</h2>
@@ -164,7 +222,7 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
             </div>
         </div>
     </div>
-
+-->
 
 
     <!-- MapModal -->
@@ -185,10 +243,21 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
     </script>
 
     <!-- JS -->
+    <script src="../public/assets/js/modules/SSEManager.js"></script>
+
+    <!-- script type="module">
+        import DuplicateManager from '../public/assets/js/edit-photos/modules/DuplicateManager.js';
+
+        window.duplicateManager = new DuplicateManager({
+            galleryId: <?= $galleryId ?>,
+            flaskUrl: '<?= $config['immich']['FLASK_API_URL'] ?>'
+        });
+    </script -->
     <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
     <script src="../public/assets/js/modules/MapManager.js"></script>
 
     <script src="../public/assets/js/edit-photos/main.js" type="module"></script>
+
 </body>
 
 </html>

@@ -13,9 +13,13 @@ class EditPhotos {
         // Initialiser les modules
         this.photoManager = new PhotoManager();
         //this.mapManager = new MapManager(); // Utiliser la classe globale
-        this.duplicateManager = new DuplicateManager(this.config.flaskApiUrl);
+        this.duplicateManager = new DuplicateManager({
+            galleryId: this.config.galleryId,
+            flaskUrl: this.config.flaskApiUrl
+        });
         this.viewManager = new ViewManager();
         //this.captionEditor = new CaptionEditor();
+        window.duplicateManager = this.duplicateManager;
 
         this.init();
     }
@@ -101,7 +105,8 @@ class EditPhotos {
           */
 
         // Doublons
-        document.getElementById('btnFindDuplicates').addEventListener('click', () => {
+        /*
+        document.getElementById('btnFindDuplicatesSelection').addEventListener('click', () => {
             const selection = this.photoManager.getSelection();
             const threshold = selection.size > 0 ? 0.85 : 0.92; // Seuil plus élevé si pas de sélection
             this.duplicateManager.findDuplicates(selection, threshold);
@@ -111,7 +116,7 @@ class EditPhotos {
             const threshold = parseFloat(document.getElementById('duplicateThreshold').value);
             this.duplicateManager.analyzeDuplicates(this.config.galleryId, threshold);
         });
-
+*/
         // Slider de seuil
         document.getElementById('duplicateThreshold').addEventListener('input', (e) => {
             document.getElementById('thresholdValue').textContent = e.target.value;
@@ -143,7 +148,7 @@ class EditPhotos {
         document.getElementById('btnPasteGPS').disabled = !hasSelection || !this.photoManager.hasClipboardGPS();
         document.getElementById('btnRemoveGPS').disabled = !hasSelection;
         document.getElementById('btnMapSelect').disabled = !hasSelection;
-        document.getElementById('btnFindDuplicates').disabled = !hasSelection;
+        document.getElementById('btnFindDuplicatesSelection').disabled = !hasSelection;
 
 
         // Boutons rotation
@@ -181,23 +186,23 @@ class EditPhotos {
     }
 }
 // Fonctions globales pour la modal
-window.closeMapModal = function() {
+window.closeMapModal = function () {
     if (window.mapManager) {
         window.mapManager.closeModal();
     }
 }
 
-window.confirmMapLocation = function() {
+window.confirmMapLocation = function () {
     if (window.mapManager) {
         const coords = window.mapManager.getSelectedCoords();
-        
+
         if (!coords) return;
-        
+
         // Utiliser l'instance globale d'EditPhotos
         if (window.editPhotos && window.editPhotos.photoManager) {
             window.editPhotos.photoManager.setClipboardGPS(coords);
         }
-        
+
         window.mapManager.closeModal();
     }
 }
