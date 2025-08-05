@@ -22,6 +22,8 @@ export default class DuplicateManager {
                 <div class="modal-content" style="max-width: 90%; width: 1200px;">
                     <div class="modal-header">
                         <h2>🔍 Détection de doublons</h2>
+                        <span id="heartbeatIndicator" class="heartbeat-indicator">💓</span>
+
                         <button class="btn-close" onclick="duplicateManager.closeModal()">✕</button>
                     </div>
                     
@@ -173,6 +175,10 @@ export default class DuplicateManager {
         console.log('Request ID:', requestId);
 
         this.sseManager.connect(`dup-${requestId}`, url, {
+            onHeartbeat: (data) => {
+                // Faire clignoter l'indicateur
+                this.flashHeartbeat();
+            },
             onProgress: (progress, details, step) => {
                 const fill = document.getElementById('dupProgressFill');
                 fill.style.width = `${progress}%`;
@@ -193,12 +199,51 @@ export default class DuplicateManager {
             }
         });
     }
+    flashHeartbeat() {
+        const indicator = document.getElementById('heartbeatIndicator');
+        if (indicator) {
+            indicator.classList.add('beating');
+            setTimeout(() => {
+                indicator.classList.remove('beating');
+            }, 500);
+        }
+    }
 
     displayResults(data) {
         // TODO: Afficher les résultats
         console.log('Résultats:', data);
     }
+    renderThumbnail(img, groupIndex, imgIndex) {
+        // Récupérer le template
+        let template = document.getElementById('duplicate-thumbnail-template').innerHTML;
 
+        // Données à remplacer
+        const data = {
+            assetId: img.asset_id,
+            groupIndex: groupIndex,
+            imgIndex: imgIndex,
+            filename: img.filename || 'Image',
+            filenameShort: (img.filename || 'Image').substring(0, 20),
+            primary: img.is_primary ? 'primary' : '',
+            checked: img.is_primary ? 'checked' : '',
+            isPrimary: img.is_primary,
+            hasGPS: !!(img.latitude && img.longitude),
+            lat: img.latitude ? img.latitude.toFixed(4) : '',
+            lng: img.longitude ? img.longitude.toFixed(4) : ''
+        };
+
+        // Remplacer les variables simples
+        Object.keys(data).forEach(key => {
+            template = template.replace(new RegExp(`{{${key}}}`, 'g'), data[key]);
+        });
+
+        // Gérer les conditions
+        template = template.replace(/{{#(\w+)}}([\s\S]*?){{\/\1}}/g, (match, key, content) => {
+            return data[key] ? content : '';
+        });
+
+        return template;
+    }
     getSelectedAssetIds() {
         const selected = [];
         document.querySelectorAll('.photo-select:checked').forEach(cb => {
@@ -225,5 +270,177 @@ export default class DuplicateManager {
     closeModal() {
         document.getElementById('duplicateModal').style.display = 'none';
         this.sseManager.closeAll();
+    }
+
+    displayResults(data) {
+        console.log('Résultats reçus:', data);
+
+        const resultsDiv = document.getElementById('dupResults');
+
+        if (!data.groups || data.groups.length === 0) {
+            resultsDiv.innerHTML = '<div class="no-results">✅ Aucun doublon trouvé !</div>';
+            return;
+        }
+
+        // Sauvegarder les groupes
+        this.currentGroups = data.groups;
+
+        // Afficher les groupes
+        let html = `
+        <div class="duplicate-summary">
+            <h3>📊 ${data.groups.length} groupe(s) de doublons trouvés</h3>
+            <p>${data.total_images || data.groups.reduce((sum, g) => sum + g.images.length, 0)} images analysées</p>
+        </div>
+    `;
+
+        data.groups.forEach((group, groupIndex) => {
+            html += `
+            <div class="duplicate-group" data-group-index="${groupIndex}">
+                <div class="group-header">
+                    <h4>Groupe ${groupIndex + 1} - ${group.images.length} images similaires</h4>
+                    <span class="similarity-badge">Similarité: ${(group.similarity_avg * 100).toFixed(0)}%</span>
+                </div>
+                
+                <div class="group-images">
+                    ${group.images.map((img, imgIndex) =>
+                this.renderThumbnail(img, groupIndex, imgIndex)  // <-- ICI, on utilise renderThumbnail
+            ).join('')}
+                </div>
+                
+                <div class="group-actions">
+                    <button class="btn btn-sm" onclick="duplicateManager.splitGroup(${groupIndex})">
+                        ✂️ Séparer le groupe
+                    </button>
+                </div>
+            </div>
+        `;
+        });
+
+        resultsDiv.innerHTML = html;
+
+        // Activer le bouton de sauvegarde
+        document.getElementById('btnSaveGroups').style.display = 'inline-block';
+    }
+
+    XdisplayResults(data) {
+        console.log('Résultats reçus:', data);
+        console.log('Résultats complets Flask:', JSON.stringify(data, null, 2));
+
+        const resultsDiv = document.getElementById('dupResults');
+
+        if (!data.groups || data.groups.length === 0) {
+            resultsDiv.innerHTML = '<div class="no-results">✅ Aucun doublon trouvé !</div>';
+            return;
+        }
+
+        // Sauvegarder les groupes pour la validation
+        this.currentGroups = data.groups;
+
+        // Afficher les groupes
+        let html = `
+        <div class="duplicate-summary">
+            <h3>📊 ${data.groups.length} groupe(s) de doublons trouvés</h3>
+<p>${data.total_images || data.groups.reduce((sum, g) => sum + g.images.length, 0)} images analysées</p>
+
+        </div>
+    `;
+
+        data.groups.forEach((group, groupIndex) => {
+            html += `
+            <div class="duplicate-group" data-group-index="${groupIndex}">
+                <div class="group-header">
+                    <h4>Groupe ${groupIndex + 1} - ${group.images.length} images similaires</h4>
+                    <span class="similarity-badge">Similarité: ${(group.similarity_avg * 100).toFixed(0)}%</span>
+                </div>
+                
+                <div class="group-images">
+                    ${group.images.map((img, imgIndex) => `
+                        <div class="dup-image ${img.is_primary ? 'primary' : ''}" 
+                             data-asset-id="${img.asset_id}"
+                             data-group-index="${groupIndex}"
+                             data-image-index="${imgIndex}">
+                            
+                            <img src="../public/image-proxy.php?id=${img.asset_id}&type=thumbnail" 
+                                 alt="${img.filename || 'Image'}">
+                            
+                            <div class="image-info">
+                                ${img.is_primary ? '<span class="primary-badge">⭐ Principale</span>' : ''}
+                                <label class="select-primary">
+                                    <input type="radio" 
+                                           name="primary-${groupIndex}" 
+                                           value="${imgIndex}"
+                                           ${img.is_primary ? 'checked' : ''}
+                                           onchange="duplicateManager.setPrimary(${groupIndex}, ${imgIndex})">
+                                    Principale
+                                </label>
+                            </div>
+                            
+                            <button class="btn-remove" 
+                                    onclick="duplicateManager.removeFromGroup(${groupIndex}, ${imgIndex})"
+                                    title="Retirer du groupe">
+                                ❌
+                            </button>
+                        </div>
+                    `).join('')}
+                </div>
+                
+                <div class="group-actions">
+                    <button class="btn btn-sm" onclick="duplicateManager.splitGroup(${groupIndex})">
+                        ✂️ Séparer le groupe
+                    </button>
+                </div>
+            </div>
+        `;
+        });
+
+        resultsDiv.innerHTML = html;
+
+        // Activer le bouton de sauvegarde
+        document.getElementById('btnSaveGroups').style.display = 'inline-block';
+    }
+
+    // Méthodes pour gérer les actions
+    setPrimary(groupIndex, imageIndex) {
+        console.log(`Définir image ${imageIndex} comme principale du groupe ${groupIndex}`);
+
+        // Mettre à jour dans currentGroups
+        this.currentGroups[groupIndex].images.forEach((img, idx) => {
+            img.is_primary = (idx === imageIndex);
+        });
+
+        // Rafraîchir l'affichage
+        this.refreshGroup(groupIndex);
+    }
+
+    removeFromGroup(groupIndex, imageIndex) {
+        if (confirm('Retirer cette image du groupe de doublons ?')) {
+            // Retirer de currentGroups
+            this.currentGroups[groupIndex].images.splice(imageIndex, 1);
+
+            // Si le groupe n'a plus qu'une image, le supprimer
+            if (this.currentGroups[groupIndex].images.length <= 1) {
+                this.currentGroups.splice(groupIndex, 1);
+                this.displayResults({ groups: this.currentGroups });
+            } else {
+                this.refreshGroup(groupIndex);
+            }
+        }
+    }
+
+    splitGroup(groupIndex) {
+        if (confirm('Séparer ce groupe ? Chaque image deviendra indépendante.')) {
+            this.currentGroups.splice(groupIndex, 1);
+            this.displayResults({ groups: this.currentGroups });
+        }
+    }
+
+    refreshGroup(groupIndex) {
+        // Réafficher juste ce groupe
+        const groupDiv = document.querySelector(`[data-group-index="${groupIndex}"]`);
+        if (groupDiv) {
+            // Recréer le HTML pour ce groupe
+            // (ou utiliser displayResults avec les groupes modifiés)
+            this.displayResults({ groups: this.currentGroups });
+        }
     }
 }

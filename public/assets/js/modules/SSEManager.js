@@ -121,6 +121,8 @@ class SSEManager {
     handleMessage(id, data) {
         const connection = this.connections.get(id);
         if (!connection) return;
+        // AJOUTER CETTE LIGNE - Réinitialiser le timer à CHAQUE message
+        connection.lastMessageTime = Date.now();
 
         const handlers = connection.handlers;
         const eventType = data.event;

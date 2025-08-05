@@ -107,6 +107,10 @@ $immichAlbums = $immichClient->getAllAlbums();
                                 class="text-blue-500 hover:text-blue-600 px-3 py-1 border border-blue-300 rounded">
                                 Modifier
                             </button>
+                            <button onclick="refreshGallery(<?= $gallery['id'] ?>)"
+                                class="text-orange-500 hover:text-orange-600 px-3 py-1 border border-orange-300 rounded">
+                                🔄 Refresh EXIF
+                            </button>
                             <button onclick="openPhotoEdit(<?= $gallery['id'] ?>)"
                                 class="text-green-500 hover:text-green-600 px-3 py-1 border border-green-300 rounded">
                                 📸 PhotoEdit
@@ -312,6 +316,30 @@ $immichAlbums = $immichClient->getAllAlbums();
                         '<input type="hidden" name="gallery_id" value="' + id + '">'
                 }).appendTo('body').submit();
             }
+
+
+        }
+
+        function refreshGallery(galleryId) {
+            if (!confirm('Rafraîchir toutes les métadonnées EXIF depuis Immich ? Cela peut prendre du temps.')) {
+                return;
+            }
+
+            fetch('refresh-gallery.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        action: 'refresh_exif',
+                        gallery_id: galleryId
+                    })
+                })
+                .then(r => r.json())
+                .then(data => {
+                    alert(`${data.updated} photos mises à jour !`);
+                    location.reload();
+                });
         }
     </script>
 </body>

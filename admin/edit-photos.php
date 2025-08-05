@@ -257,6 +257,8 @@ $photosData = getPhotosData($galleryId, $db, $immichClient);
     <script src="../public/assets/js/modules/MapManager.js"></script>
 
     <script src="../public/assets/js/edit-photos/main.js" type="module"></script>
+    <!-- Template pour les thumbnails -->
+    <?php include 'views/duplicate-thumbnail-template.php'; ?>
 
 </body>
 

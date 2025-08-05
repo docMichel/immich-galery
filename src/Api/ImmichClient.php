@@ -108,7 +108,8 @@ class ImmichClient
                 'longitude' => $asset['exifInfo']['longitude'] ?? null,
                 'dateTaken' => $asset['fileCreatedAt'] ?? $asset['fileModifiedAt'],
                 'originalPath' => $asset['originalPath'] ?? '',
-                'type' => $asset['type'] ?? 'IMAGE'
+                'type' => $asset['type'] ?? 'IMAGE',
+                'exifInfo' => $asset['exifInfo'] ?? [],  // Ajouter tout l'EXIF
             ];
         }
 
