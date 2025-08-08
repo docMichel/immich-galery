@@ -10,7 +10,6 @@ class CaptionEditor {
         this.latitude = this.config.latitude;
         this.longitude = this.config.longitude;
 
-        // On ne stocke pas SSEManager ici, on le récupérera quand on en aura besoin
         this.currentRequestId = null;
         this.init();
     }
@@ -18,7 +17,6 @@ class CaptionEditor {
     // Méthode pour obtenir SSEManager de façon sûre
     getSSEManager() {
         if (!window.sseManager) {
-            // Si pas encore disponible, essayer de le créer
             if (window.SSEManager) {
                 window.sseManager = new window.SSEManager();
             } else {
@@ -34,7 +32,7 @@ class CaptionEditor {
         this.btnGenerate = document.getElementById('btnGenerate');
         this.btnRegenerate = document.getElementById('btnRegenerate');
 
-        // Textareas
+        // Textareas pour les résultats intermédiaires
         this.imageDescription = document.getElementById('imageDescription');
         this.geoContext = document.getElementById('geoContext');
         this.culturalEnrichment = document.getElementById('culturalEnrichment');
@@ -44,7 +42,7 @@ class CaptionEditor {
         this.languageSelect = document.getElementById('language');
         this.styleSelect = document.getElementById('style');
 
-        // UI
+        // UI Progress
         this.progressContainer = document.getElementById('progressContainer');
         this.progressFill = document.getElementById('progressFill');
         this.progressText = document.getElementById('progressText');
@@ -80,16 +78,21 @@ class CaptionEditor {
         try {
             this.showProgress();
             this.btnGenerate.disabled = true;
+            this.btnRegenerate.disabled = true;
+
+            // Vider les champs pour la nouvelle génération
+            this.clearFields();
 
             // Générer un request ID unique
             this.currentRequestId = `caption-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
 
-            // Préparer les données - Structure similaire au test
+            // Préparer les données
             const requestData = {
                 request_id: this.currentRequestId,
                 asset_id: this.assetId,
                 language: this.languageSelect?.value || 'français',
-                style: this.styleSelect?.value || 'creative'
+                style: this.styleSelect?.value || 'creative',
+                include_hashtags: true
             };
 
             // Ajouter les coordonnées GPS si disponibles
@@ -98,32 +101,7 @@ class CaptionEditor {
                 requestData.longitude = this.longitude;
             }
 
-            // Si on a des contenus existants, les ajouter
-            if (this.imageDescription.value) {
-                requestData.existing_description = this.imageDescription.value;
-            }
-            if (this.geoContext.value) {
-                requestData.existing_geo_context = this.geoContext.value;
-            }
-            if (this.culturalEnrichment.value) {
-                requestData.existing_cultural = this.culturalEnrichment.value;
-            }
-
-            // OPTIONNEL : Si on a l'image en local (par ex depuis le proxy)
-            // On pourrait l'ajouter, mais ce n'est pas nécessaire si Flask peut la récupérer
-            if (window.captionEditorConfig.includeImageData) {
-                // Récupérer l'image depuis l'élément img si nécessaire
-                const mainImage = document.getElementById('mainImage');
-                if (mainImage && mainImage.src) {
-                    // Si l'image est déjà en base64
-                    if (mainImage.src.startsWith('data:')) {
-                        requestData.image_base64 = mainImage.src;
-                    }
-                    // Sinon on laisse Flask la récupérer depuis Immich
-                }
-            }
-
-            // Utiliser le bon endpoint comme dans le test
+            // Lancer la génération
             const response = await fetch(`${this.flaskApiUrl}/api/ai/generate-caption-async`, {
                 method: 'POST',
                 headers: {
@@ -153,6 +131,7 @@ class CaptionEditor {
             this.showMessage(`Erreur: ${error.message}`, 'error');
             this.hideProgress();
             this.btnGenerate.disabled = false;
+            this.btnRegenerate.disabled = false;
         }
     }
 
@@ -165,192 +144,201 @@ class CaptionEditor {
             return;
         }
 
-        // Utiliser le bon endpoint pour SSE
         const sseUrl = `${this.flaskApiUrl}/api/ai/generate-caption-stream/${requestId}`;
+        console.log('🔌 Connexion SSE:', sseUrl);
 
-        // Indicateur de heartbeat
-        let lastHeartbeat = Date.now();
-        const heartbeatElement = document.createElement('div');
-        heartbeatElement.className = 'heartbeat-indicator';
-        heartbeatElement.innerHTML = '💓';
-        this.progressContainer.appendChild(heartbeatElement);
+        // Map des étapes pour l'affichage
+        const stepLabels = {
+            'preparation': 'Préparation',
+            'image_analysis': 'Analyse de l\'image',
+            'geolocation': 'Géolocalisation',
+            'cultural_enrichment': 'Enrichissement culturel',
+            'travel_enrichment': 'Travel Llama',
+            'caption_generation': 'Génération créative',
+            'hashtags': 'Hashtags',
+            'post_processing': 'Finalisation'
+        };
 
         sseManager.connect(`caption-${requestId}`, sseUrl, {
-            onProgress: (progress, details, step) => {
-                this.updateProgress(progress, details);
-
-                // Mise à jour progressive des champs si on reçoit des résultats
-                // Le step peut contenir les données ou être une string simple
+            onProgress: (progress, message, step) => {
+                console.log('📊 Progress:', { progress, message, step });
+                
+                // Mettre à jour la barre de progression
+                this.updateProgress(progress, message);
+                
+                // Mettre à jour le label de l'étape si disponible
+                if (step && stepLabels[step]) {
+                    this.progressText.textContent = `${stepLabels[step]}: ${message}`;
+                }
             },
 
-            onResult: (data) => {
-                console.log('Résultat intermédiaire:', data);
-
-                // Mettre à jour les champs selon l'étape
-                if (data.step === 'image_analysis' && data.result) {
-                    if (data.result.description) {
-                        this.imageDescription.value = data.result.description;
-                    }
-                } else if (data.step === 'geolocation' && data.result) {
-                    const geoText = [
-                        data.result.location_basic,
-                        data.result.cultural_context
-                    ].filter(text => text && text.trim()).join('\n');
-
-                    if (geoText) {
-                        this.geoContext.value = geoText;
-                    }
-                } else if (data.step === 'cultural_enrichment' && data.result) {
-                    if (data.result.enrichment) {
-                        this.culturalEnrichment.value = data.result.enrichment;
-                    }
-                } else if (data.step === 'raw_caption' && data.result) {
-                    if (data.result.caption) {
-                        // Optionnel : montrer la légende brute avant post-traitement
-                        this.finalCaption.value = data.result.caption;
-                    }
+            onResult: (step, result) => {
+                console.log('📝 Résultat intermédiaire:', { step, result });
+                
+                // Traiter selon l'étape
+                switch(step) {
+                    case 'image_analysis':
+                        if (result.description) {
+                            this.imageDescription.value = result.description;
+                            this.animateField(this.imageDescription);
+                        }
+                        break;
+                        
+                    case 'geolocation':
+                        if (result.location_basic || result.cultural_context) {
+                            const geoText = [
+                                result.location_basic,
+                                result.cultural_context
+                            ].filter(text => text && text.trim()).join('\n\n');
+                            
+                            if (geoText) {
+                                this.geoContext.value = geoText;
+                                this.animateField(this.geoContext);
+                            }
+                        }
+                        break;
+                        
+                    case 'cultural_enrichment':
+                        if (result.enrichment) {
+                            this.culturalEnrichment.value = result.enrichment;
+                            this.animateField(this.culturalEnrichment);
+                        }
+                        break;
+                        
+                    case 'travel_enrichment':
+                        if (result.enrichment) {
+                            // Ajouter à l'enrichissement culturel
+                            const currentEnrichment = this.culturalEnrichment.value;
+                            this.culturalEnrichment.value = currentEnrichment + 
+                                (currentEnrichment ? '\n\n🌍 Travel Llama:\n' : '') + 
+                                result.enrichment;
+                            this.animateField(this.culturalEnrichment);
+                        }
+                        break;
+                        
+                    case 'caption_generation':
+                    case 'raw_caption':
+                        if (result.caption) {
+                            this.finalCaption.value = result.caption;
+                            this.animateField(this.finalCaption);
+                        }
+                        break;
+                        
+                    default:
+                        console.log(`Étape non gérée: ${step}`, result);
                 }
             },
 
             onComplete: (data) => {
-                console.log('Génération terminée:', data);
-
-                // FIX: Extraire les vraies données du double wrapping
-                let realData = data;
-                if (data && data.data) {
-                    realData = data.data;
-                }
-                if (realData && realData.data) {
-                    realData = realData.data;
-                }
-
-                console.log('Données extraites:', realData);
-                // Retirer l'indicateur de heartbeat
-                if (heartbeatElement.parentNode) {
-                    heartbeatElement.remove();
-                }
-                // Vérifier que les données sont valides
-                if (!realData || typeof realData !== 'object') {
-                    console.error('Structure de données invalide:', data);
-                    this.showMessage('Erreur: données reçues invalides', 'error');
-                    this.hideProgress();
-                    this.btnGenerate.disabled = false;
-                    return;
-                }
-
-                // Mise à jour des champs avec la structure correcte de la réponse
-                if (realData.intermediate_results) {
-                    // Description de l'image
-                    if (realData.intermediate_results.image_analysis && realData.intermediate_results.image_analysis.description) {
-                        this.imageDescription.value = realData.intermediate_results.image_analysis.description;
+                console.log('✅ Génération terminée:', data);
+                
+                // Traiter les données finales
+                if (data.success) {
+                    // Légende finale
+                    if (data.caption) {
+                        this.finalCaption.value = data.caption;
+                        this.animateField(this.finalCaption);
                     }
-
-                    // Contexte géographique
-                    if (realData.intermediate_results.geo_context) {
-                        const geoContext = realData.intermediate_results.geo_context;
-                        // Combiner les infos géo disponibles
-                        const geoText = [
-                            geoContext.location_basic,
-                            geoContext.cultural_context
-                        ].filter(text => text && text.trim()).join('\n');
-
-                        if (geoText) {
-                            this.geoContext.value = geoText;
-                        } else if (geoContext.location_basic) {
-                            // Fallback sur les coordonnées si c'est tout ce qu'on a
-                            this.geoContext.value = `Coordonnées: ${geoContext.location_basic}`;
+                    
+                    // Hashtags (optionnel)
+                    if (data.hashtags && data.hashtags.length > 0) {
+                        const hashtagsText = '\n\n' + data.hashtags.join(' ');
+                        this.finalCaption.value += hashtagsText;
+                    }
+                    
+                    // Remplir les champs intermédiaires si pas déjà fait
+                    if (data.intermediate_results) {
+                        const ir = data.intermediate_results;
+                        
+                        if (ir.image_analysis && !this.imageDescription.value) {
+                            this.imageDescription.value = ir.image_analysis.description || '';
+                        }
+                        
+                        if (ir.geo_context && !this.geoContext.value) {
+                            const geo = ir.geo_context;
+                            this.geoContext.value = [
+                                geo.location_basic,
+                                geo.cultural_context
+                            ].filter(t => t).join('\n\n');
+                        }
+                        
+                        if (ir.cultural_enrichment && !this.culturalEnrichment.value) {
+                            this.culturalEnrichment.value = ir.cultural_enrichment;
+                        }
+                        
+                        if (ir.travel_enrichment && !this.culturalEnrichment.value.includes('Travel Llama')) {
+                            this.culturalEnrichment.value += '\n\n🌍 Travel Llama:\n' + ir.travel_enrichment;
                         }
                     }
-
-                    // Enrichissement culturel
-                    if (realData.intermediate_results.cultural_enrichment) {
-                        this.culturalEnrichment.value = realData.intermediate_results.cultural_enrichment;
-                    }
-                }
-
-                // Légende finale
-                if (realData.caption) {
-                    this.finalCaption.value = realData.caption;
+                    
+                    // Score de confiance
+                    const confidence = data.confidence_score || 0;
+                    const confidenceText = `(Confiance: ${(confidence * 100).toFixed(0)}%)`;
+                    
+                    // Message de succès
+                    this.showMessage(`Légende générée avec succès! ${confidenceText}`, 'success');
                     this.saveToLocalStorage();
-                }
-
-                // Afficher le score de confiance
-                if (realData.confidence_score !== undefined) {
-                    const confidenceText = `Confiance: ${(realData.confidence_score * 100).toFixed(0)}%`;
-                    this.showMessage(`Légende générée avec succès! (${confidenceText})`, 'success');
+                    
                 } else {
-                    this.showMessage('Légende générée avec succès!', 'success');
+                    this.showMessage('Erreur: Génération échouée', 'error');
                 }
-
+                
                 this.hideProgress();
                 this.btnGenerate.disabled = false;
                 this.btnRegenerate.disabled = false;
             },
 
             onError: (error) => {
-                console.error('Erreur SSE:', error);
-
-                // Retirer l'indicateur de heartbeat
-                if (heartbeatElement.parentNode) {
-                    heartbeatElement.remove();
-                }
-
+                console.error('❌ Erreur SSE:', error);
                 this.showMessage(`Erreur: ${error}`, 'error');
                 this.hideProgress();
                 this.btnGenerate.disabled = false;
+                this.btnRegenerate.disabled = false;
             },
 
-            onLog: (logEntry) => {
-                console.log(`[${logEntry.type}] ${logEntry.message}`);
-
-                // Détecter les heartbeats
-                if (logEntry.type === 'heartbeat') {
-                    lastHeartbeat = Date.now();
-                    // Animation du heartbeat
-                    heartbeatElement.classList.add('pulse');
-                    setTimeout(() => {
-                        heartbeatElement.classList.remove('pulse');
-                    }, 300);
-                }
-
-                // Logs de debug pour géolocalisation
-                if (logEntry.message && logEntry.message.includes('géo')) {
-                    console.warn('🌍 Info géo:', logEntry);
-                }
-
-                // Optionnel : afficher certains logs à l'utilisateur
-                if (logEntry.type === 'error' || logEntry.type === 'warning') {
-                    this.showMessage(logEntry.message, logEntry.type);
-                }
+            onWarning: (message) => {
+                console.warn('⚠️ Warning:', message);
+                // Afficher temporairement le warning
+                this.showMessage(message, 'warning');
             }
         });
-
-        // Vérifier la connexion toutes les 5 secondes
-        const heartbeatChecker = setInterval(() => {
-            const timeSinceLastHeartbeat = Date.now() - lastHeartbeat;
-            if (timeSinceLastHeartbeat > 35000) { // Plus de 35 secondes sans heartbeat
-                clearInterval(heartbeatChecker);
-                if (heartbeatElement.parentNode) {
-                    heartbeatElement.remove();
-                }
-                this.showMessage('Connexion perdue avec le serveur', 'warning');
-            }
-        }, 5000);
     }
 
-    async regenerateCaption() {
-        // Effacer les champs intermédiaires mais garder la légende finale
+    clearFields() {
+        // Vider tous les champs sauf les options
         this.imageDescription.value = '';
         this.geoContext.value = '';
         this.culturalEnrichment.value = '';
+        this.finalCaption.value = '';
+    }
 
-        // Relancer la génération
+    animateField(field) {
+        // Animation visuelle quand un champ est mis à jour
+        if (field) {
+            field.classList.add('field-updated');
+            setTimeout(() => {
+                field.classList.remove('field-updated');
+            }, 1000);
+        }
+    }
+
+    async regenerateCaption() {
+        // Relancer la génération complète
         await this.generateCaption();
     }
 
     updateProgress(percent, text) {
         this.progressFill.style.width = `${percent}%`;
         this.progressText.textContent = text || `${percent}%`;
+        
+        // Couleur selon le pourcentage
+        if (percent < 30) {
+            this.progressFill.style.backgroundColor = '#3498db'; // Bleu
+        } else if (percent < 70) {
+            this.progressFill.style.backgroundColor = '#f39c12'; // Orange
+        } else {
+            this.progressFill.style.backgroundColor = '#2ecc71'; // Vert
+        }
     }
 
     showProgress() {
@@ -360,9 +348,11 @@ class CaptionEditor {
     }
 
     hideProgress() {
+        // Afficher 100% avant de cacher
+        this.updateProgress(100, 'Terminé!');
         setTimeout(() => {
             this.progressContainer.style.display = 'none';
-        }, 500);
+        }, 1000);
     }
 
     showMessage(text, type = 'info') {
@@ -370,10 +360,12 @@ class CaptionEditor {
         this.messageBox.className = `message-box ${type}`;
         this.messageBox.style.display = 'block';
 
-        // Auto-hide après 5 secondes
-        setTimeout(() => {
-            this.messageBox.style.display = 'none';
-        }, 5000);
+        // Auto-hide après 5 secondes (sauf erreurs)
+        if (type !== 'error') {
+            setTimeout(() => {
+                this.messageBox.style.display = 'none';
+            }, 5000);
+        }
     }
 
     saveToLocalStorage() {
@@ -383,7 +375,8 @@ class CaptionEditor {
             culturalEnrichment: this.culturalEnrichment.value,
             finalCaption: this.finalCaption.value,
             language: this.languageSelect?.value,
-            style: this.styleSelect?.value
+            style: this.styleSelect?.value,
+            timestamp: new Date().toISOString()
         };
 
         localStorage.setItem(`caption-${this.assetId}`, JSON.stringify(data));
@@ -395,12 +388,12 @@ class CaptionEditor {
             try {
                 const data = JSON.parse(saved);
 
-                if (realData.imageDescription) this.imageDescription.value = realData.imageDescription;
-                if (realData.geoContext) this.geoContext.value = realData.geoContext;
-                if (realData.culturalEnrichment) this.culturalEnrichment.value = realData.culturalEnrichment;
-                if (realData.finalCaption) this.finalCaption.value = realData.finalCaption;
-                if (realData.language && this.languageSelect) this.languageSelect.value = realData.language;
-                if (realData.style && this.styleSelect) this.styleSelect.value = realData.style;
+                if (data.imageDescription) this.imageDescription.value = data.imageDescription;
+                if (data.geoContext) this.geoContext.value = data.geoContext;
+                if (data.culturalEnrichment) this.culturalEnrichment.value = data.culturalEnrichment;
+                if (data.finalCaption) this.finalCaption.value = data.finalCaption;
+                if (data.language && this.languageSelect) this.languageSelect.value = data.language;
+                if (data.style && this.styleSelect) this.styleSelect.value = data.style;
 
             } catch (e) {
                 console.error('Erreur lors de la restauration depuis localStorage:', e);
@@ -408,7 +401,6 @@ class CaptionEditor {
         }
     }
 
-    // Méthode pour nettoyer les connexions SSE lors de la fermeture
     cleanup() {
         const sseManager = this.getSSEManager();
         if (this.currentRequestId && sseManager) {
@@ -417,43 +409,79 @@ class CaptionEditor {
     }
 }
 
-// Initialiser l'éditeur au chargement de la page
+// CSS pour l'animation des champs
+const style = document.createElement('style');
+style.textContent = `
+.field-updated {
+    animation: fieldPulse 1s ease-out;
+}
+
+@keyframes fieldPulse {
+    0% {
+        background-color: #e8f5e9;
+        transform: scale(1);
+    }
+    50% {
+        background-color: #c8e6c9;
+        transform: scale(1.01);
+    }
+    100% {
+        background-color: transparent;
+        transform: scale(1);
+    }
+}
+
+.heartbeat-indicator {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 20px;
+}
+
+.heartbeat-indicator.pulse {
+    animation: heartbeatPulse 0.3s ease-out;
+}
+
+@keyframes heartbeatPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.2); }
+    100% { transform: scale(1); }
+}
+
+.progress-fill {
+    transition: width 0.5s ease-out, background-color 0.5s ease-out;
+}
+`;
+document.head.appendChild(style);
+
+// Initialisation
 let captionEditor;
 
-// Fonction pour initialiser quand tout est prêt
 function initializeCaptionEditor() {
-    // Vérifier si SSEManager est disponible
     if (typeof SSEManager !== 'undefined') {
-        // Créer l'instance si elle n'existe pas
         if (!window.sseManager) {
             window.sseManager = new SSEManager();
-            console.log('SSEManager instance créée par CaptionEditor');
+            console.log('SSEManager instance créée');
         }
 
-        // Créer CaptionEditor
         captionEditor = new CaptionEditor();
         console.log('CaptionEditor initialisé');
     } else {
-        // Réessayer dans 100ms
         console.log('SSEManager pas encore disponible, nouvelle tentative dans 100ms...');
         setTimeout(initializeCaptionEditor, 100);
     }
 }
 
-// Lancer l'initialisation quand le DOM est prêt
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initializeCaptionEditor);
 } else {
-    // DOM déjà chargé
     initializeCaptionEditor();
 }
 
-// Nettoyer lors de la fermeture de la fenêtre
 window.addEventListener('beforeunload', () => {
     if (captionEditor) {
         captionEditor.cleanup();
     }
 });
 
-// Export pour usage externe si nécessaire
 window.CaptionEditor = CaptionEditor;
