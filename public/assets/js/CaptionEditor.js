@@ -159,7 +159,7 @@ class CaptionEditor {
             'post_processing': 'Finalisation'
         };
 
-        // Ajouter un listener pour l'événement 'partial'
+        // Se connecter avec les handlers appropriés
         const eventSource = sseManager.connect(`caption-${requestId}`, sseUrl, {
             onConnected: (data) => {
                 console.log('✅ Connexion établie:', data);
@@ -176,6 +176,12 @@ class CaptionEditor {
                 if (step && stepLabels[step]) {
                     this.progressText.textContent = `${stepLabels[step]}: ${message}`;
                 }
+            },
+
+            onPartial: (data) => {
+                console.log('📝 Résultat partiel reçu:', data);
+                // Traiter le résultat partiel
+                this.handlePartialResult(data);
             },
 
             onComplete: (data) => {
@@ -203,16 +209,18 @@ class CaptionEditor {
                     this.showMessage(`Légende générée avec succès! ${confidenceText}`, 'success');
                     this.saveToLocalStorage();
                     
+                    // Activer le bouton régénérer
+                    this.btnRegenerate.disabled = false;
+                    
                 } else {
                     this.showMessage('Erreur: Génération échouée', 'error');
                 }
                 
                 this.hideProgress();
                 this.btnGenerate.disabled = false;
-                this.btnRegenerate.disabled = false;
             },
 
-            onError: (error) => {
+            onError: (error, errorType) => {
                 console.error('❌ Erreur SSE:', error);
                 this.showMessage(`Erreur: ${error}`, 'error');
                 this.hideProgress();
@@ -220,9 +228,23 @@ class CaptionEditor {
                 this.btnRegenerate.disabled = false;
             },
 
-            onWarning: (message) => {
-                console.warn('⚠️ Warning:', message);
+            onWarning: (message, code) => {
+                console.warn('⚠️ Warning:', message, code);
                 this.showMessage(message, 'warning');
+            },
+
+            onHeartbeat: (data) => {
+                // Le heartbeat maintient la connexion active
+                // On peut optionnellement faire clignoter un indicateur
+                console.log('💓 Heartbeat reçu');
+            },
+
+            onTimeout: () => {
+                console.error('⏱️ Timeout de connexion');
+                this.showMessage('Timeout: la génération prend trop de temps', 'error');
+                this.hideProgress();
+                this.btnGenerate.disabled = false;
+                this.btnRegenerate.disabled = false;
             }
         });
     }

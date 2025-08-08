@@ -38,9 +38,7 @@ class SSEManager {
                 console.log('📨 MESSAGE SSE (onmessage):', data);
                 
                 // Ces messages n'ont pas de listener dédié, on les traite ici
-                if (data.event === 'connected' || data.event === 'heartbeat') {
-                    this.handleMessage(id, data);
-                }
+                this.handleGenericMessage(id, data);
             } catch (error) {
                 console.error('Erreur parsing:', error, 'Data:', event.data);
                 this.log(id, `⚠️ Message non-JSON: ${event.data}`, 'warning');
@@ -59,7 +57,6 @@ class SSEManager {
                     console.log(`📨 EVENT [${eventType}]:`, data);
                     
                     // Pour les événements typés, on passe directement les données
-                    // avec le type d'événement ajouté
                     this.handleTypedEvent(id, eventType, data);
                 } catch (error) {
                     console.error(`Erreur parsing ${eventType}:`, error, 'Data:', event.data);
@@ -75,6 +72,7 @@ class SSEManager {
             // Si on a déjà reçu complete, c'est une fermeture normale
             if (connection && connection.hasReceivedComplete) {
                 this.log(id, '✅ Connexion fermée après succès', 'info');
+                this.close(id, true);
                 return;
             }
 
@@ -85,6 +83,7 @@ class SSEManager {
             if (eventSource.readyState === EventSource.CLOSED) {
                 this.log(id, '🔌 Connexion fermée (erreur)', 'error');
                 if (handlers.onError) handlers.onError('Connexion fermée de manière inattendue');
+                this.close(id, false);
             } else if (eventSource.readyState === EventSource.CONNECTING) {
                 this.log(id, '🔄 Tentative de reconnexion...', 'info');
                 if (handlers.onConnecting) handlers.onConnecting();
@@ -94,7 +93,7 @@ class SSEManager {
         // Enregistrer la connexion
         this.connections.set(id, connection);
 
-        // Démarrer le monitoring de timeout (60 secondes au lieu de 60)
+        // Démarrer le monitoring de timeout (120 secondes)
         this.startTimeoutMonitor(id);
 
         return eventSource;
@@ -172,21 +171,20 @@ class SSEManager {
 
             case 'heartbeat':
                 // Juste mettre à jour le timestamp, pas de log pour éviter le spam
+                connection.lastMessageTime = Date.now();
                 if (handlers.onHeartbeat) handlers.onHeartbeat(data);
                 break;
         }
     }
 
-    handleMessage(id, data) {
-        // Pour les messages génériques (legacy)
-        const eventType = data.event || data.type;
-        
-        if (eventType === 'connected') {
-            this.handleTypedEvent(id, 'connected', data);
-        } else if (eventType === 'heartbeat') {
-            this.handleTypedEvent(id, 'heartbeat', data);
+    handleGenericMessage(id, data) {
+        // Pour les messages génériques (sans event type spécifique)
+        // Essayer de déterminer le type basé sur le contenu
+        if (data.event || data.type) {
+            const eventType = data.event || data.type;
+            this.handleTypedEvent(id, eventType, data);
         } else {
-            this.log(id, `❓ Message générique: ${eventType}`, 'unknown');
+            this.log(id, `❓ Message générique non typé`, 'unknown');
             const connection = this.connections.get(id);
             if (connection?.handlers.onUnknown) {
                 connection.handlers.onUnknown(data);
@@ -209,7 +207,7 @@ class SSEManager {
             }
 
             const timeSinceLastMessage = Date.now() - connection.lastMessageTime;
-            // Augmenter le timeout à 120 secondes (2 minutes) car Travel Llama peut être lent
+            // Timeout à 120 secondes (2 minutes) pour Travel Llama
             if (timeSinceLastMessage > 120000) {
                 this.log(id, '⏱️ Timeout: pas de message depuis 120s', 'error');
                 if (connection.handlers.onTimeout) {
