@@ -225,31 +225,6 @@ class CaptionEditor {
                 this.showMessage(message, 'warning');
             }
         });
-
-        // IMPORTANT: Ajouter un listener spécifique pour l'événement 'partial'
-        if (eventSource) {
-            eventSource.addEventListener('partial', (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    console.log('📝 Résultat partiel:', data);
-                    this.handlePartialResult(data);
-                } catch (error) {
-                    console.error('Erreur parsing partial:', error);
-                }
-            });
-
-            // Ajouter aussi un listener pour 'warning' s'il n'est pas géré par SSEManager
-            eventSource.addEventListener('warning', (event) => {
-                try {
-                    const data = JSON.parse(event.data);
-                    console.warn('⚠️ Warning:', data);
-                    const message = data.message || 'Avertissement';
-                    this.showMessage(message, 'warning');
-                } catch (error) {
-                    console.error('Erreur parsing warning:', error);
-                }
-            });
-        }
     }
 
     handlePartialResult(data) {

@@ -19,7 +19,7 @@ class SSEManager {
             handlers,
             logs: [],
             lastMessageTime: Date.now(),
-            completed: false,  // Flag pour savoir si on a reçu complete
+            completed: false,
             hasReceivedComplete: false
         };
 
@@ -30,54 +30,37 @@ class SSEManager {
         };
 
         // Handler principal pour les messages SANS type d'événement spécifique
-        // (messages envoyés avec juste "data:" comme connected et heartbeat)
-        // Handler principal pour les messages SANS type d'événement spécifique
         eventSource.onmessage = (event) => {
             connection.lastMessageTime = Date.now();
 
             try {
                 const data = JSON.parse(event.data);
-
-                // Ne traiter que les messages qui n'ont PAS de listener spécifique
-                const eventType = data.event;
-                if (['progress', 'result', 'complete', 'error'].includes(eventType)) {
-                    // Ces événements ont des listeners dédiés, on les ignore ici
-                    return;
-                }
-
-                // Traiter connected, heartbeat et autres messages génériques
                 console.log('📨 MESSAGE SSE (onmessage):', data);
-                this.handleMessage(id, data);
+                
+                // Ces messages n'ont pas de listener dédié, on les traite ici
+                if (data.event === 'connected' || data.event === 'heartbeat') {
+                    this.handleMessage(id, data);
+                }
             } catch (error) {
                 console.error('Erreur parsing:', error, 'Data:', event.data);
                 this.log(id, `⚠️ Message non-JSON: ${event.data}`, 'warning');
             }
         };
 
-        // IMPORTANT: Ajouter des listeners pour CHAQUE type d'événement spécifique
-        // (messages envoyés avec "event: type" puis "data:")
-        const typedEvents = ['progress', 'result', 'complete']//, 'error'];
+        // Ajouter des listeners pour CHAQUE type d'événement spécifique
+        const typedEvents = ['connected', 'progress', 'partial', 'result', 'complete', 'error', 'warning', 'heartbeat'];
 
         typedEvents.forEach(eventType => {
             eventSource.addEventListener(eventType, (event) => {
-
+                connection.lastMessageTime = Date.now();
+                
                 try {
-
-                    /*--debug ---
-                    connection.lastMessageTime = Date.now();
-                    console.log(`🔍 RAW EVENT [${eventType}]:`, event);
-                    console.log(`🔍 event.data:`, event.data);
-                    console.log(`🔍 typeof event.data:`, typeof event.data);
-
-                    if (!event.data) {
-                        console.warn(`⚠️ Event sans data pour [${eventType}]`);
-                        return;
-                    }
-                    // -- end debug
-                    */
                     const data = JSON.parse(event.data);
-                    console.log(`📨 MESSAGE SSE [${eventType}]:`, data);
-                    this.handleMessage(id, data);
+                    console.log(`📨 EVENT [${eventType}]:`, data);
+                    
+                    // Pour les événements typés, on passe directement les données
+                    // avec le type d'événement ajouté
+                    this.handleTypedEvent(id, eventType, data);
                 } catch (error) {
                     console.error(`Erreur parsing ${eventType}:`, error, 'Data:', event.data);
                     this.log(id, `⚠️ Erreur parsing ${eventType}: ${event.data}`, 'warning');
@@ -102,7 +85,6 @@ class SSEManager {
             if (eventSource.readyState === EventSource.CLOSED) {
                 this.log(id, '🔌 Connexion fermée (erreur)', 'error');
                 if (handlers.onError) handlers.onError('Connexion fermée de manière inattendue');
-                // Ne pas fermer ici, laisser le navigateur gérer la reconnexion
             } else if (eventSource.readyState === EventSource.CONNECTING) {
                 this.log(id, '🔄 Tentative de reconnexion...', 'info');
                 if (handlers.onConnecting) handlers.onConnecting();
@@ -112,23 +94,17 @@ class SSEManager {
         // Enregistrer la connexion
         this.connections.set(id, connection);
 
-        // Démarrer le monitoring de timeout
+        // Démarrer le monitoring de timeout (60 secondes au lieu de 60)
         this.startTimeoutMonitor(id);
 
         return eventSource;
     }
 
-    handleMessage(id, data) {
+    handleTypedEvent(id, eventType, data) {
         const connection = this.connections.get(id);
         if (!connection) return;
-        // AJOUTER CETTE LIGNE - Réinitialiser le timer à CHAQUE message
-        connection.lastMessageTime = Date.now();
 
         const handlers = connection.handlers;
-        const eventType = data.event;
-
-        // Log tous les messages
-        this.log(id, `📩 [${eventType}] Message reçu`, 'info');
 
         switch (eventType) {
             case 'connected':
@@ -137,63 +113,84 @@ class SSEManager {
                 break;
 
             case 'progress':
-                const progress = data.data?.progress || data.progress || 0;
-                const details = data.data?.details || data.details || '';
-                const step = data.data?.step || data.step || '';
-                this.log(id, `📊 [${progress}%] ${step}: ${details}`, 'progress');
-                if (handlers.onProgress) handlers.onProgress(progress, details, step);
+                const step = data.step || '';
+                const progress = data.progress || 0;
+                const message = data.message || '';
+                this.log(id, `📊 [${progress}%] ${step}: ${message}`, 'progress');
+                if (handlers.onProgress) handlers.onProgress(progress, message, step);
+                break;
+
+            case 'partial':
+                const partialType = data.type || 'unknown';
+                this.log(id, `📝 [${partialType}] Résultat partiel reçu`, 'partial');
+                if (handlers.onPartial) handlers.onPartial(data);
                 break;
 
             case 'result':
-                const resultStep = data.data?.step || data.step || 'unknown';
-                const result = data.data?.result || data.result || {};
+                const resultStep = data.step || 'unknown';
+                const result = data.result || {};
                 this.log(id, `📝 [${resultStep}] Résultat intermédiaire reçu`, 'result');
                 if (handlers.onResult) handlers.onResult(resultStep, result);
                 break;
 
+            case 'warning':
+                const warningMsg = data.message || 'Avertissement';
+                const code = data.code || 'WARNING';
+                this.log(id, `⚠️ ${warningMsg} (${code})`, 'warning');
+                if (handlers.onWarning) handlers.onWarning(warningMsg, code);
+                break;
+
             case 'complete':
-                // Marquer comme complété AVANT de traiter
                 connection.hasReceivedComplete = true;
                 connection.completed = true;
-
                 this.log(id, '🎉 Génération terminée avec succès!', 'success');
 
-                // Passer les données complètes au handler
                 if (handlers.onComplete) {
-                    const completeData = data.data || data;
-                    console.log('✅ Données complètes reçues:', completeData);
-                    handlers.onComplete(completeData);
+                    console.log('✅ Données complètes reçues:', data);
+                    handlers.onComplete(data);
                 }
 
-                // Fermer proprement après un petit délai pour laisser le handler finir
+                // Fermer proprement après un petit délai
                 setTimeout(() => {
-                    this.close(id, true); // true = fermeture normale
+                    this.close(id, true);
                 }, 100);
                 break;
 
             case 'error':
-                const error = data.data?.error || data.error || 'Erreur inconnue';
-                const code = data.data?.code || data.code || 'UNKNOWN_ERROR';
-                this.log(id, `❌ Erreur serveur: ${error} (${code})`, 'error');
+                const error = data.error || 'Erreur inconnue';
+                const errorType = data.error_type || 'UNKNOWN_ERROR';
+                this.log(id, `❌ Erreur: ${error} (${errorType})`, 'error');
 
                 if (handlers.onError) {
-                    handlers.onError(error, code);
+                    handlers.onError(error, errorType);
                 }
 
-                // Fermer après une erreur serveur
                 setTimeout(() => {
-                    this.close(id, false); // false = fermeture sur erreur
+                    this.close(id, false);
                 }, 100);
                 break;
 
             case 'heartbeat':
-                this.log(id, '💓 Heartbeat', 'heartbeat');
+                // Juste mettre à jour le timestamp, pas de log pour éviter le spam
                 if (handlers.onHeartbeat) handlers.onHeartbeat(data);
                 break;
+        }
+    }
 
-            default:
-                this.log(id, `❓ Événement inconnu: ${eventType}`, 'unknown');
-                if (handlers.onUnknown) handlers.onUnknown(data);
+    handleMessage(id, data) {
+        // Pour les messages génériques (legacy)
+        const eventType = data.event || data.type;
+        
+        if (eventType === 'connected') {
+            this.handleTypedEvent(id, 'connected', data);
+        } else if (eventType === 'heartbeat') {
+            this.handleTypedEvent(id, 'heartbeat', data);
+        } else {
+            this.log(id, `❓ Message générique: ${eventType}`, 'unknown');
+            const connection = this.connections.get(id);
+            if (connection?.handlers.onUnknown) {
+                connection.handlers.onUnknown(data);
+            }
         }
     }
 
@@ -212,15 +209,16 @@ class SSEManager {
             }
 
             const timeSinceLastMessage = Date.now() - connection.lastMessageTime;
-            if (timeSinceLastMessage > 60000) { // 60 secondes
-                this.log(id, '⏱️ Timeout: pas de message depuis 60s', 'error');
+            // Augmenter le timeout à 120 secondes (2 minutes) car Travel Llama peut être lent
+            if (timeSinceLastMessage > 120000) {
+                this.log(id, '⏱️ Timeout: pas de message depuis 120s', 'error');
                 if (connection.handlers.onTimeout) {
                     connection.handlers.onTimeout();
                 }
                 this.close(id, false);
                 clearInterval(checkInterval);
             }
-        }, 5000); // Vérifier toutes les 5 secondes
+        }, 10000); // Vérifier toutes les 10 secondes
 
         // Stocker l'interval pour pouvoir le nettoyer
         const connection = this.connections.get(id);
@@ -247,19 +245,21 @@ class SSEManager {
             connection.handlers.onLog(logEntry);
         }
 
-        // Log console avec emoji selon le type
-        const emoji = {
-            'success': '✅',
-            'error': '❌',
-            'warning': '⚠️',
-            'info': 'ℹ️',
-            'progress': '📊',
-            'result': '📝',
-            'heartbeat': '💓',
-            'unknown': '❓'
-        }[type] || '📌';
+        // Log console avec emoji selon le type (pas de log pour heartbeat)
+        if (type !== 'heartbeat') {
+            const emoji = {
+                'success': '✅',
+                'error': '❌',
+                'warning': '⚠️',
+                'info': 'ℹ️',
+                'progress': '📊',
+                'result': '📝',
+                'partial': '📋',
+                'unknown': '❓'
+            }[type] || '📌';
 
-        console.log(`[${timestamp}] ${emoji} ${message}`);
+            console.log(`[${timestamp}] ${emoji} ${message}`);
+        }
     }
 
     close(id, isNormalClosure = false) {
@@ -325,5 +325,12 @@ class SSEManager {
     }
 }
 
-// Instance globale du SSE Manager
-const sseManager = new SSEManager();
+// Export si utilisé comme module
+if (typeof module !== 'undefined' && module.exports) {
+    module.exports = SSEManager;
+}
+
+// Instance globale
+if (typeof window !== 'undefined') {
+    window.SSEManager = SSEManager;
+}
