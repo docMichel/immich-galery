@@ -1,5 +1,5 @@
 // public/assets/js/CaptionEditor.js
-// Module pour l'édition de légendes avec IA via SSE
+// Module pour l'édition de légendes avec IA via SSE1
 
 class CaptionEditor {
     constructor() {
