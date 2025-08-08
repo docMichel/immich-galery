@@ -1,21 +1,18 @@
 // public/assets/js/edit-photos/modules/DuplicateManager.js
 
-//import SSEManager from '../../modules/SSEManager.js';
-
 export default class DuplicateManager {
     constructor(config) {
         this.config = config;
-        this.eventsBound = false; // Flag
-
+        this.eventsBound = false;
         this.sseManager = new SSEManager();
         this.currentGroups = [];
-
+        
         this.initUI();
         this.bindEvents();
     }
 
     initUI() {
-        // Créer le modal pour les doublons
+        // Garder votre modal existant, juste ajouter un indicateur de qualité
         const modal = document.createElement('div');
         modal.innerHTML = `
             <div id="duplicateModal" class="modal" style="display: none;">
@@ -23,7 +20,6 @@ export default class DuplicateManager {
                     <div class="modal-header">
                         <h2>🔍 Détection de doublons</h2>
                         <span id="heartbeatIndicator" class="heartbeat-indicator">💓</span>
-
                         <button class="btn-close" onclick="duplicateManager.closeModal()">✕</button>
                     </div>
                     
@@ -34,6 +30,10 @@ export default class DuplicateManager {
                                 Seuil de similarité:
                                 <input type="range" id="dupThreshold" min="0.7" max="0.95" step="0.05" value="0.85">
                                 <span id="dupThresholdValue">85%</span>
+                            </label>
+                            <label style="margin-left: 20px;">
+                                <input type="checkbox" id="analyzeQuality" checked>
+                                Analyser la qualité des images
                             </label>
                         </div>
                         
@@ -53,6 +53,9 @@ export default class DuplicateManager {
                         <button id="btnStartDetection" class="btn btn-primary">
                             🚀 Lancer la détection
                         </button>
+                        <button id="btnKeepBest" class="btn btn-warning" style="display: none;">
+                            ⭐ Garder seulement les meilleures
+                        </button>
                         <button id="btnSaveGroups" class="btn btn-success" style="display: none;">
                             💾 Sauvegarder les groupes
                         </button>
@@ -65,21 +68,24 @@ export default class DuplicateManager {
         `;
         document.body.appendChild(modal);
 
-        // Listener pour le seuil
+        // Listeners existants
         document.getElementById('dupThreshold').addEventListener('input', (e) => {
-            document.getElementById('dupThresholdValue').textContent =
+            document.getElementById('dupThresholdValue').textContent = 
                 Math.round(e.target.value * 100) + '%';
         });
-        // Bouton démarrer ICI
+        
         document.getElementById('btnStartDetection').addEventListener('click', () => {
             this.startDetection();
         });
-
-        // Bouton sauvegarder aussi
+        
         document.getElementById('btnSaveGroups').addEventListener('click', () => {
             this.saveGroups();
         });
-
+        
+        // Nouveau bouton pour garder les meilleures
+        document.getElementById('btnKeepBest').addEventListener('click', () => {
+            this.keepBestInAllGroups();
+        });
     }
 
     bindEvents() {
@@ -87,59 +93,45 @@ export default class DuplicateManager {
             console.warn('Events déjà bindés !');
             return;
         }
-        console.log('Binding events...');
         this.eventsBound = true;
 
-        // Bouton sélection
         document.getElementById('btnFindDuplicatesSelection')?.addEventListener('click', () => {
             this.findDuplicates('selection');
         });
 
-        // Bouton galerie complète
         document.getElementById('btnFindDuplicatesAll')?.addEventListener('click', () => {
             this.findDuplicates('all');
         });
-
-        // Bouton démarrer
-        /* document.getElementById('btnStartDetection')?.addEventListener('click', () => {
-            this.startDetection();
-        });
-        */
     }
 
     findDuplicates(mode) {
         console.log('findDuplicates appelé avec mode:', mode);
-
+        
         this.mode = mode;
         this.showModal();
-
-        // Récupérer les assets selon le mode
+        
         if (mode === 'selection') {
             this.assetIds = this.getSelectedAssetIds();
-            console.log('Mode sélection, assets:', this.currentAssetIds);
-
-            document.getElementById('dupStatus').textContent =
+            document.getElementById('dupStatus').textContent = 
                 `${this.assetIds.length} photos sélectionnées`;
         } else {
             this.assetIds = this.getAllAssetIds();
-            document.getElementById('dupStatus').textContent =
+            document.getElementById('dupStatus').textContent = 
                 `${this.assetIds.length} photos dans la galerie`;
-            console.log('Mode galerie, assets:', this.currentAssetIds);
-
         }
-        this.currentAssetIds = this.assetIds;  // <-- Ajouter cette ligne
-
+        
+        this.currentAssetIds = this.assetIds;
     }
 
     async startDetection() {
         const threshold = parseFloat(document.getElementById('dupThreshold').value);
+        const analyzeQuality = document.getElementById('analyzeQuality').checked;
         const requestId = `dup-${Date.now()}`;
-
+        
         document.getElementById('dupProgress').style.display = 'block';
         document.getElementById('btnStartDetection').disabled = true;
-
+        
         try {
-            // POST avec la config
             const response = await fetch(`${this.config.flaskUrl}/api/duplicates/find-similar-async`, {
                 method: 'POST',
                 headers: {
@@ -148,17 +140,16 @@ export default class DuplicateManager {
                 body: JSON.stringify({
                     request_id: requestId,
                     selected_asset_ids: this.assetIds,
-                    threshold: threshold, //parseFloat(document.getElementById('dupThreshold').value),
+                    threshold: threshold,
+                    analyze_quality: analyzeQuality,  // Nouveau paramètre
                     group_by_time: true,
                     time_window_hours: 24
                 })
             });
-
+            
             const result = await response.json();
-
-
+            
             if (result.success) {
-                // Se connecter au SSE
                 this.connectSSE(result.request_id);
             }
         } catch (error) {
@@ -168,56 +159,115 @@ export default class DuplicateManager {
     }
 
     connectSSE(requestId) {
-        // const url = `api/duplicates.php?action=stream/${requestId}`;
         const url = `${this.config.flaskUrl}/api/duplicates/find-similar-stream/${requestId}`;
-        console.log('Config Flask URL:', this.config.flaskUrl);
-        console.log('URL SSE complète:', url);
-        console.log('Request ID:', requestId);
-
+        
         this.sseManager.connect(`dup-${requestId}`, url, {
             onHeartbeat: (data) => {
-                // Faire clignoter l'indicateur
                 this.flashHeartbeat();
             },
+            
             onProgress: (progress, details, step) => {
                 const fill = document.getElementById('dupProgressFill');
                 fill.style.width = `${progress}%`;
                 fill.textContent = `${progress}% - ${details}`;
+                
+                // Afficher l'étape en cours
+                document.getElementById('dupStatus').textContent = step;
             },
-
+            
+            onResult: (step, data) => {
+                // Notifications pour certaines étapes
+                if (step === 'model_loaded') {
+                    this.showToast('Modèle CLIP chargé', 'info');
+                } else if (step === 'quality') {
+                    this.showToast('Analyse de qualité en cours...', 'info');
+                }
+            },
+            
             onComplete: (data) => {
                 this.displayResults(data);
                 document.getElementById('btnStartDetection').disabled = false;
                 document.getElementById('btnSaveGroups').style.display = 'inline-block';
+                
+                // Montrer le bouton "Garder les meilleures" si analyse qualité
+                if (data.groups.some(g => g.images.some(img => img.quality_score !== undefined))) {
+                    document.getElementById('btnKeepBest').style.display = 'inline-block';
+                }
             },
-
+            
             onError: (error) => {
                 console.error('Erreur SSE:', error);
                 document.getElementById('btnStartDetection').disabled = false;
-
                 alert('Erreur pendant la détection');
             }
         });
     }
-    flashHeartbeat() {
-        const indicator = document.getElementById('heartbeatIndicator');
-        if (indicator) {
-            indicator.classList.add('beating');
-            setTimeout(() => {
-                indicator.classList.remove('beating');
-            }, 500);
-        }
-    }
 
     displayResults(data) {
-        // TODO: Afficher les résultats
-        console.log('Résultats:', data);
+        console.log('Résultats reçus:', data);
+        
+        const resultsDiv = document.getElementById('dupResults');
+        
+        if (!data.groups || data.groups.length === 0) {
+            resultsDiv.innerHTML = '<div class="no-results">✅ Aucun doublon trouvé !</div>';
+            return;
+        }
+        
+        this.currentGroups = data.groups;
+        
+        let html = `
+            <div class="duplicate-summary">
+                <h3>📊 ${data.groups.length} groupe(s) de doublons trouvés</h3>
+                <p>${data.total_duplicates || 0} doublons au total</p>
+            </div>
+        `;
+        
+        data.groups.forEach((group, groupIndex) => {
+            html += `
+                <div class="duplicate-group" data-group-index="${groupIndex}">
+                    <div class="group-header">
+                        <h4>Groupe ${groupIndex + 1} - ${group.images.length} images similaires</h4>
+                        <span class="similarity-badge">Similarité: ${(group.similarity_avg * 100).toFixed(0)}%</span>
+                        <button class="btn btn-sm btn-keep-best-group" onclick="duplicateManager.keepBestInGroup(${groupIndex})">
+                            ⭐ Garder la meilleure
+                        </button>
+                    </div>
+                    
+                    <div class="group-images">
+                        ${group.images.map((img, imgIndex) => 
+                            this.renderThumbnail(img, groupIndex, imgIndex)
+                        ).join('')}
+                    </div>
+                    
+                    <div class="group-actions">
+                        <button class="btn btn-sm" onclick="duplicateManager.splitGroup(${groupIndex})">
+                            ✂️ Séparer le groupe
+                        </button>
+                        <button class="btn btn-sm" onclick="duplicateManager.showGroupDetails(${groupIndex})">
+                            📊 Détails qualité
+                        </button>
+                    </div>
+                </div>
+            `;
+        });
+        
+        resultsDiv.innerHTML = html;
+        document.getElementById('btnSaveGroups').style.display = 'inline-block';
     }
-    renderThumbnail(img, groupIndex, imgIndex) {
-        // Récupérer le template
-        let template = document.getElementById('duplicate-thumbnail-template').innerHTML;
 
-        // Données à remplacer
+    renderThumbnail(img, groupIndex, imgIndex) {
+        let template = document.getElementById('duplicate-thumbnail-template').innerHTML;
+        
+        // Ajouter les infos de qualité si disponibles
+        const qualityInfo = img.quality_score !== undefined ? `
+            <div class="quality-info">
+                <span class="quality-score ${img.is_primary ? 'best' : ''}">
+                    ${img.is_primary ? '⭐' : ''} ${img.quality_score.toFixed(1)}
+                </span>
+                ${img.quality_reasons ? `<span class="quality-reasons">${img.quality_reasons.join(', ')}</span>` : ''}
+            </div>
+        ` : '';
+        
         const data = {
             assetId: img.asset_id,
             groupIndex: groupIndex,
@@ -229,21 +279,224 @@ export default class DuplicateManager {
             isPrimary: img.is_primary,
             hasGPS: !!(img.latitude && img.longitude),
             lat: img.latitude ? img.latitude.toFixed(4) : '',
-            lng: img.longitude ? img.longitude.toFixed(4) : ''
+            lng: img.longitude ? img.longitude.toFixed(4) : '',
+            qualityInfo: qualityInfo  // Nouveau
         };
-
-        // Remplacer les variables simples
+        
+        // Remplacer les variables
         Object.keys(data).forEach(key => {
             template = template.replace(new RegExp(`{{${key}}}`, 'g'), data[key]);
         });
-
+        
         // Gérer les conditions
         template = template.replace(/{{#(\w+)}}([\s\S]*?){{\/\1}}/g, (match, key, content) => {
             return data[key] ? content : '';
         });
-
+        
         return template;
     }
+
+    // Nouvelle méthode pour garder la meilleure dans un groupe
+    keepBestInGroup(groupIndex) {
+        const group = this.currentGroups[groupIndex];
+        if (!group) return;
+        
+        const bestImage = group.images.find(img => img.is_primary) || group.images[0];
+        const othersCount = group.images.length - 1;
+        
+        if (confirm(`Garder seulement "${bestImage.filename}" et supprimer ${othersCount} doublons ?`)) {
+            // Marquer pour suppression
+            group.images.forEach(img => {
+                if (img.asset_id !== bestImage.asset_id) {
+                    img.marked_for_deletion = true;
+                }
+            });
+            
+            // Rafraîchir l'affichage
+            this.refreshGroup(groupIndex);
+            
+            // Activer le bouton de sauvegarde
+            document.getElementById('btnSaveGroups').style.display = 'inline-block';
+        }
+    }
+    
+    // Garder les meilleures dans tous les groupes
+    keepBestInAllGroups() {
+        const totalDuplicates = this.currentGroups.reduce((sum, g) => 
+            sum + g.images.filter(img => !img.is_primary).length, 0
+        );
+        
+        if (confirm(`Garder seulement les meilleures images et supprimer ${totalDuplicates} doublons ?`)) {
+            this.currentGroups.forEach((group, idx) => {
+                group.images.forEach(img => {
+                    if (!img.is_primary) {
+                        img.marked_for_deletion = true;
+                    }
+                });
+            });
+            
+            this.displayResults({ groups: this.currentGroups });
+        }
+    }
+    
+    // Afficher les détails de qualité
+    showGroupDetails(groupIndex) {
+        const group = this.currentGroups[groupIndex];
+        if (!group) return;
+        
+        let detailsHtml = `
+            <div class="quality-details-modal">
+                <h3>Détails qualité - Groupe ${groupIndex + 1}</h3>
+                <table class="quality-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Score</th>
+                            <th>Netteté</th>
+                            <th>Exposition</th>
+                            <th>Résolution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+        `;
+        
+        group.images.forEach(img => {
+            const metrics = img.quality_metrics || {};
+            detailsHtml += `
+                <tr class="${img.is_primary ? 'primary-row' : ''}">
+                    <td>${img.filename || img.asset_id.substr(0, 8)}</td>
+                    <td>${img.quality_score ? img.quality_score.toFixed(1) : '-'}</td>
+                    <td>${metrics.sharpness || '-'}</td>
+                    <td>${metrics.exposure || '-'}</td>
+                    <td>${metrics.resolution || '-'}</td>
+                </tr>
+            `;
+        });
+        
+        detailsHtml += `
+                    </tbody>
+                </table>
+                <button onclick="this.parentElement.remove()">Fermer</button>
+            </div>
+        `;
+        
+        // Créer un overlay temporaire
+        const overlay = document.createElement('div');
+        overlay.className = 'quality-details-overlay';
+        overlay.innerHTML = detailsHtml;
+        document.body.appendChild(overlay);
+    }
+    
+    // Méthodes existantes adaptées
+    setPrimary(groupIndex, imageIndex) {
+        console.log(`Définir image ${imageIndex} comme principale du groupe ${groupIndex}`);
+        
+        this.currentGroups[groupIndex].images.forEach((img, idx) => {
+            img.is_primary = (idx === imageIndex);
+        });
+        
+        this.refreshGroup(groupIndex);
+    }
+
+    removeFromGroup(groupIndex, imageIndex) {
+        if (confirm('Retirer cette image du groupe de doublons ?')) {
+            this.currentGroups[groupIndex].images.splice(imageIndex, 1);
+            
+            if (this.currentGroups[groupIndex].images.length <= 1) {
+                this.currentGroups.splice(groupIndex, 1);
+                this.displayResults({ groups: this.currentGroups });
+            } else {
+                // Réassigner la meilleure si nécessaire
+                if (!this.currentGroups[groupIndex].images.some(img => img.is_primary)) {
+                    // Choisir la meilleure selon le score
+                    const best = this.currentGroups[groupIndex].images.reduce((prev, curr) => 
+                        (curr.quality_score || 0) > (prev.quality_score || 0) ? curr : prev
+                    );
+                    best.is_primary = true;
+                }
+                this.refreshGroup(groupIndex);
+            }
+        }
+    }
+
+    splitGroup(groupIndex) {
+        if (confirm('Séparer ce groupe ? Chaque image deviendra indépendante.')) {
+            this.currentGroups.splice(groupIndex, 1);
+            this.displayResults({ groups: this.currentGroups });
+        }
+    }
+
+    refreshGroup(groupIndex) {
+        this.displayResults({ groups: this.currentGroups });
+    }
+    
+    // Sauvegarder avec gestion des suppressions
+    async saveGroups() {
+        // Collecter les images à supprimer
+        const toDelete = [];
+        this.currentGroups.forEach(group => {
+            group.images.forEach(img => {
+                if (img.marked_for_deletion) {
+                    toDelete.push(img.asset_id);
+                }
+            });
+        });
+        
+        if (toDelete.length > 0) {
+            if (confirm(`Supprimer ${toDelete.length} doublons ?`)) {
+                try {
+                    // Appel API pour supprimer
+                    const response = await fetch('/admin/edit-photos-ajax.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: new URLSearchParams({
+                            action: 'delete_duplicates',
+                            gallery: this.config.galleryId,
+                            asset_ids: JSON.stringify(toDelete)
+                        })
+                    });
+                    
+                    const result = await response.json();
+                    if (result.success) {
+                        this.showToast(`${toDelete.length} doublons supprimés`, 'success');
+                        this.closeModal();
+                        // Recharger la page ou mettre à jour l'affichage
+                        location.reload();
+                    }
+                } catch (error) {
+                    console.error('Erreur suppression:', error);
+                    alert('Erreur lors de la suppression');
+                }
+            }
+        }
+        
+        // Sauvegarder les groupes validés
+        console.log('Groupes finaux:', this.currentGroups);
+    }
+    
+    // Utilitaires
+    flashHeartbeat() {
+        const indicator = document.getElementById('heartbeatIndicator');
+        if (indicator) {
+            indicator.classList.add('beating');
+            setTimeout(() => {
+                indicator.classList.remove('beating');
+            }, 500);
+        }
+    }
+    
+    showToast(message, type = 'info') {
+        // Utiliser votre système de toast existant
+        const toast = document.getElementById('toast');
+        if (toast) {
+            toast.textContent = message;
+            toast.className = `toast show ${type}`;
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+    }
+    
     getSelectedAssetIds() {
         const selected = [];
         document.querySelectorAll('.photo-select:checked').forEach(cb => {
@@ -270,177 +523,5 @@ export default class DuplicateManager {
     closeModal() {
         document.getElementById('duplicateModal').style.display = 'none';
         this.sseManager.closeAll();
-    }
-
-    displayResults(data) {
-        console.log('Résultats reçus:', data);
-
-        const resultsDiv = document.getElementById('dupResults');
-
-        if (!data.groups || data.groups.length === 0) {
-            resultsDiv.innerHTML = '<div class="no-results">✅ Aucun doublon trouvé !</div>';
-            return;
-        }
-
-        // Sauvegarder les groupes
-        this.currentGroups = data.groups;
-
-        // Afficher les groupes
-        let html = `
-        <div class="duplicate-summary">
-            <h3>📊 ${data.groups.length} groupe(s) de doublons trouvés</h3>
-            <p>${data.total_images || data.groups.reduce((sum, g) => sum + g.images.length, 0)} images analysées</p>
-        </div>
-    `;
-
-        data.groups.forEach((group, groupIndex) => {
-            html += `
-            <div class="duplicate-group" data-group-index="${groupIndex}">
-                <div class="group-header">
-                    <h4>Groupe ${groupIndex + 1} - ${group.images.length} images similaires</h4>
-                    <span class="similarity-badge">Similarité: ${(group.similarity_avg * 100).toFixed(0)}%</span>
-                </div>
-                
-                <div class="group-images">
-                    ${group.images.map((img, imgIndex) =>
-                this.renderThumbnail(img, groupIndex, imgIndex)  // <-- ICI, on utilise renderThumbnail
-            ).join('')}
-                </div>
-                
-                <div class="group-actions">
-                    <button class="btn btn-sm" onclick="duplicateManager.splitGroup(${groupIndex})">
-                        ✂️ Séparer le groupe
-                    </button>
-                </div>
-            </div>
-        `;
-        });
-
-        resultsDiv.innerHTML = html;
-
-        // Activer le bouton de sauvegarde
-        document.getElementById('btnSaveGroups').style.display = 'inline-block';
-    }
-
-    XdisplayResults(data) {
-        console.log('Résultats reçus:', data);
-        console.log('Résultats complets Flask:', JSON.stringify(data, null, 2));
-
-        const resultsDiv = document.getElementById('dupResults');
-
-        if (!data.groups || data.groups.length === 0) {
-            resultsDiv.innerHTML = '<div class="no-results">✅ Aucun doublon trouvé !</div>';
-            return;
-        }
-
-        // Sauvegarder les groupes pour la validation
-        this.currentGroups = data.groups;
-
-        // Afficher les groupes
-        let html = `
-        <div class="duplicate-summary">
-            <h3>📊 ${data.groups.length} groupe(s) de doublons trouvés</h3>
-<p>${data.total_images || data.groups.reduce((sum, g) => sum + g.images.length, 0)} images analysées</p>
-
-        </div>
-    `;
-
-        data.groups.forEach((group, groupIndex) => {
-            html += `
-            <div class="duplicate-group" data-group-index="${groupIndex}">
-                <div class="group-header">
-                    <h4>Groupe ${groupIndex + 1} - ${group.images.length} images similaires</h4>
-                    <span class="similarity-badge">Similarité: ${(group.similarity_avg * 100).toFixed(0)}%</span>
-                </div>
-                
-                <div class="group-images">
-                    ${group.images.map((img, imgIndex) => `
-                        <div class="dup-image ${img.is_primary ? 'primary' : ''}" 
-                             data-asset-id="${img.asset_id}"
-                             data-group-index="${groupIndex}"
-                             data-image-index="${imgIndex}">
-                            
-                            <img src="../public/image-proxy.php?id=${img.asset_id}&type=thumbnail" 
-                                 alt="${img.filename || 'Image'}">
-                            
-                            <div class="image-info">
-                                ${img.is_primary ? '<span class="primary-badge">⭐ Principale</span>' : ''}
-                                <label class="select-primary">
-                                    <input type="radio" 
-                                           name="primary-${groupIndex}" 
-                                           value="${imgIndex}"
-                                           ${img.is_primary ? 'checked' : ''}
-                                           onchange="duplicateManager.setPrimary(${groupIndex}, ${imgIndex})">
-                                    Principale
-                                </label>
-                            </div>
-                            
-                            <button class="btn-remove" 
-                                    onclick="duplicateManager.removeFromGroup(${groupIndex}, ${imgIndex})"
-                                    title="Retirer du groupe">
-                                ❌
-                            </button>
-                        </div>
-                    `).join('')}
-                </div>
-                
-                <div class="group-actions">
-                    <button class="btn btn-sm" onclick="duplicateManager.splitGroup(${groupIndex})">
-                        ✂️ Séparer le groupe
-                    </button>
-                </div>
-            </div>
-        `;
-        });
-
-        resultsDiv.innerHTML = html;
-
-        // Activer le bouton de sauvegarde
-        document.getElementById('btnSaveGroups').style.display = 'inline-block';
-    }
-
-    // Méthodes pour gérer les actions
-    setPrimary(groupIndex, imageIndex) {
-        console.log(`Définir image ${imageIndex} comme principale du groupe ${groupIndex}`);
-
-        // Mettre à jour dans currentGroups
-        this.currentGroups[groupIndex].images.forEach((img, idx) => {
-            img.is_primary = (idx === imageIndex);
-        });
-
-        // Rafraîchir l'affichage
-        this.refreshGroup(groupIndex);
-    }
-
-    removeFromGroup(groupIndex, imageIndex) {
-        if (confirm('Retirer cette image du groupe de doublons ?')) {
-            // Retirer de currentGroups
-            this.currentGroups[groupIndex].images.splice(imageIndex, 1);
-
-            // Si le groupe n'a plus qu'une image, le supprimer
-            if (this.currentGroups[groupIndex].images.length <= 1) {
-                this.currentGroups.splice(groupIndex, 1);
-                this.displayResults({ groups: this.currentGroups });
-            } else {
-                this.refreshGroup(groupIndex);
-            }
-        }
-    }
-
-    splitGroup(groupIndex) {
-        if (confirm('Séparer ce groupe ? Chaque image deviendra indépendante.')) {
-            this.currentGroups.splice(groupIndex, 1);
-            this.displayResults({ groups: this.currentGroups });
-        }
-    }
-
-    refreshGroup(groupIndex) {
-        // Réafficher juste ce groupe
-        const groupDiv = document.querySelector(`[data-group-index="${groupIndex}"]`);
-        if (groupDiv) {
-            // Recréer le HTML pour ce groupe
-            // (ou utiliser displayResults avec les groupes modifiés)
-            this.displayResults({ groups: this.currentGroups });
-        }
     }
 }

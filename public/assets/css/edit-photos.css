@@ -599,3 +599,332 @@
 }
 
 */
+
+/*
+avec qualité 
+*/
+/* Styles pour le modal de détection de doublons */
+
+/* Modal de base */
+#duplicateModal .modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.duplicate-options {
+    background: #f5f5f5;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+.duplicate-options label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Heartbeat indicator */
+.heartbeat-indicator {
+    font-size: 1.2em;
+    transition: transform 0.3s ease;
+}
+
+.heartbeat-indicator.beating {
+    transform: scale(1.3);
+    color: #ff4444;
+}
+
+/* Progress */
+#dupProgress {
+    margin: 20px 0;
+}
+
+.progress-bar {
+    height: 30px;
+    background: #e0e0e0;
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #4CAF50, #8BC34A);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    transition: width 0.3s ease;
+}
+
+/* Résumé */
+.duplicate-summary {
+    background: #e3f2fd;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.duplicate-summary h3 {
+    margin: 0 0 10px 0;
+    color: #1976d2;
+}
+
+/* Groupes */
+.duplicate-group {
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 15px;
+    margin-bottom: 20px;
+}
+
+.group-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.group-header h4 {
+    margin: 0;
+}
+
+.similarity-badge {
+    background: #ff9800;
+    color: white;
+    padding: 4px 12px;
+    border-radius: 12px;
+    font-size: 0.9em;
+}
+
+.btn-keep-best-group {
+    background: #4CAF50;
+    color: white;
+    border: none;
+    padding: 6px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.btn-keep-best-group:hover {
+    background: #45a049;
+}
+
+/* Grille d'images */
+.group-images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.dup-image {
+    position: relative;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    background: white;
+    transition: transform 0.2s, border-color 0.2s;
+}
+
+.dup-image:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
+
+.dup-image.primary {
+    border-color: #4CAF50;
+    border-width: 3px;
+}
+
+.dup-image img {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    display: block;
+}
+
+/* Infos image */
+.image-info {
+    padding: 10px;
+    font-size: 0.85em;
+}
+
+.primary-badge {
+    background: #4CAF50;
+    color: white;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.9em;
+    display: inline-block;
+    margin-bottom: 5px;
+}
+
+.filename {
+    font-weight: bold;
+    margin-bottom: 5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* Infos qualité */
+.quality-info {
+    margin: 5px 0;
+    padding: 5px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+
+.quality-score {
+    font-weight: bold;
+    color: #666;
+}
+
+.quality-score.best {
+    color: #4CAF50;
+    font-size: 1.1em;
+}
+
+.quality-reasons {
+    display: block;
+    font-size: 0.8em;
+    color: #888;
+    margin-top: 2px;
+}
+
+/* Radio buttons */
+.select-primary {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    margin: 5px 0;
+}
+
+.select-primary input {
+    margin: 0;
+}
+
+/* GPS info */
+.gps-info {
+    color: #1976d2;
+    font-size: 0.85em;
+    margin-top: 5px;
+}
+
+/* Bouton supprimer */
+.btn-remove {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: rgba(244, 67, 54, 0.9);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s;
+    font-size: 0.9em;
+}
+
+.dup-image:hover .btn-remove {
+    opacity: 1;
+}
+
+/* Actions du groupe */
+.group-actions {
+    display: flex;
+    gap: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.group-actions .btn {
+    padding: 6px 12px;
+    border: 1px solid #ddd;
+    background: white;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+}
+
+.group-actions .btn:hover {
+    background: #f5f5f5;
+}
+
+/* Modal détails qualité */
+.quality-details-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+}
+
+.quality-details-modal {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+}
+
+.quality-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0;
+}
+
+.quality-table th,
+.quality-table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.quality-table th {
+    background: #f5f5f5;
+    font-weight: bold;
+}
+
+.quality-table .primary-row {
+    background: #e8f5e9;
+}
+
+/* Pas de résultats */
+.no-results {
+    text-align: center;
+    padding: 40px;
+    color: #4CAF50;
+    font-size: 1.2em;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .group-images {
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    }
+    
+    .dup-image img {
+        height: 100px;
+    }
+    
+    .image-info {
+        font-size: 0.75em;
+    }
+}

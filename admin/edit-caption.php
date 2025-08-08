@@ -189,9 +189,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             longitude: <?= $longitude !== null ? $longitude : 'null' ?>
         };
     </script>
+    <!-- D'abord SSEManager -->
+    <script src="../public/assets/js/modules/SSEManager.js"></script>
+
 
     <!-- Import du module principal -->
-    <script type="module" src="../public/assets/js/CaptionEditor.js"></script>
+    <script src="../public/assets/js/CaptionEditor.js"></script>
 </body>
 
 </html>

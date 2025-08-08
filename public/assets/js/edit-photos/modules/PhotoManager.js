@@ -112,6 +112,41 @@ class PhotoManager {
     toggleSelectAll() {
         const visiblePhotos = document.querySelectorAll('.photo-item:not(.hidden)');
         const allSelected = this.isAllSelected();
+        const newState = !allSelected;
+
+        // Clear or populate selectedPhotos Set in one operation
+        if (newState) {
+            // Add all visible photo IDs at once
+            visiblePhotos.forEach(item => {
+                const assetId = item.dataset.assetId;
+                if (assetId) {
+                    this.selectedPhotos.add(assetId);
+                    item.classList.add('selected');
+                }
+                const checkbox = item.querySelector('.photo-select');
+                if (checkbox) checkbox.checked = true;
+            });
+        } else {
+            // Clear everything at once
+            this.selectedPhotos.clear();
+            visiblePhotos.forEach(item => {
+                item.classList.remove('selected');
+                const checkbox = item.querySelector('.photo-select');
+                if (checkbox) checkbox.checked = false;
+            });
+        }
+
+        // Update date checkboxes
+        document.querySelectorAll('.date-select').forEach(dateCheckbox => {
+            dateCheckbox.checked = newState;
+        });
+
+        // Single UI update at the end
+        this.updateSelectionUI();
+    }
+    XtoggleSelectAll() {
+        const visiblePhotos = document.querySelectorAll('.photo-item:not(.hidden)');
+        const allSelected = this.isAllSelected();
 
         visiblePhotos.forEach(item => {
             const checkbox = item.querySelector('.photo-select');

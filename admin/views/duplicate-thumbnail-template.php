@@ -1,26 +1,23 @@
-<?php
-// admin/views/duplicate-thumbnail-template.php
-// Ce fichier génère un template JavaScript
-?>
+<!-- views/duplicate-thumbnail-template.php -->
 <script type="text/template" id="duplicate-thumbnail-template">
     <div class="dup-image {{primary}}" 
          data-asset-id="{{assetId}}"
          data-group-index="{{groupIndex}}"
          data-image-index="{{imgIndex}}">
         
-        {{#hasGPS}}
-        <span class="gps-badge" title="GPS: {{lat}}, {{lng}}">📍</span>
-        {{/hasGPS}}
-        
         <img src="../public/image-proxy.php?id={{assetId}}&type=thumbnail" 
              alt="{{filename}}"
-             onerror="this.onerror=null; duplicateManager.reloadThumbnail(this, '{{assetId}}')"
-             loading="lazy">
+             title="{{filename}}">
         
         <div class="image-info">
             {{#isPrimary}}
-            <span class="primary-badge">⭐ Principale</span>
+                <span class="primary-badge">⭐ Principale</span>
             {{/isPrimary}}
+            
+            <div class="filename" title="{{filename}}">{{filenameShort}}</div>
+            
+            <!-- Infos qualité -->
+            {{qualityInfo}}
             
             <label class="select-primary">
                 <input type="radio" 
@@ -31,9 +28,11 @@
                 Principale
             </label>
             
-            {{#filename}}
-            <small class="filename" title="{{filename}}">{{filenameShort}}</small>
-            {{/filename}}
+            {{#hasGPS}}
+                <div class="gps-info" title="GPS: {{lat}}, {{lng}}">
+                    📍 GPS
+                </div>
+            {{/hasGPS}}
         </div>
         
         <button class="btn-remove" 

@@ -27,11 +27,60 @@ function handleAjaxRequest($action, $data, $galleryId, $db, $immichClient)
                 $result = LocalfindDuplicates($data, $galleryId, $db);
                 break;
 
+            case 'delete_duplicates':
+                handleDeleteDuplicates($_POST, $galleryId, $db, $immichClient);
+                break;
+
             default:
                 $result = ['success' => false, 'error' => 'Action inconnue'];
         }
 
         echo json_encode($result);
+    } catch (Exception $e) {
+        echo json_encode([
+            'success' => false,
+            'error' => $e->getMessage()
+        ]);
+    }
+}
+function handleDeleteDuplicates($data, $galleryId, $db, $immichClient)
+{
+    try {
+        $assetIds = json_decode($data['asset_ids'] ?? '[]', true);
+
+        if (empty($assetIds)) {
+            throw new Exception('Aucune image à supprimer');
+        }
+
+        $deletedCount = 0;
+        $errors = [];
+
+        foreach ($assetIds as $assetId) {
+            try {
+                // 1. Supprimer de la galerie locale
+                $stmt = $db->getPDO()->prepare("
+                    DELETE FROM gallery_photos 
+                    WHERE gallery_id = ? AND asset_id = ?
+                ");
+                $stmt->execute([$galleryId, $assetId]);
+
+                // 2. Optionnel : marquer comme supprimé dans Immich
+                // (selon votre politique de gestion)
+                // $immichClient->markAsDeleted($assetId);
+
+                $deletedCount++;
+            } catch (Exception $e) {
+                $errors[] = "Erreur suppression $assetId: " . $e->getMessage();
+            }
+        }
+
+        // Retour JSON
+        echo json_encode([
+            'success' => true,
+            'deleted' => $deletedCount,
+            'total' => count($assetIds),
+            'errors' => $errors
+        ]);
     } catch (Exception $e) {
         echo json_encode([
             'success' => false,
