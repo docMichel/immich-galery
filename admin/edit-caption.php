@@ -45,10 +45,16 @@ $existingCaption = $imageData['caption'] ?? '';
 // Extraire les coordonnées GPS
 $latitude = null;
 $longitude = null;
-if (isset($assetInfo['exifInfo'])) {
+
+if ($imageData['latitude'] ?? false) {
+    $latitude = $imageData['latitude'];
+    $longitude = $imageData['longitude'];
+} elseif (isset($assetInfo['exifInfo'])) {
     $latitude = $assetInfo['exifInfo']['latitude'] ?? null;
     $longitude = $assetInfo['exifInfo']['longitude'] ?? null;
 }
+
+
 
 // Sauvegarder si POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'save') {
