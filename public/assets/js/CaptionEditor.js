@@ -155,11 +155,17 @@ class CaptionEditor {
             'cultural_enrichment': 'Enrichissement culturel',
             'travel_enrichment': 'Travel Llama',
             'caption_generation': 'Génération créative',
-            'hashtags': 'Hashtags',
+            'hashtag_generation': 'Génération des hashtags',
             'post_processing': 'Finalisation'
         };
 
-        sseManager.connect(`caption-${requestId}`, sseUrl, {
+        // Ajouter un listener pour l'événement 'partial'
+        const eventSource = sseManager.connect(`caption-${requestId}`, sseUrl, {
+            onConnected: (data) => {
+                console.log('✅ Connexion établie:', data);
+                this.showMessage('Connexion établie avec le serveur', 'success');
+            },
+
             onProgress: (progress, message, step) => {
                 console.log('📊 Progress:', { progress, message, step });
                 
@@ -169,63 +175,6 @@ class CaptionEditor {
                 // Mettre à jour le label de l'étape si disponible
                 if (step && stepLabels[step]) {
                     this.progressText.textContent = `${stepLabels[step]}: ${message}`;
-                }
-            },
-
-            onResult: (step, result) => {
-                console.log('📝 Résultat intermédiaire:', { step, result });
-                
-                // Traiter selon l'étape
-                switch(step) {
-                    case 'image_analysis':
-                        if (result.description) {
-                            this.imageDescription.value = result.description;
-                            this.animateField(this.imageDescription);
-                        }
-                        break;
-                        
-                    case 'geolocation':
-                        if (result.location_basic || result.cultural_context) {
-                            const geoText = [
-                                result.location_basic,
-                                result.cultural_context
-                            ].filter(text => text && text.trim()).join('\n\n');
-                            
-                            if (geoText) {
-                                this.geoContext.value = geoText;
-                                this.animateField(this.geoContext);
-                            }
-                        }
-                        break;
-                        
-                    case 'cultural_enrichment':
-                        if (result.enrichment) {
-                            this.culturalEnrichment.value = result.enrichment;
-                            this.animateField(this.culturalEnrichment);
-                        }
-                        break;
-                        
-                    case 'travel_enrichment':
-                        if (result.enrichment) {
-                            // Ajouter à l'enrichissement culturel
-                            const currentEnrichment = this.culturalEnrichment.value;
-                            this.culturalEnrichment.value = currentEnrichment + 
-                                (currentEnrichment ? '\n\n🌍 Travel Llama:\n' : '') + 
-                                result.enrichment;
-                            this.animateField(this.culturalEnrichment);
-                        }
-                        break;
-                        
-                    case 'caption_generation':
-                    case 'raw_caption':
-                        if (result.caption) {
-                            this.finalCaption.value = result.caption;
-                            this.animateField(this.finalCaption);
-                        }
-                        break;
-                        
-                    default:
-                        console.log(`Étape non gérée: ${step}`, result);
                 }
             },
 
@@ -240,35 +189,10 @@ class CaptionEditor {
                         this.animateField(this.finalCaption);
                     }
                     
-                    // Hashtags (optionnel)
+                    // Hashtags
                     if (data.hashtags && data.hashtags.length > 0) {
                         const hashtagsText = '\n\n' + data.hashtags.join(' ');
                         this.finalCaption.value += hashtagsText;
-                    }
-                    
-                    // Remplir les champs intermédiaires si pas déjà fait
-                    if (data.intermediate_results) {
-                        const ir = data.intermediate_results;
-                        
-                        if (ir.image_analysis && !this.imageDescription.value) {
-                            this.imageDescription.value = ir.image_analysis.description || '';
-                        }
-                        
-                        if (ir.geo_context && !this.geoContext.value) {
-                            const geo = ir.geo_context;
-                            this.geoContext.value = [
-                                geo.location_basic,
-                                geo.cultural_context
-                            ].filter(t => t).join('\n\n');
-                        }
-                        
-                        if (ir.cultural_enrichment && !this.culturalEnrichment.value) {
-                            this.culturalEnrichment.value = ir.cultural_enrichment;
-                        }
-                        
-                        if (ir.travel_enrichment && !this.culturalEnrichment.value.includes('Travel Llama')) {
-                            this.culturalEnrichment.value += '\n\n🌍 Travel Llama:\n' + ir.travel_enrichment;
-                        }
                     }
                     
                     // Score de confiance
@@ -298,10 +222,137 @@ class CaptionEditor {
 
             onWarning: (message) => {
                 console.warn('⚠️ Warning:', message);
-                // Afficher temporairement le warning
                 this.showMessage(message, 'warning');
             }
         });
+
+        // IMPORTANT: Ajouter un listener spécifique pour l'événement 'partial'
+        if (eventSource) {
+            eventSource.addEventListener('partial', (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    console.log('📝 Résultat partiel:', data);
+                    this.handlePartialResult(data);
+                } catch (error) {
+                    console.error('Erreur parsing partial:', error);
+                }
+            });
+
+            // Ajouter aussi un listener pour 'warning' s'il n'est pas géré par SSEManager
+            eventSource.addEventListener('warning', (event) => {
+                try {
+                    const data = JSON.parse(event.data);
+                    console.warn('⚠️ Warning:', data);
+                    const message = data.message || 'Avertissement';
+                    this.showMessage(message, 'warning');
+                } catch (error) {
+                    console.error('Erreur parsing warning:', error);
+                }
+            });
+        }
+    }
+
+    handlePartialResult(data) {
+        const type = data.type;
+        const content = data.content || {};
+
+        console.log(`📝 Traitement résultat partiel [${type}]:`, content);
+
+        switch(type) {
+            case 'image_analysis':
+                if (content.description) {
+                    this.imageDescription.value = content.description;
+                    this.animateField(this.imageDescription);
+                    
+                    // Afficher la confiance si disponible
+                    if (content.confidence) {
+                        const confidencePercent = (content.confidence * 100).toFixed(0);
+                        this.imageDescription.value += `\n[Confiance: ${confidencePercent}%]`;
+                    }
+                }
+                break;
+                
+            case 'geolocation':
+                const geoTexts = [];
+                
+                if (content.location) {
+                    geoTexts.push(`📍 ${content.location}`);
+                }
+                
+                if (content.coordinates && content.coordinates.length === 2) {
+                    geoTexts.push(`GPS: ${content.coordinates[0].toFixed(6)}, ${content.coordinates[1].toFixed(6)}`);
+                }
+                
+                if (content.nearby_places && content.nearby_places.length > 0) {
+                    geoTexts.push(`Lieux proches: ${content.nearby_places.join(', ')}`);
+                }
+                
+                if (content.cultural_sites && content.cultural_sites.length > 0) {
+                    geoTexts.push(`Sites culturels: ${content.cultural_sites.join(', ')}`);
+                }
+                
+                if (geoTexts.length > 0) {
+                    this.geoContext.value = geoTexts.join('\n');
+                    this.animateField(this.geoContext);
+                }
+                break;
+                
+            case 'cultural_enrichment':
+                if (content.text) {
+                    // Ajouter ou remplacer l'enrichissement culturel
+                    const currentValue = this.culturalEnrichment.value;
+                    if (currentValue && content.source === 'travel_llama') {
+                        // Ajouter Travel Llama à la suite
+                        this.culturalEnrichment.value = currentValue + '\n\n🌍 ' + content.text;
+                    } else {
+                        this.culturalEnrichment.value = content.text;
+                    }
+                    this.animateField(this.culturalEnrichment);
+                }
+                break;
+                
+            case 'travel_enrichment':
+                if (content.text) {
+                    // Travel Llama est un enrichissement supplémentaire
+                    const currentEnrichment = this.culturalEnrichment.value;
+                    const separator = currentEnrichment ? '\n\n🌍 Travel Llama:\n' : '🌍 Travel Llama:\n';
+                    this.culturalEnrichment.value = currentEnrichment + separator + content.text;
+                    this.animateField(this.culturalEnrichment);
+                }
+                break;
+                
+            case 'raw_caption':
+                if (content.caption) {
+                    this.finalCaption.value = content.caption;
+                    this.animateField(this.finalCaption);
+                    
+                    // Afficher la langue et le style si disponibles
+                    const meta = [];
+                    if (content.language) meta.push(`Langue: ${content.language}`);
+                    if (content.style) meta.push(`Style: ${content.style}`);
+                    if (meta.length > 0) {
+                        this.showMessage(meta.join(' | '), 'info');
+                    }
+                }
+                break;
+                
+            case 'hashtags':
+                if (content.tags && content.tags.length > 0) {
+                    // Ajouter les hashtags à la légende finale
+                    const hashtagsText = '\n\n' + content.tags.join(' ');
+                    this.finalCaption.value += hashtagsText;
+                    this.animateField(this.finalCaption);
+                    
+                    this.showMessage(`${content.count || content.tags.length} hashtags générés`, 'info');
+                }
+                break;
+                
+            default:
+                console.log(`Type de résultat partiel non géré: ${type}`, content);
+        }
+        
+        // Sauvegarder après chaque mise à jour
+        this.saveToLocalStorage();
     }
 
     clearFields() {
@@ -323,8 +374,51 @@ class CaptionEditor {
     }
 
     async regenerateCaption() {
-        // Relancer la génération complète
-        await this.generateCaption();
+        // Régénérer uniquement la légende finale à partir des contextes existants
+        try {
+            this.showMessage('Régénération de la légende...', 'info');
+            this.btnRegenerate.disabled = true;
+
+            const requestData = {
+                image_description: this.imageDescription.value,
+                geo_context: this.geoContext.value,
+                cultural_enrichment: this.culturalEnrichment.value,
+                language: this.languageSelect?.value || 'français',
+                style: this.styleSelect?.value || 'creative'
+            };
+
+            const response = await fetch(`${this.flaskApiUrl}/api/ai/regenerate-final`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                mode: 'cors',
+                credentials: 'omit',
+                body: JSON.stringify(requestData)
+            });
+
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.error || 'Erreur de régénération');
+            }
+
+            const result = await response.json();
+
+            if (result.success) {
+                this.finalCaption.value = result.caption;
+                this.animateField(this.finalCaption);
+                this.showMessage('Légende régénérée avec succès!', 'success');
+                this.saveToLocalStorage();
+            } else {
+                throw new Error(result.error || 'Échec de la régénération');
+            }
+
+        } catch (error) {
+            console.error('Erreur régénération:', error);
+            this.showMessage(`Erreur: ${error.message}`, 'error');
+        } finally {
+            this.btnRegenerate.disabled = false;
+        }
     }
 
     updateProgress(percent, text) {
@@ -431,21 +525,35 @@ style.textContent = `
     }
 }
 
-.heartbeat-indicator {
-    position: absolute;
-    top: 5px;
-    right: 10px;
-    font-size: 20px;
+.message-box {
+    padding: 10px 15px;
+    margin: 10px 0;
+    border-radius: 4px;
+    font-size: 14px;
 }
 
-.heartbeat-indicator.pulse {
-    animation: heartbeatPulse 0.3s ease-out;
+.message-box.success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
 }
 
-@keyframes heartbeatPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.2); }
-    100% { transform: scale(1); }
+.message-box.error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message-box.warning {
+    background-color: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeeba;
+}
+
+.message-box.info {
+    background-color: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
 }
 
 .progress-fill {
