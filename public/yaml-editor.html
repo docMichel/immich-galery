@@ -8,12 +8,20 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">
     <style>
-           body {
-        display: flex;
-        flex-direction: column;
-        overflow: hidden; /* Seulement sur body */
-    }
-    
+        html,
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            /* Seulement sur body */
+        }
+
         /* Solution alternative plus simple */
         .editor-container {
             flex: 1;
@@ -37,34 +45,36 @@
             min-height: 100%;
         }
 
-   .file-browser {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.9);
-        z-index: 2000;
-        display: none;
-        overflow: auto; /* Permettre le scroll si nécessaire */
-    }
-    
-    .browser-content {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        background: #2d2d2d;
-        width: 80%;
-        max-width: 800px;
-        height: 80%;
-        max-height: 600px; /* Hauteur max pour éviter les problèmes */
-        border-radius: 8px;
-        display: flex;
-        flex-direction: column;
-        overflow: hidden;
-    }
-    
+        .file-browser {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            display: none;
+            overflow: auto;
+            /* Permettre le scroll si nécessaire */
+        }
+
+        .browser-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2d2d2d;
+            width: 80%;
+            max-width: 800px;
+            height: 80%;
+            max-height: 600px;
+            /* Hauteur max pour éviter les problèmes */
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
 
         .browser-header {
             padding: 1rem;
@@ -73,6 +83,54 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
+        }
+
+        /* S'assurer que les éléments dans le browser sont cliquables */
+        .browser-item {
+            display: flex;
+            align-items: center;
+            padding: 0.5rem;
+            margin-bottom: 0.25rem;
+            background: #3d3d3d;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+            position: relative;
+            /* Important */
+            z-index: 1;
+            /* S'assurer qu'ils sont au-dessus */
+        }
+
+        .browser-item:hover {
+            background: #4d4d4d;
+        }
+
+        /* S'assurer que les zones scrollables fonctionnent */
+        .file-list-browser,
+        .recent-files {
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Fix pour les boutons dans le browser */
+        .browser-footer button,
+        .browser-header button,
+        .quick-btn {
+            position: relative;
+            z-index: 10;
+            cursor: pointer;
+        }
+
+        /* S'assurer que le backdrop ne bloque pas les clics sur le contenu */
+        .file-browser::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
         }
 
         .browser-path {
@@ -278,6 +336,8 @@
 
         // Afficher le navigateur de fichiers
         function showFileBrowser() {
+            console.log('Opening file browser...');
+
             document.getElementById('fileBrowser').style.display = 'block';
             loadRecentFiles();
             navigateTo(currentPath);
@@ -290,6 +350,7 @@
 
         // Naviguer vers un dossier
         async function navigateTo(path) {
+            console.log('Navigating to:', path);
             try {
                 const response = await fetch(`yaml-editor.php?action=browse&path=${encodeURIComponent(path)}`);
                 const data = await response.json();
@@ -300,10 +361,10 @@
                     displayFiles(data.items);
                 }
             } catch (error) {
+                console.error('Navigation error:', error);
                 showMessage('Erreur lors de la navigation', 'error');
             }
         }
-
         // Mettre à jour le fil d'Ariane
         function updateBreadcrumb(path) {
             const container = document.getElementById('browserPath');
@@ -339,9 +400,9 @@
                 });
             }
         }
-
-        // Afficher les fichiers
+        // Afficher les fichiers avec meilleur debug
         function displayFiles(items) {
+            console.log('Displaying files:', items.length);
             const container = document.getElementById('browserFileList');
             container.innerHTML = '';
 
@@ -354,18 +415,22 @@
                     ` <span style="color: #888; font-size: 12px;">${item.size} octets</span>` : '';
 
                 element.innerHTML = `
-                    <span class="icon">${icon}</span>
-                    <span style="flex: 1;">${item.name}</span>
-                    ${info}
-                `;
+            <span class="icon">${icon}</span>
+            <span style="flex: 1;">${item.name}</span>
+            ${info}
+        `;
 
-                element.onclick = () => {
+                // Utiliser addEventListener au lieu de onclick
+                element.addEventListener('click', (e) => {
+                    e.stopPropagation(); // Empêcher la propagation
+                    console.log('Clicked on:', item.name);
+
                     if (item.type === 'directory') {
                         navigateTo(item.path);
                     } else {
                         selectFile(item.path);
                     }
-                };
+                });
 
                 container.appendChild(element);
             });
@@ -410,7 +475,7 @@
             }
         }
 
-        // Charger les fichiers récents
+        // Même chose pour les fichiers récents
         async function loadRecentFiles() {
             try {
                 const response = await fetch('yaml-editor.php?action=recent');
@@ -428,13 +493,20 @@
                             item.className = 'browser-item';
                             item.style.fontSize = '12px';
                             item.innerHTML = `
-                                <span class="icon">📄</span>
-                                <div style="flex: 1;">
-                                    <div>${file.name}</div>
-                                    <div style="color: #666; font-size: 11px;">${file.dir}</div>
-                                </div>
-                            `;
-                            item.onclick = () => selectFile(file.path);
+                        <span class="icon">📄</span>
+                        <div style="flex: 1;">
+                            <div>${file.name}</div>
+                            <div style="color: #666; font-size: 11px;">${file.dir}</div>
+                        </div>
+                    `;
+
+                            // Utiliser addEventListener
+                            item.addEventListener('click', (e) => {
+                                e.stopPropagation();
+                                console.log('Selected recent file:', file.path);
+                                selectFile(file.path);
+                            });
+
                             container.appendChild(item);
                         });
                     }
@@ -443,6 +515,17 @@
                 console.error('Erreur lors du chargement des fichiers récents');
             }
         }
+        // S'assurer que le clic sur le fond ferme le browser
+        document.getElementById('fileBrowser').addEventListener('click', (e) => {
+            if (e.target === e.currentTarget) {
+                closeFileBrowser();
+            }
+        });
+
+        // Empêcher la fermeture quand on clique sur le contenu
+        document.querySelector('.browser-content').addEventListener('click', (e) => {
+            e.stopPropagation();
+        });
 
         // Sauvegarder le fichier
         async function saveFile() {
