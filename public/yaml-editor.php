@@ -6,6 +6,11 @@ session_start();
 $BASE_PATH = realpath(__DIR__ . '/../'); // Racine du projet
 $ALLOWED_EXTENSIONS = ['yaml', 'yml'];
 $EXCLUDED_DIRS = ['vendor', 'node_modules', '.git', 'cache', 'logs'];
+$ALLOWED_FILES = [
+    'yaml-files/ai_prompts.yaml',
+    'yaml-files/other_config.yaml'
+];
+
 
 // Fonction pour vérifier si un chemin est sûr
 function isPathSafe($path, $basePath)
