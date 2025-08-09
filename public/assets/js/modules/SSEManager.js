@@ -20,7 +20,8 @@ class SSEManager {
             logs: [],
             lastMessageTime: Date.now(),
             completed: false,
-            hasReceivedComplete: false
+            hasReceivedComplete: false,
+            heartbeatCount: 0
         };
 
         // Handler d'ouverture
@@ -170,16 +171,28 @@ class SSEManager {
                 break;
 
             case 'heartbeat':
-                // Juste mettre à jour le timestamp, pas de log pour éviter le spam
+                // Incrémenter le compteur
+                connection.heartbeatCount++;
                 connection.lastMessageTime = Date.now();
-                if (handlers.onHeartbeat) handlers.onHeartbeat(data);
+                
+                // Appeler le handler pour faire battre le cœur dans l'UI
+                if (handlers.onHeartbeat) {
+                    handlers.onHeartbeat({
+                        ...data,
+                        count: connection.heartbeatCount
+                    });
+                }
+                
+                // Log occasionnel (tous les 10 heartbeats)
+                if (connection.heartbeatCount % 10 === 0) {
+                    console.log(`💓 Heartbeat #${connection.heartbeatCount}`);
+                }
                 break;
         }
     }
 
     handleGenericMessage(id, data) {
         // Pour les messages génériques (sans event type spécifique)
-        // Essayer de déterminer le type basé sur le contenu
         if (data.event || data.type) {
             const eventType = data.event || data.type;
             this.handleTypedEvent(id, eventType, data);
@@ -243,21 +256,19 @@ class SSEManager {
             connection.handlers.onLog(logEntry);
         }
 
-        // Log console avec emoji selon le type (pas de log pour heartbeat)
-        if (type !== 'heartbeat') {
-            const emoji = {
-                'success': '✅',
-                'error': '❌',
-                'warning': '⚠️',
-                'info': 'ℹ️',
-                'progress': '📊',
-                'result': '📝',
-                'partial': '📋',
-                'unknown': '❓'
-            }[type] || '📌';
+        // Log console avec emoji selon le type
+        const emoji = {
+            'success': '✅',
+            'error': '❌',
+            'warning': '⚠️',
+            'info': 'ℹ️',
+            'progress': '📊',
+            'result': '📝',
+            'partial': '📋',
+            'unknown': '❓'
+        }[type] || '📌';
 
-            console.log(`[${timestamp}] ${emoji} ${message}`);
-        }
+        console.log(`[${timestamp}] ${emoji} ${message}`);
     }
 
     close(id, isNormalClosure = false) {
@@ -315,7 +326,8 @@ class SSEManager {
                 readyState: connection.eventSource.readyState,
                 completed: connection.completed,
                 lastMessageTime: new Date(connection.lastMessageTime).toISOString(),
-                logsCount: connection.logs.length
+                logsCount: connection.logs.length,
+                heartbeatCount: connection.heartbeatCount
             });
         }
 

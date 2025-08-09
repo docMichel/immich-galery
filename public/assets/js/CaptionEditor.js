@@ -1,5 +1,5 @@
 // public/assets/js/CaptionEditor.js
-// Module pour l'édition de légendes avec IA via SSE1
+// Module pour l'édition de légendes avec IA via SSE
 
 class CaptionEditor {
     constructor() {
@@ -11,6 +11,7 @@ class CaptionEditor {
         this.longitude = this.config.longitude;
 
         this.currentRequestId = null;
+        this.heartbeatIndicator = null;
         this.init();
     }
 
@@ -48,6 +49,9 @@ class CaptionEditor {
         this.progressText = document.getElementById('progressText');
         this.messageBox = document.getElementById('messageBox');
 
+        // Créer l'indicateur de heartbeat
+        this.createHeartbeatIndicator();
+
         // Event listeners
         if (this.btnGenerate) {
             this.btnGenerate.addEventListener('click', () => this.generateCaption());
@@ -66,6 +70,39 @@ class CaptionEditor {
 
         // Restaurer depuis localStorage
         this.restoreFromLocalStorage();
+    }
+
+    createHeartbeatIndicator() {
+        // Créer un petit cœur qui bat dans l'UI
+        const heart = document.createElement('div');
+        heart.className = 'heartbeat-indicator';
+        heart.innerHTML = '❤️';
+        heart.style.cssText = `
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            font-size: 20px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        `;
+        document.body.appendChild(heart);
+        this.heartbeatIndicator = heart;
+    }
+
+    pulseHeartbeat() {
+        // Faire battre le cœur
+        if (this.heartbeatIndicator) {
+            this.heartbeatIndicator.style.opacity = '1';
+            this.heartbeatIndicator.style.transform = 'scale(1.2)';
+            
+            setTimeout(() => {
+                this.heartbeatIndicator.style.transform = 'scale(1)';
+                setTimeout(() => {
+                    this.heartbeatIndicator.style.opacity = '0.3';
+                }, 200);
+            }, 200);
+        }
     }
 
     async generateCaption() {
@@ -164,6 +201,11 @@ class CaptionEditor {
             onConnected: (data) => {
                 console.log('✅ Connexion établie:', data);
                 this.showMessage('Connexion établie avec le serveur', 'success');
+                
+                // Montrer le cœur quand la connexion est établie
+                if (this.heartbeatIndicator) {
+                    this.heartbeatIndicator.style.opacity = '0.3';
+                }
             },
 
             onProgress: (progress, message, step) => {
@@ -187,8 +229,18 @@ class CaptionEditor {
             onComplete: (data) => {
                 console.log('✅ Génération terminée:', data);
 
+                // Cacher le cœur
+                if (this.heartbeatIndicator) {
+                    this.heartbeatIndicator.style.opacity = '0';
+                }
+
                 // Traiter les données finales
                 if (data.success) {
+                    // D'abord traiter les enrichissements s'ils sont dans le message complete
+                    if (data.enrichments) {
+                        this.processEnrichments(data.enrichments);
+                    }
+
                     // Légende finale
                     if (data.caption) {
                         this.finalCaption.value = data.caption;
@@ -226,6 +278,11 @@ class CaptionEditor {
                 this.hideProgress();
                 this.btnGenerate.disabled = false;
                 this.btnRegenerate.disabled = false;
+                
+                // Cacher le cœur en cas d'erreur
+                if (this.heartbeatIndicator) {
+                    this.heartbeatIndicator.style.opacity = '0';
+                }
             },
 
             onWarning: (message, code) => {
@@ -234,9 +291,13 @@ class CaptionEditor {
             },
 
             onHeartbeat: (data) => {
-                // Le heartbeat maintient la connexion active
-                // On peut optionnellement faire clignoter un indicateur
-                console.log('💓 Heartbeat reçu');
+                // Faire battre le cœur visuellement
+                this.pulseHeartbeat();
+                
+                // Afficher le numéro du heartbeat de temps en temps
+                if (data.count && data.count % 5 === 0) {
+                    console.log(`💓 Connexion active (${data.count} heartbeats)`);
+                }
             },
 
             onTimeout: () => {
@@ -245,8 +306,77 @@ class CaptionEditor {
                 this.hideProgress();
                 this.btnGenerate.disabled = false;
                 this.btnRegenerate.disabled = false;
+                
+                // Cacher le cœur
+                if (this.heartbeatIndicator) {
+                    this.heartbeatIndicator.style.opacity = '0';
+                }
             }
         });
+    }
+
+    processEnrichments(enrichments) {
+        // Contexte géographique
+        if (enrichments.geo_context) {
+            const geo = enrichments.geo_context;
+            const geoTexts = [];
+            
+            if (geo.location_basic) {
+                geoTexts.push(`📍 ${geo.location_basic}`);
+            }
+            if (geo.location_detailed) {
+                geoTexts.push(`Adresse: ${geo.location_detailed}`);
+            }
+            if (geo.nearby_attractions) {
+                geoTexts.push(`Attractions: ${geo.nearby_attractions}`);
+            }
+            if (geo.geographic_context) {
+                geoTexts.push(geo.geographic_context);
+            }
+            if (geo.natural_features) {
+                geoTexts.push(`Nature: ${geo.natural_features}`);
+            }
+            if (geo.urban_context) {
+                geoTexts.push(`Contexte: ${geo.urban_context}`);
+            }
+            
+            if (geoTexts.length > 0) {
+                this.geoContext.value = geoTexts.join('\n');
+                this.animateField(this.geoContext);
+            }
+        }
+
+        // Enrichissement culturel/travel
+        if (enrichments.travel_enrichment || enrichments.cultural_enrichment) {
+            const culturalTexts = [];
+            
+            if (enrichments.cultural_enrichment) {
+                culturalTexts.push(enrichments.cultural_enrichment);
+            }
+            
+            if (enrichments.travel_enrichment) {
+                if (culturalTexts.length > 0) {
+                    culturalTexts.push('\n🌍 Travel Llama:\n' + enrichments.travel_enrichment);
+                } else {
+                    culturalTexts.push(enrichments.travel_enrichment);
+                }
+            }
+            
+            if (culturalTexts.length > 0) {
+                this.culturalEnrichment.value = culturalTexts.join('\n');
+                this.animateField(this.culturalEnrichment);
+            }
+        }
+
+        // Description de l'image
+        if (enrichments.image_analysis && enrichments.image_analysis.description) {
+            this.imageDescription.value = enrichments.image_analysis.description;
+            if (enrichments.image_analysis.confidence) {
+                const confidencePercent = (enrichments.image_analysis.confidence * 100).toFixed(0);
+                this.imageDescription.value += `\n[Confiance: ${confidencePercent}%]`;
+            }
+            this.animateField(this.imageDescription);
+        }
     }
 
     handlePartialResult(data) {
@@ -275,7 +405,7 @@ class CaptionEditor {
                 if (content.location) {
                     geoTexts.push(`📍 ${content.location}`);
                 }
-                // AJOUTER L'ADRESSE COMPLÈTE
+                
                 if (content.address) {
                     geoTexts.push(`Adresse: ${content.address}`);
                 }
@@ -291,12 +421,13 @@ class CaptionEditor {
                 if (content.cultural_sites && content.cultural_sites.length > 0) {
                     geoTexts.push(`Sites culturels: ${content.cultural_sites.join(', ')}`);
                 }
-                // AJOUTER LES STATS
+                
                 if (content.stats) {
                     const stats = [];
                     if (content.stats.cities > 0) stats.push(`${content.stats.cities} villes`);
                     if (content.stats.pois > 0) stats.push(`${content.stats.pois} POIs`);
                     if (content.stats.cultural > 0) stats.push(`${content.stats.cultural} sites culturels`);
+                    if (content.stats.unesco > 0) stats.push(`${content.stats.unesco} sites UNESCO`);
                     if (stats.length > 0) {
                         geoTexts.push(`Données: ${stats.join(', ')}`);
                     }
@@ -511,10 +642,15 @@ class CaptionEditor {
         if (this.currentRequestId && sseManager) {
             sseManager.close(`caption-${this.currentRequestId}`);
         }
+        
+        // Retirer l'indicateur de heartbeat
+        if (this.heartbeatIndicator) {
+            this.heartbeatIndicator.remove();
+        }
     }
 }
 
-// CSS pour l'animation des champs
+// CSS pour l'animation des champs et le heartbeat
 const style = document.createElement('style');
 style.textContent = `
 .field-updated {
@@ -534,6 +670,18 @@ style.textContent = `
         background-color: transparent;
         transform: scale(1);
     }
+}
+
+.heartbeat-indicator {
+    animation: heartbeat 1.5s ease-in-out infinite;
+}
+
+@keyframes heartbeat {
+    0% { transform: scale(1); }
+    14% { transform: scale(1.3); }
+    28% { transform: scale(1); }
+    42% { transform: scale(1.3); }
+    70% { transform: scale(1); }
 }
 
 .message-box {
