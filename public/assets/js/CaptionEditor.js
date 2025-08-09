@@ -168,10 +168,10 @@ class CaptionEditor {
 
             onProgress: (progress, message, step) => {
                 console.log('📊 Progress:', { progress, message, step });
-                
+
                 // Mettre à jour la barre de progression
                 this.updateProgress(progress, message);
-                
+
                 // Mettre à jour le label de l'étape si disponible
                 if (step && stepLabels[step]) {
                     this.progressText.textContent = `${stepLabels[step]}: ${message}`;
@@ -186,7 +186,7 @@ class CaptionEditor {
 
             onComplete: (data) => {
                 console.log('✅ Génération terminée:', data);
-                
+
                 // Traiter les données finales
                 if (data.success) {
                     // Légende finale
@@ -194,28 +194,28 @@ class CaptionEditor {
                         this.finalCaption.value = data.caption;
                         this.animateField(this.finalCaption);
                     }
-                    
+
                     // Hashtags
                     if (data.hashtags && data.hashtags.length > 0) {
                         const hashtagsText = '\n\n' + data.hashtags.join(' ');
                         this.finalCaption.value += hashtagsText;
                     }
-                    
+
                     // Score de confiance
                     const confidence = data.confidence_score || 0;
                     const confidenceText = `(Confiance: ${(confidence * 100).toFixed(0)}%)`;
-                    
+
                     // Message de succès
                     this.showMessage(`Légende générée avec succès! ${confidenceText}`, 'success');
                     this.saveToLocalStorage();
-                    
+
                     // Activer le bouton régénérer
                     this.btnRegenerate.disabled = false;
-                    
+
                 } else {
                     this.showMessage('Erreur: Génération échouée', 'error');
                 }
-                
+
                 this.hideProgress();
                 this.btnGenerate.disabled = false;
             },
@@ -255,12 +255,12 @@ class CaptionEditor {
 
         console.log(`📝 Traitement résultat partiel [${type}]:`, content);
 
-        switch(type) {
+        switch (type) {
             case 'image_analysis':
                 if (content.description) {
                     this.imageDescription.value = content.description;
                     this.animateField(this.imageDescription);
-                    
+
                     // Afficher la confiance si disponible
                     if (content.confidence) {
                         const confidencePercent = (content.confidence * 100).toFixed(0);
@@ -268,32 +268,46 @@ class CaptionEditor {
                     }
                 }
                 break;
-                
+
             case 'geolocation':
                 const geoTexts = [];
-                
+
                 if (content.location) {
                     geoTexts.push(`📍 ${content.location}`);
                 }
-                
+                // AJOUTER L'ADRESSE COMPLÈTE
+                if (content.address) {
+                    geoTexts.push(`Adresse: ${content.address}`);
+                }
+
                 if (content.coordinates && content.coordinates.length === 2) {
                     geoTexts.push(`GPS: ${content.coordinates[0].toFixed(6)}, ${content.coordinates[1].toFixed(6)}`);
                 }
-                
+
                 if (content.nearby_places && content.nearby_places.length > 0) {
                     geoTexts.push(`Lieux proches: ${content.nearby_places.join(', ')}`);
                 }
-                
+
                 if (content.cultural_sites && content.cultural_sites.length > 0) {
                     geoTexts.push(`Sites culturels: ${content.cultural_sites.join(', ')}`);
                 }
-                
+                // AJOUTER LES STATS
+                if (content.stats) {
+                    const stats = [];
+                    if (content.stats.cities > 0) stats.push(`${content.stats.cities} villes`);
+                    if (content.stats.pois > 0) stats.push(`${content.stats.pois} POIs`);
+                    if (content.stats.cultural > 0) stats.push(`${content.stats.cultural} sites culturels`);
+                    if (stats.length > 0) {
+                        geoTexts.push(`Données: ${stats.join(', ')}`);
+                    }
+                }
+
                 if (geoTexts.length > 0) {
                     this.geoContext.value = geoTexts.join('\n');
                     this.animateField(this.geoContext);
                 }
                 break;
-                
+
             case 'cultural_enrichment':
                 if (content.text) {
                     // Ajouter ou remplacer l'enrichissement culturel
@@ -307,7 +321,7 @@ class CaptionEditor {
                     this.animateField(this.culturalEnrichment);
                 }
                 break;
-                
+
             case 'travel_enrichment':
                 if (content.text) {
                     // Travel Llama est un enrichissement supplémentaire
@@ -317,12 +331,12 @@ class CaptionEditor {
                     this.animateField(this.culturalEnrichment);
                 }
                 break;
-                
+
             case 'raw_caption':
                 if (content.caption) {
                     this.finalCaption.value = content.caption;
                     this.animateField(this.finalCaption);
-                    
+
                     // Afficher la langue et le style si disponibles
                     const meta = [];
                     if (content.language) meta.push(`Langue: ${content.language}`);
@@ -332,22 +346,22 @@ class CaptionEditor {
                     }
                 }
                 break;
-                
+
             case 'hashtags':
                 if (content.tags && content.tags.length > 0) {
                     // Ajouter les hashtags à la légende finale
                     const hashtagsText = '\n\n' + content.tags.join(' ');
                     this.finalCaption.value += hashtagsText;
                     this.animateField(this.finalCaption);
-                    
+
                     this.showMessage(`${content.count || content.tags.length} hashtags générés`, 'info');
                 }
                 break;
-                
+
             default:
                 console.log(`Type de résultat partiel non géré: ${type}`, content);
         }
-        
+
         // Sauvegarder après chaque mise à jour
         this.saveToLocalStorage();
     }
@@ -421,7 +435,7 @@ class CaptionEditor {
     updateProgress(percent, text) {
         this.progressFill.style.width = `${percent}%`;
         this.progressText.textContent = text || `${percent}%`;
-        
+
         // Couleur selon le pourcentage
         if (percent < 30) {
             this.progressFill.style.backgroundColor = '#3498db'; // Bleu
