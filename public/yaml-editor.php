@@ -15,10 +15,27 @@ $ALLOWED_FILES = [
 // Fonction pour vérifier si un chemin est sûr
 function isPathSafe($path, $basePath)
 {
-    $realPath = realpath($path);
+    // D'abord vérifier si le chemin relatif est dans la base
+    $relativePath = $path;
+    if (strpos($relativePath, '..') !== false) {
+        return false; // Pas de remontée de dossier
+    }
+
+    // Si c'est un lien symbolique dans notre arborescence, c'est OK
+    $fullPath = $basePath . '/' . $relativePath;
+    if (is_link($fullPath)) {
+        // Vérifier que le lien lui-même est dans notre arborescence
+        $linkDir = dirname($fullPath);
+        $realLinkDir = realpath($linkDir);
+        return strpos($realLinkDir, realpath($basePath)) === 0;
+    }
+
+    // Pour les fichiers normaux, vérifier le chemin réel
+    $realPath = realpath($fullPath);
     $realBase = realpath($basePath);
     return $realPath && strpos($realPath, $realBase) === 0;
 }
+
 
 // Router
 $action = $_GET['action'] ?? 'browse';
@@ -104,13 +121,17 @@ try {
             $filepath = $_GET['file'] ?? '';
             $fullPath = realpath($BASE_PATH . '/' . $filepath);
 
-            if (!isPathSafe($fullPath, $BASE_PATH)) {
+            // Si c'est un lien symbolique dans yaml-files, on l'autorise
+            if (strpos($filepath, 'yaml-files/') === 0 && is_link($fullPath)) {
+                // OK, c'est un lien autorisé
+            } else if (!isPathSafe($filepath, $BASE_PATH)) {
                 throw new Exception('Chemin non autorisé');
             }
 
             if (!file_exists($fullPath)) {
                 throw new Exception('Fichier non trouvé');
             }
+
 
             $content = file_get_contents($fullPath);
 
