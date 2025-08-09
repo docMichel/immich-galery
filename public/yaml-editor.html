@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditeur de Prompts YAML</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #1a1a1a;
+            color: #e0e0e0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .header {
+            background: #2d2d2d;
+            padding: 1rem;
+            border-bottom: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            color: #fff;
+        }
+        
+        .toolbar {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+        
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background 0.3s;
+        }
+        
+        button:hover {
+            background: #45a049;
+        }
+        
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        
+        button.secondary {
+            background: #2196F3;
+        }
+        
+        button.secondary:hover {
+            background: #1976D2;
+        }
+        
+        button.danger {
+            background: #f44336;
+        }
+        
+        button.danger:hover {
+            background: #d32f2f;
+        }
+        
+        .main-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+        
+        .sidebar {
+            width: 250px;
+            background: #2d2d2d;
+            border-right: 1px solid #444;
+            overflow-y: auto;
+        }
+        
+        .file-list {
+            padding: 1rem;
+        }
+        
+        .file-item {
+            padding: 0.5rem;
+            margin-bottom: 0.5rem;
+            background: #3d3d3d;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        
+        .file-item:hover {
+            background: #4d4d4d;
+        }
+        
+        .file-item.active {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .editor-header {
+            background: #2d2d2d;
+            padding: 0.5rem 1rem;
+            border-bottom: 1px solid #444;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .CodeMirror {
+            flex: 1;
+            font-size: 14px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+        }
+        
+        .status-bar {
+            background: #2d2d2d;
+            padding: 0.5rem 1rem;
+            border-top: 1px solid #444;
+            font-size: 12px;
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.8);
+            z-index: 1000;
+        }
+        
+        .modal-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #2d2d2d;
+            padding: 2rem;
+            border-radius: 8px;
+            max-width: 600px;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        
+        .backup-list {
+            margin-top: 1rem;
+        }
+        
+        .backup-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem;
+            background: #3d3d3d;
+            margin-bottom: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        .message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 1rem;
+            border-radius: 4px;
+            z-index: 2000;
+            animation: slideIn 0.3s ease;
+        }
+        
+        .message.success {
+            background: #4CAF50;
+            color: white;
+        }
+        
+        .message.error {
+            background: #f44336;
+            color: white;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .search-box {
+            margin: 1rem;
+            position: relative;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 0.5rem;
+            background: #3d3d3d;
+            border: 1px solid #555;
+            border-radius: 4px;
+            color: #e0e0e0;
+        }
+        
+        .diff-viewer {
+            font-family: monospace;
+            font-size: 12px;
+            background: #1e1e1e;
+            padding: 1rem;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+        
+        .diff-add {
+            background: rgba(76, 175, 80, 0.2);
+            color: #4CAF50;
+        }
+        
+        .diff-remove {
+            background: rgba(244, 67, 54, 0.2);
+            color: #f44336;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🎯 Éditeur de Prompts YAML</h1>
+        <div class="toolbar">
+            <button id="saveBtn" onclick="saveFile()">💾 Sauvegarder</button>
+            <button id="reloadBtn" class="secondary" onclick="reloadFile()">🔄 Recharger</button>
+            <button id="backupBtn" class="secondary" onclick="showBackups()">📋 Backups</button>
+            <button id="formatBtn" class="secondary" onclick="formatYAML()">✨ Formater</button>
+        </div>
+    </div>
+    
+    <div class="main-container">
+        <div class="sidebar">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Rechercher un prompt..." onkeyup="searchPrompts()">
+            </div>
+            <div class="file-list" id="fileList">
+                <!-- Liste des fichiers -->
+            </div>
+        </div>
+        
+        <div class="editor-container">
+            <div class="editor-header">
+                <span id="currentFile">Aucun fichier sélectionné</span>
+                <span id="modifiedIndicator" style="color: #ff9800; display: none;">● Modifié</span>
+            </div>
+            <textarea id="editor"></textarea>
+            <div class="status-bar">
+                <span id="cursorPosition">Ligne: 1, Col: 1</span>
+                <span id="fileInfo"></span>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal pour les backups -->
+    <div id="backupModal" class="modal">
+        <div class="modal-content">
+            <h2>Backups disponibles</h2>
+            <div id="backupList" class="backup-list"></div>
+            <button onclick="closeModal()" style="margin-top: 1rem;">Fermer</button>
+        </div>
+    </div>
+    
+    <!-- Messages -->
+    <div id="messageContainer"></div>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/yaml/yaml.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
+    
+    <script>
+        let editor;
+        let currentFile = null;
+        let originalContent = '';
+        let isModified = false;
+        
+        // Initialiser l'éditeur
+        function initEditor() {
+            editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
+                mode: 'yaml',
+                theme: 'monokai',
+                lineNumbers: true,
+                lineWrapping: true,
+                indentUnit: 2,
+                tabSize: 2,
+                indentWithTabs: false,
+                autofocus: true,
+                extraKeys: {
+                    'Ctrl-S': saveFile,
+                    'Cmd-S': saveFile,
+                    'Ctrl-F': 'findPersistent',
+                    'Cmd-F': 'findPersistent'
+                }
+            });
+            
+            // Détecter les modifications
+            editor.on('change', () => {
+                if (currentFile && editor.getValue() !== originalContent) {
+                    setModified(true);
+                } else {
+                    setModified(false);
+                }
+            });
+            
+            // Mettre à jour la position du curseur
+            editor.on('cursorActivity', () => {
+                const cursor = editor.getCursor();
+                document.getElementById('cursorPosition').textContent = 
+                    `Ligne: ${cursor.line + 1}, Col: ${cursor.ch + 1}`;
+            });
+        }
+        
+        // Charger la liste des fichiers
+        async function loadFileList() {
+            try {
+                const response = await fetch('yaml-editor.php?action=list');
+                const data = await response.json();
+                
+                if (data.success) {
+                    const fileList = document.getElementById('fileList');
+                    fileList.innerHTML = '';
+                    
+                    data.files.forEach(file => {
+                        const item = document.createElement('div');
+                        item.className = 'file-item';
+                        item.innerHTML = `
+                            <div style="font-weight: bold;">${file.name}</div>
+                            <div style="font-size: 12px; color: #888;">
+                                ${file.size} octets • ${file.modified}
+                            </div>
+                        `;
+                        item.onclick = () => loadFile(file.name);
+                        fileList.appendChild(item);
+                    });
+                    
+                    // Charger le premier fichier
+                    if (data.files.length > 0) {
+                        loadFile(data.files[0].name);
+                    }
+                }
+            } catch (error) {
+                showMessage('Erreur lors du chargement des fichiers', 'error');
+            }
+        }
+        
+        // Charger un fichier
+        async function loadFile(filename) {
+            if (isModified) {
+                if (!confirm('Des modifications non sauvegardées seront perdues. Continuer ?')) {
+                    return;
+                }
+            }
+            
+            try {
+                const response = await fetch(`yaml-editor.php?action=load&file=${filename}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    currentFile = filename;
+                    originalContent = data.content;
+                    editor.setValue(data.content);
+                    setModified(false);
+                    
+                    // Mettre à jour l'UI
+                    document.getElementById('currentFile').textContent = filename;
+                    document.getElementById('fileInfo').textContent = 
+                        `${data.backups} backup(s) disponible(s)`;
+                    
+                    // Marquer le fichier actif
+                    document.querySelectorAll('.file-item').forEach(item => {
+                        item.classList.remove('active');
+                        if (item.textContent.includes(filename)) {
+                            item.classList.add('active');
+                        }
+                    });
+                }
+            } catch (error) {
+                showMessage('Erreur lors du chargement du fichier', 'error');
+            }
+        }
+        
+        // Sauvegarder le fichier
+        async function saveFile() {
+            if (!currentFile) return;
+            
+            try {
+                const response = await fetch('yaml-editor.php?action=save', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        filename: currentFile,
+                        content: editor.getValue()
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    originalContent = editor.getValue();
+                    setModified(false);
+                    showMessage('Fichier sauvegardé avec succès', 'success');
+                    
+                    // Recharger la liste pour mettre à jour les dates
+                    loadFileList();
+                } else {
+                    showMessage(data.error || 'Erreur lors de la sauvegarde', 'error');
+                }
+            } catch (error) {
+                showMessage('Erreur lors de la sauvegarde', 'error');
+            }
+        }
+        
+        // Recharger le fichier
+        function reloadFile() {
+            if (currentFile) {
+                if (isModified) {
+                    if (!confirm('Des modifications non sauvegardées seront perdues. Continuer ?')) {
+                        return;
+                    }
+                }
+                loadFile(currentFile);
+            }
+        }
+        
+        // Afficher les backups
+        async function showBackups() {
+            if (!currentFile) return;
+            
+            try {
+                const response = await fetch(`yaml-editor.php?action=backups&file=${currentFile}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    const backupList = document.getElementById('backupList');
+                    backupList.innerHTML = '';
+                    
+                    if (data.backups.length === 0) {
+                        backupList.innerHTML = '<p>Aucun backup disponible</p>';
+                    } else {
+                        data.backups.forEach(backup => {
+                            const item = document.createElement('div');
+                            item.className = 'backup-item';
+                            item.innerHTML = `
+                                <div>
+                                    <div style="font-weight: bold;">${backup.date}</div>
+                                    <div style="font-size: 12px; color: #888;">
+                                        ${backup.size} octets
+                                    </div>
+                                </div>
+                                <button onclick="restoreBackup('${backup.name}')" class="danger">
+                                    Restaurer
+                                </button>
+                            `;
+                            backupList.appendChild(item);
+                        });
+                    }
+                    
+                    document.getElementById('backupModal').style.display = 'block';
+                }
+            } catch (error) {
+                showMessage('Erreur lors du chargement des backups', 'error');
+            }
+        }
+        
+        // Restaurer un backup
+        async function restoreBackup(backupName) {
+            if (!confirm('Êtes-vous sûr de vouloir restaurer ce backup ?')) {
+                return;
+            }
+            
+            try {
+                const response = await fetch('yaml-editor.php?action=restore', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        backup: backupName
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showMessage('Backup restauré avec succès', 'success');
+                    closeModal();
+                    
+                    // Recharger le fichier
+                    if (currentFile) {
+                        loadFile(currentFile);
+                    }
+                } else {
+                    showMessage(data.error || 'Erreur lors de la restauration', 'error');
+                }
+            } catch (error) {
+                showMessage('Erreur lors de la restauration', 'error');
+            }
+        }
+        
+        // Formater le YAML
+        function formatYAML() {
+            try {
+                const parsed = jsyaml.load(editor.getValue());
+                const formatted = jsyaml.dump(parsed, {
+                    indent: 2,
+                    lineWidth: 80,
+                    noRefs: true
+                });
+                editor.setValue(formatted);
+            } catch (error) {
+                showMessage('Erreur de syntaxe YAML: ' + error.message, 'error');
+            }
+        }
+        
+        // Rechercher dans les prompts
+        function searchPrompts() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const content = editor.getValue().toLowerCase();
+            
+            if (query && content.includes(query)) {
+                editor.execCommand('find');
+            }
+        }
+        
+        // Gérer l'état modifié
+        function setModified(modified) {
+            isModified = modified;
+            document.getElementById('modifiedIndicator').style.display = 
+                modified ? 'inline' : 'none';
+            document.getElementById('saveBtn').disabled = !modified;
+        }
+        
+        // Afficher un message
+        function showMessage(text, type = 'info') {
+            const container = document.getElementById('messageContainer');
+            const message = document.createElement('div');
+            message.className = `message ${type}`;
+            message.textContent = text;
+            
+            container.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 3000);
+        }
+        
+        // Fermer la modal
+        function closeModal() {
+            document.getElementById('backupModal').style.display = 'none';
+        }
+        
+        // Gérer les raccourcis clavier
+        document.addEventListener('keydown', (e) => {
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                saveFile();
+            }
+        });
+        
+        // Prévenir la fermeture accidentelle
+        window.addEventListener('beforeunload', (e) => {
+            if (isModified) {
+                e.preventDefault();
+                e.returnValue = '';
+            }
+        });
+        
+        // Initialisation
+        initEditor();
+        loadFileList();
+    </script>
+</body>
+</html>
