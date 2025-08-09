@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="fr">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,19 +8,40 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/theme/monokai.min.css">
     <style>
-        /* Styles précédents... */
-        
+        /* Solution alternative plus simple */
+        .editor-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            min-height: 0;
+        }
+
+        /* L'astuce est d'utiliser flex sur le parent de CodeMirror */
+        .editor-container .CodeMirror {
+            flex: 1;
+            min-height: 0;
+        }
+
+        /* Forcer CodeMirror à ne pas avoir de hauteur fixe */
+        .CodeMirror {
+            height: auto !important;
+        }
+
+        .CodeMirror-scroll {
+            min-height: 100%;
+        }
+
         .file-browser {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.9);
+            background: rgba(0, 0, 0, 0.9);
             z-index: 2000;
             display: none;
         }
-        
+
         .browser-content {
             position: absolute;
             top: 50%;
@@ -34,7 +56,7 @@
             flex-direction: column;
             overflow: hidden;
         }
-        
+
         .browser-header {
             padding: 1rem;
             background: #1a1a1a;
@@ -43,31 +65,31 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .browser-path {
             display: flex;
             align-items: center;
             gap: 0.5rem;
             flex: 1;
         }
-        
+
         .path-segment {
             padding: 0.25rem 0.5rem;
             background: #3d3d3d;
             border-radius: 4px;
             cursor: pointer;
         }
-        
+
         .path-segment:hover {
             background: #4d4d4d;
         }
-        
+
         .browser-body {
             flex: 1;
             display: flex;
             overflow: hidden;
         }
-        
+
         .recent-files {
             width: 200px;
             background: #1a1a1a;
@@ -75,13 +97,13 @@
             padding: 1rem;
             overflow-y: auto;
         }
-        
+
         .file-list-browser {
             flex: 1;
             padding: 1rem;
             overflow-y: auto;
         }
-        
+
         .browser-item {
             display: flex;
             align-items: center;
@@ -92,20 +114,20 @@
             cursor: pointer;
             transition: background 0.2s;
         }
-        
+
         .browser-item:hover {
             background: #4d4d4d;
         }
-        
+
         .browser-item.directory {
             font-weight: bold;
         }
-        
+
         .browser-item .icon {
             margin-right: 0.5rem;
             font-size: 1.2rem;
         }
-        
+
         .browser-footer {
             padding: 1rem;
             background: #1a1a1a;
@@ -114,24 +136,25 @@
             justify-content: flex-end;
             gap: 1rem;
         }
-        
+
         .quick-access {
             display: flex;
             gap: 0.5rem;
             margin-bottom: 1rem;
         }
-        
+
         .quick-btn {
             padding: 0.25rem 0.5rem;
             font-size: 12px;
             background: #3d3d3d;
         }
-        
+
         .quick-btn:hover {
             background: #4d4d4d;
         }
     </style>
 </head>
+
 <body>
     <div class="header">
         <h1>🎯 Éditeur YAML</h1>
@@ -142,7 +165,7 @@
             <button id="formatBtn" class="secondary" onclick="formatYAML()">✨ Formater</button>
         </div>
     </div>
-    
+
     <div class="main-container">
         <div class="editor-container" style="margin-left: 0;">
             <div class="editor-header">
@@ -156,7 +179,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- Navigateur de fichiers -->
     <div id="fileBrowser" class="file-browser">
         <div class="browser-content">
@@ -164,13 +187,13 @@
                 <div class="browser-path" id="browserPath"></div>
                 <button onclick="closeFileBrowser()" style="padding: 0.25rem 0.5rem;">✕</button>
             </div>
-            
+
             <div class="browser-body">
                 <div class="recent-files">
                     <h3 style="margin-bottom: 1rem;">Fichiers récents</h3>
                     <div id="recentFilesList"></div>
                 </div>
-                
+
                 <div class="file-list-browser">
                     <div class="quick-access">
                         <button class="quick-btn" onclick="navigateTo('config')">Config</button>
@@ -180,25 +203,25 @@
                     <div id="browserFileList"></div>
                 </div>
             </div>
-            
+
             <div class="browser-footer">
                 <button onclick="closeFileBrowser()">Annuler</button>
             </div>
         </div>
     </div>
-    
+
     <!-- Scripts -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/codemirror.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.9/mode/yaml/yaml.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/js-yaml/4.1.0/js-yaml.min.js"></script>
-    
+
     <script>
         let editor;
         let currentFile = null;
         let currentPath = '';
         let originalContent = '';
         let isModified = false;
-        
+
         // Initialiser l'éditeur
         function initEditor() {
             editor = CodeMirror.fromTextArea(document.getElementById('editor'), {
@@ -219,7 +242,16 @@
                     'Cmd-F': 'findPersistent'
                 }
             });
-            
+            // Forcer le refresh après le chargement pour ajuster la taille
+            setTimeout(() => {
+                editor.refresh();
+            }, 100);
+
+            // Rafraîchir l'éditeur quand la fenêtre change de taille
+            window.addEventListener('resize', () => {
+                editor.refresh();
+            });
+
             editor.on('change', () => {
                 if (currentFile && editor.getValue() !== originalContent) {
                     setModified(true);
@@ -227,32 +259,32 @@
                     setModified(false);
                 }
             });
-            
+
             editor.on('cursorActivity', () => {
                 const cursor = editor.getCursor();
-                document.getElementById('cursorPosition').textContent = 
+                document.getElementById('cursorPosition').textContent =
                     `Ligne: ${cursor.line + 1}, Col: ${cursor.ch + 1}`;
             });
         }
-        
+
         // Afficher le navigateur de fichiers
         function showFileBrowser() {
             document.getElementById('fileBrowser').style.display = 'block';
             loadRecentFiles();
             navigateTo(currentPath);
         }
-        
+
         // Fermer le navigateur
         function closeFileBrowser() {
             document.getElementById('fileBrowser').style.display = 'none';
         }
-        
+
         // Naviguer vers un dossier
         async function navigateTo(path) {
             try {
                 const response = await fetch(`yaml-editor.php?action=browse&path=${encodeURIComponent(path)}`);
                 const data = await response.json();
-                
+
                 if (data.success) {
                     currentPath = data.path;
                     updateBreadcrumb(data.path);
@@ -262,62 +294,62 @@
                 showMessage('Erreur lors de la navigation', 'error');
             }
         }
-        
+
         // Mettre à jour le fil d'Ariane
         function updateBreadcrumb(path) {
             const container = document.getElementById('browserPath');
             container.innerHTML = '';
-            
+
             // Racine
             const root = document.createElement('span');
             root.className = 'path-segment';
             root.textContent = '🏠 Racine';
             root.onclick = () => navigateTo('');
             container.appendChild(root);
-            
+
             // Segments du chemin
             if (path) {
                 const segments = path.split('/');
                 let currentPath = '';
-                
+
                 segments.forEach((segment, index) => {
                     const separator = document.createElement('span');
                     separator.textContent = ' / ';
                     separator.style.color = '#666';
                     container.appendChild(separator);
-                    
+
                     currentPath += (index > 0 ? '/' : '') + segment;
                     const pathSegment = document.createElement('span');
                     pathSegment.className = 'path-segment';
                     pathSegment.textContent = segment;
-                    
+
                     const segmentPath = currentPath;
                     pathSegment.onclick = () => navigateTo(segmentPath);
-                    
+
                     container.appendChild(pathSegment);
                 });
             }
         }
-        
+
         // Afficher les fichiers
         function displayFiles(items) {
             const container = document.getElementById('browserFileList');
             container.innerHTML = '';
-            
+
             items.forEach(item => {
                 const element = document.createElement('div');
                 element.className = 'browser-item ' + item.type;
-                
+
                 const icon = item.type === 'directory' ? '📁' : '📄';
-                const info = item.type === 'file' ? 
+                const info = item.type === 'file' ?
                     ` <span style="color: #888; font-size: 12px;">${item.size} octets</span>` : '';
-                
+
                 element.innerHTML = `
                     <span class="icon">${icon}</span>
                     <span style="flex: 1;">${item.name}</span>
                     ${info}
                 `;
-                
+
                 element.onclick = () => {
                     if (item.type === 'directory') {
                         navigateTo(item.path);
@@ -325,11 +357,11 @@
                         selectFile(item.path);
                     }
                 };
-                
+
                 container.appendChild(element);
             });
         }
-        
+
         // Sélectionner un fichier
         function selectFile(filepath) {
             if (isModified) {
@@ -337,30 +369,30 @@
                     return;
                 }
             }
-            
+
             closeFileBrowser();
             loadFile(filepath);
         }
-        
+
         // Charger un fichier
         async function loadFile(filepath) {
             try {
                 const response = await fetch(`yaml-editor.php?action=load&file=${encodeURIComponent(filepath)}`);
                 const data = await response.json();
-                
+
                 if (data.success) {
                     currentFile = filepath;
                     originalContent = data.content;
                     editor.setValue(data.content);
                     setModified(false);
-                    
+
                     document.getElementById('currentFile').textContent = filepath;
-                    document.getElementById('fileInfo').textContent = 
+                    document.getElementById('fileInfo').textContent =
                         `${data.backups} backup(s) • ${data.writable ? 'Modifiable' : 'Lecture seule'}`;
-                    
+
                     // Ajouter aux récents
                     fetch(`yaml-editor.php?action=add_recent&file=${encodeURIComponent(filepath)}`);
-                    
+
                     // Désactiver la sauvegarde si lecture seule
                     document.getElementById('saveBtn').disabled = !data.writable;
                 }
@@ -368,17 +400,17 @@
                 showMessage('Erreur lors du chargement du fichier', 'error');
             }
         }
-        
+
         // Charger les fichiers récents
         async function loadRecentFiles() {
             try {
                 const response = await fetch('yaml-editor.php?action=recent');
                 const data = await response.json();
-                
+
                 if (data.success) {
                     const container = document.getElementById('recentFilesList');
                     container.innerHTML = '';
-                    
+
                     if (data.files.length === 0) {
                         container.innerHTML = '<p style="color: #888;">Aucun fichier récent</p>';
                     } else {
@@ -402,11 +434,11 @@
                 console.error('Erreur lors du chargement des fichiers récents');
             }
         }
-        
+
         // Sauvegarder le fichier
         async function saveFile() {
             if (!currentFile || document.getElementById('saveBtn').disabled) return;
-            
+
             try {
                 const response = await fetch('yaml-editor.php?action=save', {
                     method: 'POST',
@@ -418,9 +450,9 @@
                         content: editor.getValue()
                     })
                 });
-                
+
                 const data = await response.json();
-                
+
                 if (data.success) {
                     originalContent = editor.getValue();
                     setModified(false);
@@ -432,7 +464,7 @@
                 showMessage('Erreur lors de la sauvegarde', 'error');
             }
         }
-        
+
         // Recharger le fichier
         function reloadFile() {
             if (currentFile) {
@@ -444,7 +476,7 @@
                 loadFile(currentFile);
             }
         }
-        
+
         // Formater le YAML
         function formatYAML() {
             try {
@@ -459,28 +491,28 @@
                 showMessage('Erreur de syntaxe YAML: ' + error.message, 'error');
             }
         }
-        
+
         // Gérer l'état modifié
         function setModified(modified) {
             isModified = modified;
-            document.getElementById('modifiedIndicator').style.display = 
+            document.getElementById('modifiedIndicator').style.display =
                 modified ? 'inline' : 'none';
             document.getElementById('saveBtn').disabled = !modified || !currentFile;
         }
-        
+
         // Afficher un message
         function showMessage(text, type = 'info') {
             const message = document.createElement('div');
             message.className = `message ${type}`;
             message.textContent = text;
-            
+
             document.body.appendChild(message);
-            
+
             setTimeout(() => {
                 message.remove();
             }, 3000);
         }
-        
+
         // Raccourcis clavier
         document.addEventListener('keydown', (e) => {
             if ((e.ctrlKey || e.metaKey) && e.key === 's') {
@@ -492,7 +524,7 @@
                 showFileBrowser();
             }
         });
-        
+
         // Prévenir la fermeture accidentelle
         window.addEventListener('beforeunload', (e) => {
             if (isModified) {
@@ -500,14 +532,15 @@
                 e.returnValue = '';
             }
         });
-        
+
         // Initialisation
         initEditor();
-        
+
         // Ouvrir automatiquement le navigateur au démarrage
         setTimeout(() => {
             showFileBrowser();
         }, 100);
     </script>
 </body>
+
 </html>
