@@ -3,137 +3,160 @@
 session_start();
 
 // Configuration
-$CONFIG_PATH = __DIR__ . '/../config/';
-$BACKUP_PATH = __DIR__ . '/../config/backups/';
-$ALLOWED_FILES = ['ai_prompts.yaml']; // Liste blanche des fichiers éditables
+$BASE_PATH = realpath(__DIR__ . '/../'); // Racine du projet
+$ALLOWED_EXTENSIONS = ['yaml', 'yml'];
+$EXCLUDED_DIRS = ['vendor', 'node_modules', '.git', 'cache', 'logs'];
 
-// Créer le dossier de backup si nécessaire
-if (!file_exists($BACKUP_PATH)) {
-    mkdir($BACKUP_PATH, 0755, true);
-}
-
-// Fonction pour parser YAML simple (sans extension YAML)
-function parseYamlSimple($content)
+// Fonction pour vérifier si un chemin est sûr
+function isPathSafe($path, $basePath)
 {
-    // Pour un vrai parser, installer: composer require symfony/yaml
-    // Ici on fait un parser basique pour les prompts
-    $lines = explode("\n", $content);
-    $result = [];
-    $currentKey = '';
-    $currentValue = '';
-    $inMultiline = false;
-
-    foreach ($lines as $line) {
-        // Ignorer les commentaires et lignes vides
-        if (trim($line) === '' || strpos(trim($line), '#') === 0) {
-            continue;
-        }
-
-        // Détecter le début d'un bloc multilignes
-        if (preg_match('/^(\s*)(\w+):\s*\|/', $line, $matches)) {
-            if ($currentKey) {
-                $result[$currentKey] = trim($currentValue);
-            }
-            $currentKey = $matches[2];
-            $currentValue = '';
-            $inMultiline = true;
-            continue;
-        }
-
-        // Ligne simple clé: valeur
-        if (!$inMultiline && preg_match('/^(\s*)(\w+):\s*(.*)$/', $line, $matches)) {
-            if ($currentKey) {
-                $result[$currentKey] = trim($currentValue);
-            }
-            $currentKey = $matches[2];
-            $currentValue = $matches[3];
-            $inMultiline = false;
-            continue;
-        }
-
-        // Contenu multilignes
-        if ($inMultiline) {
-            $currentValue .= $line . "\n";
-        }
-    }
-
-    // Dernière entrée
-    if ($currentKey) {
-        $result[$currentKey] = trim($currentValue);
-    }
-
-    return $result;
+    $realPath = realpath($path);
+    $realBase = realpath($basePath);
+    return $realPath && strpos($realPath, $realBase) === 0;
 }
 
-// Router simple
-$action = $_GET['action'] ?? 'list';
+// Router
+$action = $_GET['action'] ?? 'browse';
 
 header('Content-Type: application/json');
 
 try {
     switch ($action) {
-        case 'list':
-            // Lister les fichiers disponibles
-            $files = [];
-            foreach ($ALLOWED_FILES as $file) {
-                $path = $CONFIG_PATH . $file;
-                if (file_exists($path)) {
-                    $files[] = [
-                        'name' => $file,
-                        'size' => filesize($path),
-                        'modified' => date('Y-m-d H:i:s', filemtime($path)),
-                        'writable' => is_writable($path)
-                    ];
+        case 'browse':
+            // Parcourir les dossiers
+            $path = $_GET['path'] ?? '';
+            $fullPath = $BASE_PATH;
+
+            if ($path) {
+                $fullPath = realpath($BASE_PATH . '/' . $path);
+                if (!isPathSafe($fullPath, $BASE_PATH)) {
+                    throw new Exception('Chemin non autorisé');
                 }
             }
-            echo json_encode(['success' => true, 'files' => $files]);
+
+            $items = [];
+
+            // Dossier parent
+            if ($path) {
+                $parentPath = dirname($path);
+                $items[] = [
+                    'name' => '..',
+                    'type' => 'directory',
+                    'path' => $parentPath === '.' ? '' : $parentPath
+                ];
+            }
+
+            // Scanner le dossier
+            $files = scandir($fullPath);
+            foreach ($files as $file) {
+                if ($file === '.' || $file === '..') continue;
+
+                $filePath = $fullPath . '/' . $file;
+                $relativePath = $path ? $path . '/' . $file : $file;
+
+                if (is_dir($filePath)) {
+                    // Exclure certains dossiers
+                    if (in_array($file, $EXCLUDED_DIRS)) continue;
+
+                    $items[] = [
+                        'name' => $file,
+                        'type' => 'directory',
+                        'path' => $relativePath
+                    ];
+                } else {
+                    // Vérifier l'extension
+                    $ext = pathinfo($file, PATHINFO_EXTENSION);
+                    if (in_array($ext, $ALLOWED_EXTENSIONS)) {
+                        $items[] = [
+                            'name' => $file,
+                            'type' => 'file',
+                            'path' => $relativePath,
+                            'size' => filesize($filePath),
+                            'modified' => date('Y-m-d H:i:s', filemtime($filePath)),
+                            'writable' => is_writable($filePath)
+                        ];
+                    }
+                }
+            }
+
+            // Trier : dossiers d'abord, puis fichiers
+            usort($items, function ($a, $b) {
+                if ($a['type'] !== $b['type']) {
+                    return $a['type'] === 'directory' ? -1 : 1;
+                }
+                return strcasecmp($a['name'], $b['name']);
+            });
+
+            echo json_encode([
+                'success' => true,
+                'path' => $path,
+                'items' => $items
+            ]);
             break;
 
         case 'load':
             // Charger un fichier
-            $filename = $_GET['file'] ?? '';
-            if (!in_array($filename, $ALLOWED_FILES)) {
-                throw new Exception('Fichier non autorisé');
+            $filepath = $_GET['file'] ?? '';
+            $fullPath = realpath($BASE_PATH . '/' . $filepath);
+
+            if (!isPathSafe($fullPath, $BASE_PATH)) {
+                throw new Exception('Chemin non autorisé');
             }
 
-            $filepath = $CONFIG_PATH . $filename;
-            if (!file_exists($filepath)) {
+            if (!file_exists($fullPath)) {
                 throw new Exception('Fichier non trouvé');
             }
 
-            $content = file_get_contents($filepath);
+            $content = file_get_contents($fullPath);
+
+            // Créer le dossier de backup pour ce fichier
+            $backupDir = dirname($fullPath) . '/.backups';
+            if (!file_exists($backupDir)) {
+                mkdir($backupDir, 0755, true);
+            }
 
             // Compter les backups
-            $backups = glob($BACKUP_PATH . $filename . '.*.bak');
+            $filename = basename($filepath);
+            $backups = glob($backupDir . '/' . $filename . '.*.bak');
 
             echo json_encode([
                 'success' => true,
                 'content' => $content,
+                'filepath' => $filepath,
                 'filename' => $filename,
-                'backups' => count($backups)
+                'backups' => count($backups),
+                'writable' => is_writable($fullPath)
             ]);
             break;
 
         case 'save':
             // Sauvegarder un fichier
             $data = json_decode(file_get_contents('php://input'), true);
-            $filename = $data['filename'] ?? '';
+            $filepath = $data['filepath'] ?? '';
             $content = $data['content'] ?? '';
 
-            if (!in_array($filename, $ALLOWED_FILES)) {
-                throw new Exception('Fichier non autorisé');
+            $fullPath = realpath($BASE_PATH . '/' . $filepath);
+
+            if (!isPathSafe($fullPath, $BASE_PATH)) {
+                throw new Exception('Chemin non autorisé');
             }
 
-            $filepath = $CONFIG_PATH . $filename;
+            if (!is_writable($fullPath)) {
+                throw new Exception('Fichier non modifiable');
+            }
 
             // Créer un backup
-            if (file_exists($filepath)) {
-                $backupName = $filename . '.' . date('Ymd_His') . '.bak';
-                copy($filepath, $BACKUP_PATH . $backupName);
+            $backupDir = dirname($fullPath) . '/.backups';
+            if (!file_exists($backupDir)) {
+                mkdir($backupDir, 0755, true);
             }
 
+            $filename = basename($filepath);
+            $backupName = $filename . '.' . date('Ymd_His') . '.bak';
+            copy($fullPath, $backupDir . '/' . $backupName);
+
             // Sauvegarder
-            if (file_put_contents($filepath, $content) === false) {
+            if (file_put_contents($fullPath, $content) === false) {
                 throw new Exception('Erreur lors de la sauvegarde');
             }
 
@@ -143,67 +166,47 @@ try {
             ]);
             break;
 
-        case 'backups':
-            // Lister les backups
-            $filename = $_GET['file'] ?? '';
-            if (!in_array($filename, $ALLOWED_FILES)) {
-                throw new Exception('Fichier non autorisé');
+        case 'recent':
+            // Obtenir les fichiers récents depuis la session
+            $recent = $_SESSION['recent_files'] ?? [];
+
+            // Vérifier que les fichiers existent encore
+            $validRecent = [];
+            foreach ($recent as $file) {
+                $fullPath = $BASE_PATH . '/' . $file;
+                if (file_exists($fullPath) && isPathSafe($fullPath, $BASE_PATH)) {
+                    $validRecent[] = [
+                        'path' => $file,
+                        'name' => basename($file),
+                        'dir' => dirname($file)
+                    ];
+                }
             }
-
-            $backups = [];
-            $files = glob($BACKUP_PATH . $filename . '.*.bak');
-            foreach ($files as $file) {
-                $backups[] = [
-                    'name' => basename($file),
-                    'date' => date('Y-m-d H:i:s', filemtime($file)),
-                    'size' => filesize($file)
-                ];
-            }
-
-            // Trier par date décroissante
-            usort($backups, function ($a, $b) {
-                return strtotime($b['date']) - strtotime($a['date']);
-            });
-
-            echo json_encode(['success' => true, 'backups' => $backups]);
-            break;
-
-        case 'restore':
-            // Restaurer un backup
-            $data = json_decode(file_get_contents('php://input'), true);
-            $backupName = $data['backup'] ?? '';
-
-            // Vérifier que c'est bien un backup
-            if (!preg_match('/^[\w\-\.]+\.yaml\.\d{8}_\d{6}\.bak$/', $backupName)) {
-                throw new Exception('Nom de backup invalide');
-            }
-
-            $backupPath = $BACKUP_PATH . $backupName;
-            if (!file_exists($backupPath)) {
-                throw new Exception('Backup non trouvé');
-            }
-
-            // Extraire le nom du fichier original
-            $originalName = preg_replace('/\.\d{8}_\d{6}\.bak$/', '', $backupName);
-            if (!in_array($originalName, $ALLOWED_FILES)) {
-                throw new Exception('Fichier non autorisé');
-            }
-
-            $originalPath = $CONFIG_PATH . $originalName;
-
-            // Faire un backup du fichier actuel avant de restaurer
-            if (file_exists($originalPath)) {
-                $newBackupName = $originalName . '.' . date('Ymd_His') . '.before_restore.bak';
-                copy($originalPath, $BACKUP_PATH . $newBackupName);
-            }
-
-            // Restaurer
-            copy($backupPath, $originalPath);
 
             echo json_encode([
                 'success' => true,
-                'message' => 'Backup restauré avec succès'
+                'files' => array_slice($validRecent, 0, 10)
             ]);
+            break;
+
+        case 'add_recent':
+            // Ajouter aux fichiers récents
+            $filepath = $_GET['file'] ?? '';
+
+            if (!isset($_SESSION['recent_files'])) {
+                $_SESSION['recent_files'] = [];
+            }
+
+            // Retirer si déjà présent
+            $_SESSION['recent_files'] = array_diff($_SESSION['recent_files'], [$filepath]);
+
+            // Ajouter au début
+            array_unshift($_SESSION['recent_files'], $filepath);
+
+            // Garder seulement les 10 derniers
+            $_SESSION['recent_files'] = array_slice($_SESSION['recent_files'], 0, 10);
+
+            echo json_encode(['success' => true]);
             break;
 
         default:
